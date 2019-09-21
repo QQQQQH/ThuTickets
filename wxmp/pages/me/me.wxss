@@ -1,0 +1,16 @@
+/* pages/me/me.wxss */
+.container{
+  height: 100vh;/*高100的视窗*/
+  display: flex;/*flex布局方法*/
+  flex-direction: column;/*垂直布局*/
+  align-items: center;/*水平方向居中*/
+  justify-content: space-around;/*垂直方向分散布局*/
+}
+.wx{
+  width: 500rpx;
+  border-radius: 50%;/*四个角变为圆角形状*/
+}
+text{
+  font-size: 50rpx;
+  color: blue;
+}

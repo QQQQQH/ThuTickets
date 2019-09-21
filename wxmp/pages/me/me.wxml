@@ -1,0 +1,8 @@
+<!--pages/me/me.wxml-->
+<view class='container'>
+  <image src='{{src}}' class='wx'></image>
+  <text>{{name}}</text>
+  <button open-type="getUserInfo" bindgetuserinfo="getMyInfo">点击获取头像和昵称</button>
+  <!-- open-type='getUserInfo'表示激活获取微信用户信息功能 -->
+  <!-- bindgetuserinfo='getMyInfo'表示获得的数据将传递给自定义函数getMyInfo -->
+</view>
