@@ -6,23 +6,22 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "清小票",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "white"
   },
   "tabBar": {
     "list": [
       {
         "pagePath": "pages/index/index",
         "text": "主页",
-        "iconPath": "/images/tabbar/normal/index.png",
-        "selectedIconPath": "/images/tabbar/selected/index.png"
+        "iconPath": "/images/tabbar/index.png",
+        "selectedIconPath": "/images/tabbar/index_selected.png"
       },
       {
         "pagePath": "pages/me/me",
         "text": "我的",
-        "iconPath": "/images/tabbar/normal/me.png",
-        "selectedIconPath": "/images/tabbar/selected/me.png"
+        "iconPath": "/images/tabbar/me.png",
+        "selectedIconPath": "/images/tabbar/me_selected.png"
       }
     ]
   },

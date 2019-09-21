@@ -1,27 +1,31 @@
 // pages/me/me.js
+let app=getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    name: '清小票',
-    src: '/images/wx.png'
-  },
-  getMyInfo: function (e) {
-    console.log(e.detail.userInfo)
-    let info = e.detail.userInfo
-    this.setData({
-      name: info.nickName,
-      src: info.avatarUrl
-    })
-
+    userInfo: {}
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log('me')
+    // 页面初始化 options为页面跳转所带来的参数
+    let that = this
+    //调用应用实例的方法获取全局数据
+    app.getUserInfo(function (userInfo) {
+      //更新数据
+      that.setData({
+        userInfo: userInfo
+      })
+    })
+  },
 
+  bindId: function (){
+    console.log('bindId')
   },
 
   /**
