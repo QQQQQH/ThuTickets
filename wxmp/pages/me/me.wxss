@@ -3,15 +3,13 @@ page{
     background-color: #f8f7f7;
     height: 100%;
 }
-.userinfo{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    padding: 15px;
-    background-color: #fff;
+
+.me-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .userinfo-avatar{
     width: 4em;
     height: 4em;
@@ -19,17 +17,16 @@ page{
     border: 1px solid #ddd;
     margin-bottom: 5px;
 }
-.userinfo-list{
-    margin-top: 10px;
-    background-color: #fff;
-    line-height: 2;
+
+.userinfo-avatar{
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 100rpx;
+  margin: 100rpx, 0;
 }
-.userinfo-item{
-    display: flex;
-    padding: 0 1em;
-}
-.userinfo-item:not(:last-child){
-    border-bottom: 1px solid #ddd;
-}
-.btn{
+
+.userinfo-nickName{
+  font-size: 32rpx;
+  font-weight: bold;
+  margin: 100rpx, 0;
 }

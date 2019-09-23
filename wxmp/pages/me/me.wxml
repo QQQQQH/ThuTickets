@@ -1,10 +1,7 @@
 <!--pages/me/me.wxml-->
-<view class="userinfo">
+<view class="me-container">
   <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
-  <text>{{userInfo.nickName}}</text>
-</view>
-<view class="userinfo-list">
-  <view class="userinfo-item">
-    <button class="btn" bindtap="bindId">绑定学号</button>
-  </view>
+  <text class="userinfo-nickName">{{userInfo.nickName}}</text>
+  <button bindgetuserinfo="handleGetUserInfo" style="display:{{isShow?'block':'none'}}" open-type="getUserInfo">获取用户名与头像</button>
+  <button bindtap="bindId">绑定学号</button>
 </view>

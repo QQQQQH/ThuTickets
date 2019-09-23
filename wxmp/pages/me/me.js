@@ -1,27 +1,56 @@
 // pages/me/me.js
-let app=getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    userInfo: {}
+    userInfo: {},
+    isShow: true,
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log('me')
-    // 页面初始化 options为页面跳转所带来的参数
-    let that = this
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
+    // 初始化工作，发送请求，开启定时器
+  },
+
+  getUserInfo: function () {
+    // 获取用户登录的信息
+
+    // 判断用户是否授权
+    wx.getSetting({
+      success: (data) => {
+        if (data.authSetting['scope.userInfo']) {
+          //  用户已经授权
+          this.setData({
+            isShow: false
+          });
+        } else {
+          //  没有授权
+        }
+      }
     })
+
+    wx.getUserInfo({
+      success: (data) => {
+        // 更新data中的userInfo
+        this.setData({
+          userInfo: data.userInfo
+        })
+      },
+      fail: () => {
+        console.log('getUserInfo failed')
+      }
+    })
+  },
+
+  handleGetUserInfo: function (data) {
+    // 判断用户是否点击允许
+    if (data.detail.rawData) {
+      // 用户点击允许
+      this.getUserInfo();
+    }
   },
 
   bindId: function (){
