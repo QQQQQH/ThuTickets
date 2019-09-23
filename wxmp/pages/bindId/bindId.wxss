@@ -1,0 +1,17 @@
+/* pages/bindId/bindId.wxss */
+
+.bindId-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.click {
+  width: 220rpx;
+  height: 80rpx;
+  font-size: 28rpx;
+  border: 1rpx solid #999;
+  border-radius: 10rpx;
+  text-align: center;
+  line-height: 80rpx;
+}

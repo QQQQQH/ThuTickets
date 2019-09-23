@@ -3,5 +3,7 @@
   <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
   <text class="userinfo-nickName">{{userInfo.nickName}}</text>
   <button bindgetuserinfo="handleGetUserInfo" style="display:{{isShow?'block':'none'}}" open-type="getUserInfo">获取用户名与头像</button>
-  <button bindtap="bindId">绑定学号</button>
+  <view catchtap="handleClick" class='bind-id'>
+    <text>绑定学号</text>
+  </view>
 </view>

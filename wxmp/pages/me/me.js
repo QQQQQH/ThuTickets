@@ -8,11 +8,19 @@ Page({
     userInfo: {},
     isShow: true,
   },
+
+  handleClick: function () {
+    wx.navigateTo({
+      url: '/pages/bindId/bindId',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     // 初始化工作，发送请求，开启定时器
+    this.getUserInfo();
   },
 
   getUserInfo: function () {

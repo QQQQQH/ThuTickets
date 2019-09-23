@@ -1,0 +1,11 @@
+<!--pages/bindId/bindId.wxml-->
+
+<view class="bindId-container">
+  <view class="input">
+  <input type="text" placeholder="请输入姓名"></input>
+  <input type="number" placeholder="请输入学号"></input>
+  <view catchtap="handleClick" class='click'>
+    <text>确认绑定</text>
+  </view>
+  </view>
+</view>
