@@ -1,5 +1,5 @@
 <!--index.wxml-->
 
-<view>
+<view class='pageContainer'>
   <text>这是主页</text>
 </view>

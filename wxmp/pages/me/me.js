@@ -9,7 +9,7 @@ Page({
     isShow: true,
   },
 
-  handleClick: function () {
+  handleClickBindId: function () {
     wx.navigateTo({
       url: '/pages/bindId/bindId',
     })
@@ -42,9 +42,17 @@ Page({
 
     wx.getUserInfo({
       success: (data) => {
+        console.log('getUserInfo successed')
         // 更新data中的userInfo
         this.setData({
           userInfo: data.userInfo
+        });
+
+        // 弹窗:获取用户信息成功
+        wx.showToast({
+          title: '获取信息成功',
+          icon: '',
+          duration: 1000
         })
       },
       fail: () => {
@@ -59,10 +67,6 @@ Page({
       // 用户点击允许
       this.getUserInfo();
     }
-  },
-
-  bindId: function (){
-    console.log('bindId')
   },
 
   /**

@@ -1,12 +1,24 @@
 /* pages/bindId/bindId.wxss */
 
-.bindId-container{
+.pageContainer{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.click {
+.input{
+  margin: 100rpx;
+}
+
+.input input{
+  margin: 50rpx;
+  border: 5rpx solid #999;
+  width: 500rpx;
+  border-radius: 10rpx;
+}
+
+.btnBind {
+  margin: 100rpx;
   width: 220rpx;
   height: 80rpx;
   font-size: 28rpx;
