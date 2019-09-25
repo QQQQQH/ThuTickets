@@ -10,21 +10,22 @@ page {
   align-items: center;
 }
 
-.userinfoAvatar {
-  width: 200rpx;
-  height: 200rpx;
-  border-radius: 100rpx;
-  margin: 100rpx;
+.userInfoAvatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
 }
 
-.userinfoNickName {
+.userInfoNickName {
+  color: #aaa;
   font-size: 32rpx;
   font-weight: bold;
   margin: 100rpx;
 }
 
-.btnBindId {
-  width: 220rpx;
+button {
+  width: 300rpx;
   height: 80rpx;
   font-size: 28rpx;
   border: 1rpx solid #999;

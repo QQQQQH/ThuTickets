@@ -1,120 +1,55 @@
-// pages/me/me.js
-Page({
+//me.js
+//获取应用实例
+const app = getApp()
 
-  /**
-   * 页面的初始数据
-   */
+Page({
   data: {
     userInfo: {},
-    isShow: true,
+    hasUserInfo: false,
   },
-
-  handleClickBindId: function () {
+  //事件处理函数
+  bindViewTap: function() {
     wx.navigateTo({
-      url: '/pages/bindId/bindId',
+      url: '../logs/logs'
     })
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    // 初始化工作，发送请求，开启定时器
-    this.getUserInfo();
-  },
-
-  getUserInfo: function () {
-    // 获取用户登录的信息
-
-    // 判断用户是否授权
-    wx.getSetting({
-      success: (data) => {
-        if (data.authSetting['scope.userInfo']) {
-          //  用户已经授权
-          this.setData({
-            isShow: false
-          });
-        } else {
-          //  没有授权
-        }
-      }
-    })
-
-    wx.getUserInfo({
-      success: (data) => {
-        console.log('getUserInfo successed')
-        // 更新data中的userInfo
+  onLoad: function() {
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true
+      })
+    } else {
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      app.userInfoReadyCallback = res => {
         this.setData({
-          userInfo: data.userInfo
-        });
-
-        // 弹窗:获取用户信息成功
-        wx.showToast({
-          title: '获取信息成功',
-          icon: '',
-          duration: 1000
+          userInfo: res.userInfo,
+          hasUserInfo: true
         })
-      },
-      fail: () => {
-        console.log('getUserInfo failed')
       }
-    })
-  },
-
-  handleGetUserInfo: function (data) {
-    // 判断用户是否点击允许
-    if (data.detail.rawData) {
-      // 用户点击允许
-      this.getUserInfo();
     }
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  handleClickGetUserInfo: function(e) {
+    // 点击获取昵称和头像按钮
+    console.log(e)
+    if (e.detail.userInfo) {
+      app.globalData.userInfo = e.detail.userInfo
+      app.globalData.rawData = e.detail.rawData
+      app.globalData.signature = e.detail.signature
+      app.globalData.encrypteData = e.detail.encrypteData
+      app.globalData.iv = e.detail.iv
+      this.setData({
+        userInfo: e.detail.userInfo,
+        hasUserInfo: true
+      })
+      app.login()
+    } else {}
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  handleClickBindId: function() {
+    // 点击绑定学号按钮
+    wx.navigateTo({
+      url: '../bindId/bindId'
+    })
   }
 })

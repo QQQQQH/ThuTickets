@@ -1,7 +1,9 @@
 <!--pages/me/me.wxml-->
 <view class="pageContainer">
-  <image class="userinfoAvatar" src="{{userInfo.avatarUrl}}"></image>
-  <text class="userinfoNickName">{{userInfo.nickName}}</text>
-  <button bindgetuserinfo="handleGetUserInfo" style="display:{{isShow?'block':'none'}}" open-type="getUserInfo">获取用户名与头像</button>
-    <button bindtap="handleClickBindId" class="btnBindId">绑定学号</button>
+  <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="handleClickGetUserInfo"> 登录 </button>
+  <block wx:else>
+    <image bindtap="bindViewTap" class="userInfoAvatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    <text class="userInfoNickName">{{userInfo.nickName}}</text>
+  </block>
+  <button bindtap="handleClickBindId">绑定学号</button>
 </view>

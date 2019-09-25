@@ -3,11 +3,15 @@
 
 ## 建立数据库
 在MySQL中登录账号：root，密码：12345678。用以下命令建立数据库：
-```
+```shell
 CREATE DATABASE thutickets;
 ```
-并添加数据表：
+进入数据库：
+``` shell
+USE thutickets;
 ```
+并添加数据表：
+```shell
 CREATE TABLE `user`  (
   `openid` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'openid',
   `session_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'session_key',
