@@ -1,5 +1,7 @@
 package cn.edu.tsinghua.thutickets.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.IdType;
 import lombok.Data;
 
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.Date;
 @Data
 @TableName("user")
 public class User {
+    @TableId(value = "openid",type = IdType.INPUT)
     private String openid;
     private String session_key;
     private String status_key;
