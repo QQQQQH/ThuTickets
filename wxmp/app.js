@@ -36,15 +36,19 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log(res.code)
         wx.request({
           url: 'http://localhost:8080/login',
           method: 'POST',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
           data: {
             code: res.code, //临时登录凭证
-            rawData: this.globalData.userInfo.rawData, //用户非敏感信息
-            signature: this.globalData.userInfo.signature, //签名
-            encrypteData: this.globalData.userInfo.encryptedData, //用户敏感信息
-            iv: this.globalData.userInfo.iv //解密算法的向量
+            rawData: this.globalData.rawData, //用户非敏感信息
+            signature: this.globalData.signature, //签名
+            encrypteData: this.globalData.encryptedData, //用户敏感信息
+            iv: this.globalData.iv //解密算法的向量
           },
           success: res => {
             if (res.data.status == 200) {
