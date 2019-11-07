@@ -40,7 +40,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         data: {
-          token: app.globalData.token
+          token: token: app.globalData.token.token
         },
         success: res => {
           if (res.data.status == 200) {

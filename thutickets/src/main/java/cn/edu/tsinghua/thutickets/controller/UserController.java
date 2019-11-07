@@ -58,26 +58,30 @@ public class UserController {
         return Result.buildOK(status_key);
     }
 
-    @RequestMapping("/test")
-    public Result verification(@RequestParam(value = "token") String token) {
-        System.out.println(token);
+    @PostMapping("/user/verification")
+    public Result verification(@RequestParam(value = "token", required = false) String token) {
+        System.out.println("token:" + token);
         //设置请求参数
-        String jsonParam = "{\"token\":" + token + "}";
+        String jsonParam = "{\"token\":" + "\"" + token + "\"}";
         //执行请求
         String res = HttpClientUtil.doPostJson("https://alumni-test.iterator-traits.com/fake-id-tsinghua-proxy/api/user/session/token", jsonParam);
+        System.out.println(res);
         JSONObject studentInfo = JSON.parseObject(res);
-        JSONObject errorInfo = JSON.parseObject(JSON.parseObject(studentInfo.getString("user")).getString("error"));
+        /*JSONObject errorInfo = JSON.parseObject(JSON.parseObject(studentInfo.getString("user")).getString("error"));
         String status = errorInfo.getString("message");
         if (status == "success") {
             //身份验证验证成功
             String card = JSON.parseObject(studentInfo.getString("user")).getString("card");
             System.out.println(card);
-            return Result.buildOK(card);
+
         }
+
         else {
             //身份验证失败
             return Result.buildError("verification failed.");
-        }
+        }*/
+        String card = "";
+        return Result.buildOK(card);
     }
 
     private String updateUserInfo(JSONObject idJson, JSONObject rawDataJson) {
