@@ -32,35 +32,8 @@ App({
     })
   },
 
-  onshow: function (options) {
-    if (this.globalData.token!=null)
-    {
-      wx.request({
-          url: 'http://localhost:8080/user/verifcation',
-          method: 'POST',
-          header: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          data: {
-            token: this.globalData.token
-          },
-          success: res => {
-            if (res.data.status == 200) {
-              wx.setStorageSync('skey', res.data);
-              wx.showToast({
-                title: '绑定成功',
-                duration: 1000
-              })
-            } else {
-              console.log('服务器异常');
-            }
-          },
-          fail: function (error) {
-            //调用服务端登录接口失败
-            console.log(error);
-          }
-        })
-    }
+  onShow: function (options) {
+    this.globalData.token = options.referrerInfo.extraData
   },
   
   login: function() {
