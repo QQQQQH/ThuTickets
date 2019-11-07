@@ -38,7 +38,7 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         console.log(res.code)
         wx.request({
-          url: 'http://localhost:8080/login',
+          url: 'http://localhost:8080/user/login',
           method: 'POST',
           header: {
             'content-type': 'application/x-www-form-urlencoded'
@@ -52,6 +52,7 @@ App({
           },
           success: res => {
             if (res.data.status == 200) {
+              console.log(res.data);
               wx.setStorageSync('skey', res.data);
               wx.showToast({
                 title: '登录成功',

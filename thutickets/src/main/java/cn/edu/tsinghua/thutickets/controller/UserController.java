@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
@@ -19,6 +20,7 @@ import cn.edu.tsinghua.thutickets.entity.User;
 
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -49,7 +51,9 @@ public class UserController {
     private String updateUserInfo(JSONObject idJson, JSONObject rawDataJson) {
         String openid = idJson.getString("openid");
         String session_key = idJson.getString("session_key");
+
         String status_key = UUID.randomUUID().toString();
+
         String nickName = rawDataJson.getString("nickName");
         String gender = rawDataJson.getString("gender");
         String language = rawDataJson.getString("language");

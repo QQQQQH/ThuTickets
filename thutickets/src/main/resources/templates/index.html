@@ -29,8 +29,10 @@
         </div>
     </div>
 
+    <p style="color: red" th:text="${message}" th:if="${not #strings.isEmpty(message)}"></p>
+
     <div class="container">
-        <form th:action="@{/login}" th:object="${user}" method="post">
+        <form th:action="@{/admin/login}" th:object="${user}" method="post">
             <p class="lead">Please input your user name and password to login.</p>
             <div class="row">
                 <div class="col">
