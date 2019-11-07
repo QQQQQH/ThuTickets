@@ -1,12 +1,23 @@
 package cn.edu.tsinghua.thutickets.controller;
 
+import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
@@ -16,6 +27,7 @@ import cn.edu.tsinghua.thutickets.common.HttpClientUtil;
 import cn.edu.tsinghua.thutickets.common.Result;
 import cn.edu.tsinghua.thutickets.dao.UserMapper;
 import cn.edu.tsinghua.thutickets.entity.User;
+import org.springframework.web.client.RestTemplate;
 
 
 @RestController
@@ -44,6 +56,28 @@ public class UserController {
         JSONObject idJson = JSON.parseObject(res);
         String status_key = this.updateUserInfo(idJson, rawDataJson);
         return Result.buildOK(status_key);
+    }
+
+    @RequestMapping("/test")
+    public Result verification(@RequestParam(value = "token") String token) {
+        System.out.println(token);
+        //设置请求参数
+        String jsonParam = "{\"token\":" + token + "}";
+        //执行请求
+        String res = HttpClientUtil.doPostJson("https://alumni-test.iterator-traits.com/fake-id-tsinghua-proxy/api/user/session/token", jsonParam);
+        JSONObject studentInfo = JSON.parseObject(res);
+        JSONObject errorInfo = JSON.parseObject(JSON.parseObject(studentInfo.getString("user")).getString("error"));
+        String status = errorInfo.getString("message");
+        if (status == "success") {
+            //身份验证验证成功
+            String card = JSON.parseObject(studentInfo.getString("user")).getString("card");
+            System.out.println(card);
+            return Result.buildOK(card);
+        }
+        else {
+            //身份验证失败
+            return Result.buildError("verification failed.");
+        }
     }
 
     private String updateUserInfo(JSONObject idJson, JSONObject rawDataJson) {
@@ -84,4 +118,6 @@ public class UserController {
         }
         return status_key;
     }
+
+
 }
