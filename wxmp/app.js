@@ -1,6 +1,6 @@
 //app.js
 App({
-  onLaunch: function() {
+  onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -35,15 +35,15 @@ App({
   onShow: function (options) {
     this.globalData.token = options.referrerInfo.extraData
   },
-  
-  login: function() {
+
+  login: function () {
     // 登录
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         console.log(res.code)
         wx.request({
-          url: 'http://localhost:8080/login',
+          url: 'http://localhost:8080/user/login',
           method: 'POST',
           header: {
             'content-type': 'application/x-www-form-urlencoded'
@@ -54,7 +54,7 @@ App({
             signature: this.globalData.signature, //签名
             encrypteData: this.globalData.encryptedData, //用户敏感信息
             iv: this.globalData.iv //解密算法的向量
-            
+
           },
           success: res => {
             if (res.data.status == 200) {
@@ -67,7 +67,7 @@ App({
               console.log('服务器异常');
             }
           },
-          fail: function(error) {
+          fail: function (error) {
             //调用服务端登录接口失败
             console.log(error);
           }
@@ -76,7 +76,7 @@ App({
     })
 
 
-    
+
 
 
   },

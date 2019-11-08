@@ -31,6 +31,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -87,7 +88,9 @@ public class UserController {
     private String updateUserInfo(JSONObject idJson, JSONObject rawDataJson) {
         String openid = idJson.getString("openid");
         String session_key = idJson.getString("session_key");
+
         String status_key = UUID.randomUUID().toString();
+
         String nickName = rawDataJson.getString("nickName");
         String gender = rawDataJson.getString("gender");
         String language = rawDataJson.getString("language");
