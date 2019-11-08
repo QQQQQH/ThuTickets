@@ -30,6 +30,37 @@ Page({
       }
     }
   },
+
+  onShow: function() {
+    if (app.globalData.token != null) {
+      wx.request({
+        url: 'http://localhost:8080/user/verifcation',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          token: token: app.globalData.token.token
+        },
+        success: res => {
+          if (res.data.status == 200) {
+            wx.setStorageSync('skey', res.data);
+            wx.showToast({
+              title: '绑定成功',
+              duration: 1000
+            })
+          } else {
+            console.log('服务器异常');
+          }
+        },
+        fail: function(error) {
+          //调用服务端登录接口失败
+          console.log(error);
+        }
+      })
+    }
+  },
+
   handleClickGetUserInfo: function(e) {
     // 点击获取昵称和头像按钮
     console.log(e)
@@ -48,8 +79,19 @@ Page({
   },
   handleClickBindId: function() {
     // 点击绑定学号按钮
-    wx.navigateTo({
-      url: '../bindId/bindId'
+    wx.navigateToMiniProgram({
+      appId: "wx1ebe3b2266f4afe0",
+      path: "pages/index/index",
+      envVersion: "trial",
+      extraData: {
+        origin: "miniapp",
+        type: "id.tsinghua"
+      }
     })
+
+
+
+
+
   }
 })

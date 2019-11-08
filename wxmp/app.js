@@ -31,6 +31,11 @@ App({
       }
     })
   },
+
+  onShow: function (options) {
+    this.globalData.token = options.referrerInfo.extraData
+  },
+  
   login: function() {
     // 登录
     wx.login({
@@ -49,6 +54,7 @@ App({
             signature: this.globalData.signature, //签名
             encrypteData: this.globalData.encryptedData, //用户敏感信息
             iv: this.globalData.iv //解密算法的向量
+            
           },
           success: res => {
             if (res.data.status == 200) {
@@ -68,12 +74,19 @@ App({
         })
       }
     })
+
+
+    
+
+
   },
   globalData: {
     userInfo: null,
     rawData: null, //用户非敏感信息
     signature: null, //签名
     encrypteData: null, //用户敏感信息
-    iv: null //解密算法的向量
+    iv: null, //解密算法的向量
+    token: null,
+
   }
 })

@@ -21,5 +21,9 @@ public class Result {
     public static Result buildOK(Object data) {
         return new Result(200, "OK", data);
     }
+
+    public static  Result buildError(Object data) {
+        return new Result(500, "error:", data);
+    }
 }
 
