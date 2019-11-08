@@ -1,0 +1,13 @@
+language: java
+jdk: oraclejdk13
+sudo: true
+services: mysql
+dist: xenial
+sudo: required
+before_install: 
+- cd thutickets
+- chmod +x ./mvnw
+- mysql -u root -e "CREATE DATABASE thutickets; USE thutickets; CREATE TABLE user  (openid varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'openid', session_key varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'session_key', status_key varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'status_key', nick_name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '昵称', gender tinyint(11) NULL DEFAULT NULL COMMENT '性别', language varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '语言', province varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '省份', country varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '国家', avatar_url varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像', create_time timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间', last_visit_time timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后登录时间', PRIMARY KEY (openid) USING BTREE) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息' ROW_FORMAT = Dynamic;"
+- mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '12345678';"
+before_build: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script: mvn test
