@@ -1,21 +1,11 @@
 package cn.edu.tsinghua.thutickets.controller;
 
-import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +17,6 @@ import cn.edu.tsinghua.thutickets.common.HttpClientUtil;
 import cn.edu.tsinghua.thutickets.common.Result;
 import cn.edu.tsinghua.thutickets.dao.UserMapper;
 import cn.edu.tsinghua.thutickets.entity.User;
-import org.springframework.web.client.RestTemplate;
 
 
 @RestController
