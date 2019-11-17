@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorate="~{layout}">
+
+<head>
+    <title>Login</title>
+</head>
+
+<body>
+    <h1 layout:fragment="head">Login</h1>
+    <h1 layout:fragment="leadText">Please login first</h1>
+    <p layout:fragment="leadMessage">Please login to continue.</p>
+    <div layout:fragment="content">
+        <form method="post" th:action="@{/admin/login}" enctype="multipart/form-data">
+            <p class="lead">Please input your user name and password to login.</p>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+            </div>
+
+            <button type="submit" class="btn btn-primary">提交</button>
+        </form>
+    </div>
+</body>
+
+</html>

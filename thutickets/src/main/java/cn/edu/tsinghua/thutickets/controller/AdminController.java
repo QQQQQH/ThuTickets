@@ -24,7 +24,7 @@ public class AdminController {
 
     @GetMapping("/login")
     public String getLoginPage() {
-        return "index";
+        return "login";
     }
 
     @PostMapping("/login")
@@ -35,11 +35,11 @@ public class AdminController {
         System.out.println(password);
         if (service.checkAdmin(name, password)) {
             map.put("message", "登录成功");
-            return "index";
+            return "login";
         }
         else {
             map.put("message", "密码错误");
-            return "index";
+            return "login";
         }
 
     }
