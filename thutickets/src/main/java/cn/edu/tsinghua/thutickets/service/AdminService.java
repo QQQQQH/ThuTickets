@@ -1,8 +1,10 @@
 package cn.edu.tsinghua.thutickets.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface AdminService {
     boolean checkAdmin(String name, String password);
+    public boolean uploadEvent(String title, String date,
+                               String time, String text,
+                               MultipartFile img);
 };

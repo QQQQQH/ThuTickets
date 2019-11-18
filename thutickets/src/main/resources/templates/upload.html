@@ -11,7 +11,7 @@
     <h1 layout:fragment="leadText">Please upload</h1>
     <p layout:fragment="leadMessage">Please upload to continue.</p>
     <div layout:fragment="content">
-        <form method="POST" th:action="@{/admin/upload}" enctype="multipart/form-data">
+        <form method="post" th:action="@{/admin/upload}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">标题</label>
                 <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题">

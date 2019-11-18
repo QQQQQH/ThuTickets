@@ -44,8 +44,9 @@
     </div>
 </div>
 
-<div class="alert alert-warning" th:text="${message}" th:if="${not #strings.isEmpty(message)}">
-</div>
+<div class="alert alert-success" th:text="${msgSuccess}" th:if="${not #strings.isEmpty(msgSuccess)}"></div>
+<div class="alert alert-warning" th:text="${msgWarning}" th:if="${not #strings.isEmpty(msgWarning)}"></div>
+<div class="alert alert-danger" th:text="${msgError}" th:if="${not #strings.isEmpty(msgError)}"></div>
 
 <div layout:fragment="content" class="container">
     content

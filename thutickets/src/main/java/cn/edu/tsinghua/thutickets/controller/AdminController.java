@@ -1,5 +1,6 @@
 package cn.edu.tsinghua.thutickets.controller;
 
+import cn.edu.tsinghua.thutickets.dao.UserMapper;
 import cn.edu.tsinghua.thutickets.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -15,11 +18,16 @@ import java.util.Map;
 public class AdminController {
 
     @Autowired
-    AdminService service;
+    private AdminService service;
 
     @RequestMapping("")
+    public String _() {
+        return "redirect:/admin/index";
+    }
+
+    @RequestMapping("/index")
     public String index() {
-        return "redirect:/admin/login";
+        return "index";
     }
 
     @GetMapping("/login")
@@ -27,20 +35,39 @@ public class AdminController {
         return "login";
     }
 
+    @GetMapping("/upload")
+    public String getUploadPage() { return "upload"; }
+
     @PostMapping("/login")
-    public String login(@RequestParam(value = "name", required = false) String name,
+    public String login(@RequestParam(value = "username", required = false) String username,
                         @RequestParam(value = "password", required = false) String password,
-                        Map<String, Object> map) {
-        System.out.println(name);
-        System.out.println(password);
-        if (service.checkAdmin(name, password)) {
-            map.put("message", "登录成功");
-            return "login";
+                        Map<String, Object> map,
+                        HttpSession session) {
+        if (service.checkAdmin(username, password)) {
+            session.setAttribute("username", "admin");
+            return "redirect:/admin/index";
         }
         else {
-            map.put("message", "密码错误");
+            session.setAttribute("username", "");
+            map.put("msgError", "密码错误");
             return "login";
         }
+    }
 
+    @PostMapping("/upload")
+    public String upload(@RequestParam(value = "title", required = false) String title,
+                         @RequestParam(value = "date", required = false) String date,
+                         @RequestParam(value = "time", required = false) String time,
+                         @RequestParam(value = "text", required = false) String text,
+                         @RequestParam(value = "inputImg", required = false) MultipartFile inputImg,
+                         Map<String, Object> map) {
+        if (service.uploadEvent(title, date, time, text, inputImg)) {
+            map.put("msgSuccess", "上传成功");
+            return "upload";
+        }
+        else {
+            map.put("msgError", "上传失败");
+            return "upload";
+        }
     }
 }
