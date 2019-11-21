@@ -5,3 +5,9 @@
 <head>
     <title>Index</title>
 </head>
+
+<body>
+<div layout:fragment="content">
+    <p th:text="${eventsPage.getRecords().get(1).getCreateTime()}">
+</div>
+</body>

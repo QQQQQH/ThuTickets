@@ -3,6 +3,9 @@ package cn.edu.tsinghua.thutickets.service.impl;
 import cn.edu.tsinghua.thutickets.dao.EventMapper;
 import cn.edu.tsinghua.thutickets.service.AdminService;
 import cn.edu.tsinghua.thutickets.entity.Event;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,15 +52,25 @@ public class AdminServiceImpl implements AdminService {
                 e.printStackTrace();
                 return false;
             }
-            event.setImg_path(path);
+            event.setImgPath(path);
         }
         event.setEventid(eventid);
         event.setTitle(title);
         event.setDate(date);
         event.setTime(time);
         event.setText(text);
-        event.setCreate_time(new Date());
+        event.setCreateTime(new Date());
         eventMapper.insert(event);
         return true;
+    }
+
+    @Override
+    public IPage<Event> listEvents(int pageIndex) {
+        QueryWrapper<Event> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("eventid");
+        Page<Event> page = new Page<>(pageIndex, 5);
+
+        IPage<Event> iPage = eventMapper.selectPage(page, queryWrapper);
+        return iPage;
     }
 };

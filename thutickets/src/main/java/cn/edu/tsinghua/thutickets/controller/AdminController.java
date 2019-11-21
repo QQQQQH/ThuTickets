@@ -1,13 +1,12 @@
 package cn.edu.tsinghua.thutickets.controller;
 
-import cn.edu.tsinghua.thutickets.dao.UserMapper;
+import cn.edu.tsinghua.thutickets.entity.Event;
 import cn.edu.tsinghua.thutickets.service.AdminService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -35,8 +34,16 @@ public class AdminController {
         return "login";
     }
 
-    @GetMapping("/upload")
+    @GetMapping("/events/upload")
     public String getUploadPage() { return "upload"; }
+
+    @GetMapping("/events/list")
+    public String eventsList(@RequestParam(value = "page", required = false) int pageIndex, Model model) {
+        IPage<Event> eventsPage = service.listEvents(pageIndex);
+        model.addAttribute("eventsPage", eventsPage);
+        return "index";
+    }
+
 
     @PostMapping("/login")
     public String login(@RequestParam(value = "username", required = false) String username,
@@ -54,8 +61,8 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/upload")
-    public String upload(@RequestParam(value = "title", required = false) String title,
+    @PostMapping("/events/upload")
+    public String eventsUpload(@RequestParam(value = "title", required = false) String title,
                          @RequestParam(value = "date", required = false) String date,
                          @RequestParam(value = "time", required = false) String time,
                          @RequestParam(value = "text", required = false) String text,
