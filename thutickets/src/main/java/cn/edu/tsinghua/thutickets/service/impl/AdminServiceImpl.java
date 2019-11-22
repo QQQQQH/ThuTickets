@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -59,7 +60,7 @@ public class AdminServiceImpl implements AdminService {
         event.setDate(date);
         event.setTime(time);
         event.setText(text);
-        event.setCreateTime(new Date());
+        event.setCreateTime(new Timestamp(new Date().getTime()));
         eventMapper.insert(event);
         return true;
     }

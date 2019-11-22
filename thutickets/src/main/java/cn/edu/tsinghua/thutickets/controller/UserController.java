@@ -1,5 +1,6 @@
 package cn.edu.tsinghua.thutickets.controller;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
@@ -93,7 +94,7 @@ public class UserController {
         if(isNewUser) {
             user = new User();
             user.setOpenid(openid);
-            user.setCreateTime(new Date());
+            user.setCreateTime(new Timestamp(new Date().getTime()));
         }
 
         user.setSessionKey(sessionKey);
@@ -104,7 +105,7 @@ public class UserController {
         user.setProvince(province);
         user.setCountry(country);
         user.setAvatarUrl(avatarUrl);
-        user.setLastVisitTime(new Date());
+        user.setLastVisitTime(new Timestamp(new Date().getTime()));
 
         if(isNewUser) {
             this.userMapper.insert(user);

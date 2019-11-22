@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -30,8 +31,8 @@ public class User {
     private String avatarUrl;
     // private Date create_time;
     @TableField(value = "create_time", exist = true)
-    private Date createTime;
+    private Timestamp createTime;
     // private Date last_visit_time;
     @TableField(value = "last_visit_time", exist = true)
-    private Date lastVisitTime;
+    private Timestamp lastVisitTime;
 }

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -20,7 +21,7 @@ public class Event {
     @TableField(value = "img_path", exist = true)
     private String imgPath;
     @TableField(value = "create_time", exist = true)
-    private Date createTime;
+    private Timestamp createTime;
 
     public String getImgPath() {
         System.out.println(eventid);
