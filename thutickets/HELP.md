@@ -48,6 +48,11 @@ PRIMARY KEY (`eventid`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '活动信息' ROW_FORMAT = Dynamic;
 ```
 
+如果需要彻底删除表（以user为例）：
+```sql
+drop table user;
+```
+
 ## IDEA配置
 在IDEA中用打开`ThuTickets/thutickets`文件夹，右击项目名称选择`maven->Reimport`可以自动导入依赖的包。
 

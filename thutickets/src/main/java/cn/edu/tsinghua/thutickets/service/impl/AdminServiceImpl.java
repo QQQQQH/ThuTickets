@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Service("AdminService")
 public class AdminServiceImpl implements AdminService {
-    private String localPath = "/Users/myosotis/Documents/GitHub/ThuTickets/thutickets/images/";
+    private String localPath = "D:\\THU\\2019-2020_Autumn\\4-2 Software Engineering\\hw\\final\\ThuTickets\\thutickets\\images\\";
     private String imgPath = "~/images/";
 
     @Autowired
@@ -69,7 +69,7 @@ public class AdminServiceImpl implements AdminService {
     public IPage<Event> listEvents(int pageIndex) {
         QueryWrapper<Event> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByAsc("eventid");
-        Page<Event> page = new Page<>(pageIndex, 5);
+        Page<Event> page = new Page<>(pageIndex, 2);
 
         IPage<Event> iPage = eventMapper.selectPage(page, queryWrapper);
         return iPage;
