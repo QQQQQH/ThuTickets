@@ -1,23 +1,23 @@
 .playlist{
-  text-align: center;
-  display:flex;
-  height: 20%;
-  width: 100%;
-  background-color:#f0f0f0;
+ display:flex;                    
+ justify-content: space-between;       
+  background-color:white;
+  margin-top: 12rpx
 }
 
-poster.imge{
-  height: 10rpx;
-  width:20%;
+.imge{
+  height:300px;
+  width:200px;
+   border-radius:10%
 }
 
-.info{
-  flex:1;
+.title{
+  display: 1;
 }
-.infobutton{
-    height: 40px;
+.detailBtn{
+    height: 500px;
   width:100px;
   position: absolute;
   right: 0rpx;
-  top: 200rpx;
+  top: 100rpx;
 }

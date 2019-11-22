@@ -43,5 +43,24 @@ Page({
     console.log(this.data.imgList)
   },
 
+  bindId: function () {
+      // 若姓名和学号不为空
+      wx.request({
+        url: '',
+        method: 'GET',
+        data: {
+        },
+        success: res => {
+          console.log(res)
+        },
+        fail: function (error) {
+          //调用服务端登录接口失败
+          console.log(error);
+        }
+      })
+      
+    }
+
+
   
 })

@@ -36,6 +36,14 @@ height: 50px;
   top: 0rpx;
 
 }
+.todaycomment{
+ display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+    background-color: white;
+}
 
 
  /* .u-wrp-bnr {

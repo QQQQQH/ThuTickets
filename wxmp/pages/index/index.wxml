@@ -14,7 +14,7 @@
     </block>
   </swiper>
 </view>
-  <text>今日推荐</text>
+  <text class='todaycomment'>今日推荐</text>
 
 <block wx:for='{{imgList}}' wx:key='{{index}}'>
   <view>
