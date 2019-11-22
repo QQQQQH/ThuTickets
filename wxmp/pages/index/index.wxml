@@ -7,7 +7,7 @@
   </view>
 
   <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <block wx:for="{{imgUrls}}" wx:key="unique">
+    <block wx:for="{{imgPath}}" wx:key="unique">
       <swiper-item>
         <image src="{{item}}" class="slide-image" />
       </swiper-item>
@@ -16,7 +16,7 @@
 </view>
   <text class='todaycomment'>今日推荐</text>
 
-<block wx:for='{{imgList}}' wx:key='{{index}}'>
+<block wx:for='{{eventList}}' wx:key='{{index}}'>
   <view>
     <template is='imgTmp' data='{{...item}}'/>
   </view>
