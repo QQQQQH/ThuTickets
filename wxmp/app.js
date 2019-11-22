@@ -43,7 +43,7 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         console.log(res.code)
         wx.request({
-          url: 'http://localhost:8080/user/login',
+          url: 'http://localhost:8000/user/login',
           method: 'POST',
           header: {
             'content-type': 'application/x-www-form-urlencoded'

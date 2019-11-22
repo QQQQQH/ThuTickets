@@ -34,7 +34,7 @@ Page({
   onShow: function() {
     if (app.globalData.token != null) {
       wx.request({
-        url: 'http://localhost:8080/user/verifcation',
+        url: 'http://localhost:8000/user/verifcation',
         method: 'POST',
         header: {
           'content-type': 'application/x-www-form-urlencoded'

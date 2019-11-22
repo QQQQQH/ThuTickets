@@ -21,8 +21,8 @@ public class ThuticketsApplicationTests {
     public void contextLoads() {
         User user = new User();
         user.setOpenid("hahaha");
-        user.setSession_key("131");
-        user.setStatus_key("121");
+        user.setSessionKey("131");
+        user.setStatusKey("121");
         userMapper.insert(user);
     }
 

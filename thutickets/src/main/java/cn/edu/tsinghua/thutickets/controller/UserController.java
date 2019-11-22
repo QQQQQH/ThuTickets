@@ -1,5 +1,6 @@
 package cn.edu.tsinghua.thutickets.controller;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
@@ -44,8 +45,8 @@ public class UserController {
 
         JSONObject rawDataJson = JSON.parseObject(rawData);
         JSONObject idJson = JSON.parseObject(res);
-        String status_key = this.updateUserInfo(idJson, rawDataJson);
-        return Result.buildOK(status_key);
+        String statusKey = this.updateUserInfo(idJson, rawDataJson);
+        return Result.buildOK(statusKey);
     }
 
     @PostMapping("/user/verification")
@@ -76,9 +77,9 @@ public class UserController {
 
     private String updateUserInfo(JSONObject idJson, JSONObject rawDataJson) {
         String openid = idJson.getString("openid");
-        String session_key = idJson.getString("session_key");
+        String sessionKey = idJson.getString("session_key");
 
-        String status_key = UUID.randomUUID().toString();
+        String statusKey = UUID.randomUUID().toString();
 
         String nickName = rawDataJson.getString("nickName");
         String gender = rawDataJson.getString("gender");
@@ -93,18 +94,18 @@ public class UserController {
         if(isNewUser) {
             user = new User();
             user.setOpenid(openid);
-            user.setCreate_time(new Date());
+            user.setCreateTime(new Timestamp(new Date().getTime()));
         }
 
-        user.setSession_key(session_key);
-        user.setStatus_key(status_key);
-        user.setNick_name(nickName);
+        user.setSessionKey(sessionKey);
+        user.setStatusKey(statusKey);
+        user.setNickName(nickName);
         user.setGender(Integer.parseInt(gender));
         user.setLanguage(language);
         user.setProvince(province);
         user.setCountry(country);
-        user.setAvatar_url(avatarUrl);
-        user.setLast_visit_time(new Date());
+        user.setAvatarUrl(avatarUrl);
+        user.setLastVisitTime(new Timestamp(new Date().getTime()));
 
         if(isNewUser) {
             this.userMapper.insert(user);
@@ -112,7 +113,7 @@ public class UserController {
         else {
             this.userMapper.updateById(user);
         }
-        return status_key;
+        return statusKey;
     }
 
 
