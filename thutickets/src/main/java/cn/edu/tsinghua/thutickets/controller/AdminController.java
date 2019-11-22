@@ -41,7 +41,7 @@ public class AdminController {
     public String eventsList(@RequestParam(value = "page", required = false) int pageIndex, Model model) {
         IPage<Event> eventsPage = service.listEvents(pageIndex);
         model.addAttribute("eventsPage", eventsPage);
-        eventsPage.getRecords().get(0).getDate();
+        eventsPage.getRecords().isEmpty();
         return "eventList";
     }
 
