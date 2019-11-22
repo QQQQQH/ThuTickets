@@ -65,7 +65,6 @@ public class UserController {
             //身份验证验证成功
             String card = JSON.parseObject(studentInfo.getString("user")).getString("card");
             System.out.println(card);
-
         }
 
         else {
@@ -86,15 +85,11 @@ public class UserController {
             String temp = img.replace("~", "");
             e.setImgPath(temp);
         }
-        String json_str = JSON.toJSON(eventList).toString();
-        StringBuilder temp = new StringBuilder(json_str);
-        temp.setCharAt(0, '{');
-        temp.setCharAt(temp.length() - 1, '}');
-        json_str = temp.toString();
+        Object json = JSON.toJSON(eventList);
         System.out.println("json string:");
-        System.out.println(json_str);
+        System.out.println(json);
 
-        return Result.buildOK(json_str);
+        return Result.buildOK(json);
     }
 
     private String updateUserInfo(JSONObject idJson, JSONObject rawDataJson) {
@@ -137,5 +132,4 @@ public class UserController {
         }
         return statusKey;
     }
-
 }
