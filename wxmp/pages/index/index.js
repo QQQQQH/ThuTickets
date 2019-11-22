@@ -23,16 +23,16 @@ Page({
   onLoad: function (options) {
     for (let i = 0; i < 3; ++i) {
       wx.request({
-        url: 'https://img.xjh.me/random_img.php',
+        url: 'localhost:8000/user/events',
         headers: {
           'Content-Type': 'application/json'
         },
+        method: 'GET',
         data: {
-          return: 'json',
-          type: 'bg',
-          ctype: 'acg'
+          
         },
         success: res => {
+          console.log(res)
           let img = 'imgList[' + i + '].img'
           this.setData({
             [img]: res.data.img,
@@ -43,21 +43,19 @@ Page({
     console.log(this.data.imgList)
   },
 
-  bindId: function () {
-      // 若姓名和学号不为空
-      wx.request({
-        url: '',
-        method: 'GET',
-        data: {
-        },
-        success: res => {
-          console.log(res)
-        },
-        fail: function (error) {
-          //调用服务端登录接口失败
-          console.log(error);
-        }
-      })
+  GetEvent: function () {
+
+      // wx.request({
+      //   url: '/user/events',
+      //   method: 'GET',
+      //   success: res => {
+      //     console.log(res)
+      //   },
+      //   fail: function (error) {
+      //     //调用服务端登录接口失败
+      //     console.log(error);
+      //   }
+      // })
       
     }
 
