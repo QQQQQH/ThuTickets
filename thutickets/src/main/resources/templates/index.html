@@ -8,6 +8,8 @@
 
 <body>
 <div layout:fragment="content">
-    <p th:text="${eventsPage.getRecords().get(1).getCreateTime()}">
+    <p th:text="${eventsPage.getRecords().get(1).getCreateTime()}"></p>
+    <p th:text="${eventsPage.getRecords().get(1).getImgPath()}"></p>
+    <img th:src="${eventsPage.getRecords().get(1).getImgPath()}">
 </div>
 </body>
