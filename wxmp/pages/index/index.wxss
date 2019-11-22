@@ -1,11 +1,60 @@
-/**index.wxss**/
-
+@import '/pages/template/imgTmp.wxss';
 page{
-  height: 100%;
+  height:100%;
+}
+.slide-image{
+  width: 100%;
+    display:flex;
+  flex-direction: column;
 }
 
-.pageContainer{
-  display: flex;
+.root{
+  display:flex;
   flex-direction: column;
-  align-items: center;
+  height:33%;
+  background-color:#f0f0f0; 
 }
+
+
+.searchtab{
+height: 50px;
+  flex-direction: row;
+  background-color: rgb(230, 36, 36);
+}
+.searchinput{
+  background-color: white;
+  width:500rpx;
+  position:absolute;
+  top:25rpx;
+  left:30rpx;
+}
+.searchbutton{
+  height: 50px;
+  width:100px;
+  position: absolute;
+  right: 0rpx;
+  top: 0rpx;
+
+}
+
+
+ /* .u-wrp-bnr {
+  width: 100%;
+  height: 200rpx;
+  display: block;
+  position: relative;
+  top: 100rpx;
+  background: #f0f0f0;
+}
+.u-img-slide {
+  width: 100%;
+  height: inherit;
+}
+
+.list.inner{
+  display: flex;
+}
+.list.inner.item{
+  width:10px;
+  height: 10px;
+}  */

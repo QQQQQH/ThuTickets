@@ -1,5 +1,23 @@
 <!--index.wxml-->
+<import src="/pages/template/imgTmp.wxml" />
+<view class="root">
+  <view class="searchtab">
+    <input class="searchinput" placeholder="搜你想要的" />
+    <button class="searchbutton">搜索</button>
+  </view>
 
-<view class='pageContainer'>
-  <text>这是主页</text>
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{imgUrls}}" wx:key="unique">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" />
+      </swiper-item>
+    </block>
+  </swiper>
 </view>
+  <text>今日推荐</text>
+
+<block wx:for='{{imgList}}' wx:key='{{index}}'>
+  <view>
+    <template is='imgTmp' data='{{...item}}'/>
+  </view>
+</block>

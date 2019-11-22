@@ -1,0 +1,15 @@
+<view class="root">
+
+
+  <view class="list">
+    <view class="inner">
+      <view class="item">
+        <image src="../../images/tabbar/index.png"></image>
+        <text>喵</text>
+        <button type="defalut" bindtap="jumpBtn">抢票</button>
+      </view>
+
+    </view>
+  </view>
+
+</view>

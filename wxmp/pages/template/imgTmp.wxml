@@ -1,0 +1,16 @@
+<template name="imgTmp">
+    <!-- <view class="item"> -->
+  <!-- <view class="playlist1"> 
+    <view class="poster"> -->
+      <!-- <image src="{{img}}" ></image> -->
+ <!-- <image src="{{img}}" ></image> -->
+  <view class="playlist"> 
+      <image src="{{img}}" class="imge" ></image>
+    <view class="info">
+      <text>你好</text>
+       <button type="defalut" bindtap="jumpBtn">详情</button>
+    </view>
+  </view>
+
+</template>
+

@@ -1,0 +1,23 @@
+.playlist{
+  text-align: center;
+  display:flex;
+  height: 20%;
+  width: 100%;
+  background-color:#f0f0f0;
+}
+
+poster.imge{
+  height: 10rpx;
+  width:20%;
+}
+
+.info{
+  flex:1;
+}
+.infobutton{
+    height: 40px;
+  width:100px;
+  position: absolute;
+  right: 0rpx;
+  top: 200rpx;
+}
