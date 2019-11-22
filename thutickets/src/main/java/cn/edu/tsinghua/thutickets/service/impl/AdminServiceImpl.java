@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Service("AdminService")
 public class AdminServiceImpl implements AdminService {
-    private String localPath = "/Users/myosotis/Documents/GitHub/ThuTickets/thutickets/images/";
+    private String localPath = "D:\\NewProject\\ThuTickets\\thutickets\\images\\"; //
     private String imgPath = "~/images/";
 
     @Autowired
