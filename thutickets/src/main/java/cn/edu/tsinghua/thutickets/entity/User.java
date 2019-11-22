@@ -20,6 +20,7 @@ public class User {
     @TableField(value = "status_key", exist = true)
     private String statusKey;
     // private String nick_name;
+    private String studentid;
     @TableField(value = "nick_name", exist = true)
     private String nickName;
     private Integer gender;
