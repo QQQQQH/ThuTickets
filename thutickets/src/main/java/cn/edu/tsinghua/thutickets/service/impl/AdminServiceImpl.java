@@ -18,8 +18,8 @@ import java.util.UUID;
 
 @Service("AdminService")
 public class AdminServiceImpl implements AdminService {
-
-    private String imgPath = "/Users/myosotis/Documents/GitHub/ThuTickets/thutickets/images/";
+    private String localPath = "/Users/myosotis/Documents/GitHub/ThuTickets/thutickets/images/";
+    private String imgPath = "~/images/";
 
     @Autowired
     private EventMapper eventMapper;
@@ -41,7 +41,7 @@ public class AdminServiceImpl implements AdminService {
         if (sepIndex != -1) {
             String suffix = filename.substring(sepIndex);
             filename = eventid+suffix;
-            String path = imgPath+filename;
+            String path = localPath+filename;
             File file = new File(path);
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
@@ -53,7 +53,7 @@ public class AdminServiceImpl implements AdminService {
                 e.printStackTrace();
                 return false;
             }
-            event.setImgPath(path);
+            event.setImgPath(imgPath+filename);
         }
         event.setEventid(eventid);
         event.setTitle(title);

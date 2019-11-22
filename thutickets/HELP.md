@@ -54,5 +54,8 @@ PRIMARY KEY (`eventid`) USING BTREE
 依赖包主要有以下（通过以上操作已经安装好）：
 Mybatis-Plus（用于将实体类映射到数据库中的数据项）、lombok（用于实体类中简化代码）、MySQL驱动、SpringBoot依赖包等。
 
+### 访问静态资源
+请将cn.edu.tsinghua.thutickets.configuration.WebAppConfig中addResourceHandler方法下addResourceLocations改为本机的绝对路径（记得前面必须有"file:"）。
+
 ## 运行
 在IDEA中找到`src/main/java/cn.edu.tsinghua.thutickets/ThuticketsApplication`，右击该文件点击`run 'ThuticketsApplication'`启动服务器（端口8080，可在`src/main/resources/application.properties`中修改）。

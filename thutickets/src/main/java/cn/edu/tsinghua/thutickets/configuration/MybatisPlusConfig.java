@@ -11,8 +11,8 @@ import java.util.Properties;
 
 @EnableTransactionManagement
 @Configuration
-@MapperScan("com.swnote.*.dao.*")
-
+// @MapperScan("com.swnote.*.dao.*")
+@MapperScan("cn.edu.tsinghua.thutickets.dao")
 public class MybatisPlusConfig {
 
     @Bean
