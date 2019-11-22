@@ -21,44 +21,61 @@ Page({
     })
   },
   onLoad: function (options) {
-    for (let i = 0; i < 3; ++i) {
-      wx.request({
-        url: 'localhost:8000/user/events',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'GET',
-        data: {
-          
-        },
-        success: res => {
-          console.log(res)
-          let img = 'imgList[' + i + '].img'
-          this.setData({
-            [img]: res.data.img,
-          })
-        }
-      })
-    }
+    wx.request({
+      url: 'http://localhost:8000/user/events',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      success: res => {
+        console.log(res)
+        let img = 'imgList[' + i + '].img'
+        this.setData({
+          [img]: res.data.data.imgPath,
+        })
+      },
+      fail: function (error) {
+        //调用服务端登录接口失败
+        console.log(error);
+      }
+    })
+    
+      // wx.request({
+      //   url: 'https://img.xjh.me/random_img.php',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   data: {
+      //     return: 'json',
+      //     type: 'bg',
+      //     ctype: 'acg'
+      //   },
+      //   success: res => {
+      //     let img = 'imgList[' + i + '].img'
+      //     this.setData({
+      //       [img]: res.data.data.imgPath,
+      //     })
+      //   }
+      // })
+
     console.log(this.data.imgList)
   },
 
+
   GetEvent: function () {
 
-      // wx.request({
-      //   url: '/user/events',
-      //   method: 'GET',
-      //   success: res => {
-      //     console.log(res)
-      //   },
-      //   fail: function (error) {
-      //     //调用服务端登录接口失败
-      //     console.log(error);
-      //   }
-      // })
-      
-    }
+    wx.request({
+      url: '/user/events',
+      method: 'GET',
+      success: res => {
+        console.log(res)
+      },
+      fail: function (error) {
+        //调用服务端登录接口失败
+        console.log(error);
+      }
+    })
 
-
+  }
   
 })
