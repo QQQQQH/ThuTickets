@@ -2,7 +2,13 @@
 
 
 ## 建立数据库
-在MySQL中登录账号：root，密码：12345678。用以下命令建立数据库：
+在MySQL中登录账号：root，密码：12345678。
+
+登录数据库：
+```sql
+mysql -u root -p
+```
+用以下命令建立数据库：
 ```sql
 CREATE DATABASE thutickets;
 ```
