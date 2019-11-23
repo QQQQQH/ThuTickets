@@ -19,11 +19,11 @@ public class ThuticketsApplicationTests {
     private UserMapper userMapper;
     @Test
     public void contextLoads() {
-        User user = new User();
-        user.setOpenid("hahaha");
-        user.setSessionKey("131");
-        user.setStatusKey("121");
-        userMapper.insert(user);
+//        User user = new User();
+//        user.setOpenid("hahaha");
+//        user.setSessionKey("131");
+//        user.setStatusKey("121");
+//        userMapper.insert(user);
     }
 
 }

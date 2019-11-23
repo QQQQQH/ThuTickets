@@ -9,16 +9,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebAppConfig implements WebMvcConfigurer {
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new LoginHandlerInterceptor())
-//                .addPathPatterns("/admin/**")
-//                .excludePathPatterns("/admin/login");
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginHandlerInterceptor())
+                .addPathPatterns("/admin/**")
+                .excludePathPatterns("/admin/login");
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")
-                .addResourceLocations("file:D:\\NewProject\\ThuTickets\\thutickets\\images\\");
+                .addResourceLocations("file:/home/ubuntu/thutickets/images/");
     }
 }
