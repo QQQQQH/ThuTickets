@@ -24,7 +24,7 @@ Page({
   onLoad: function(options) {
 
     wx.request({
-      url: 'http://183.173.152.189:8000/user/events',
+      url: 'http://140.143.129.182:80/user/events',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -36,9 +36,9 @@ Page({
         })
         console.log(this.data.eventList)
         for (let i = 0; i < this.data.eventList.length; i++) {
-          console.log('http://183.173.152.189:8000' + this.data.eventList[i].imgPath)
+          // console.log('140.143.129.182' + this.data.eventList[i].imgPath)
           let s = 'eventList[' + i + '].imgPath'
-          let path = 'http://183.173.152.189:8000' + this.data.eventList[i].imgPath
+          let path = 'http://140.143.129' + this.data.eventList[i].imgPath
           this.setData({
             [s]:path
           })
