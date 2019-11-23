@@ -1,5 +1,3 @@
-//me.js
-//获取应用实例
 const app = getApp()
 
 Page({
@@ -33,8 +31,9 @@ Page({
 
   onShow: function() {
     if (app.globalData.token != null) {
+      let url = app.globalData.serverIp + '/user/verifcation'
       wx.request({
-        url: 'http://localhost:8000/user/verifcation',
+        url: url,
         method: 'POST',
         header: {
           'content-type': 'application/x-www-form-urlencoded'

@@ -5,8 +5,7 @@
   <view class='textbox'>
     <text>时间\n</text>
     <text>地点\n</text>
-    <text>演员\n</text>
-    <text>描述</text>
+    <text>简介\n</text>
     <button type="defalut" bindtap="jumpBtn" class='goodbutton' hover-class="hover">抢票</button>
   </view>
 

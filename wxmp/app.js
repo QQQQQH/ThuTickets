@@ -1,6 +1,6 @@
 //app.js
 App({
-  onLaunch: function () {
+  onLaunch: function() {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -32,18 +32,19 @@ App({
     })
   },
 
-  onShow: function (options) {
+  onShow: function(options) {
     this.globalData.token = options.referrerInfo.extraData
   },
 
-  login: function () {
+  login: function() {
     // 登录
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         console.log(res.code)
+        let url = this.globalData.serverIp + '/user/login'
         wx.request({
-          url: 'http://140.143.129.182:80/user/login',
+          url: url,
           method: 'POST',
           header: {
             'content-type': 'application/x-www-form-urlencoded'
@@ -67,19 +68,15 @@ App({
               console.log('服务器异常');
             }
           },
-          fail: function (error) {
+          fail: function(error) {
             //调用服务端登录接口失败
             console.log(error);
           }
         })
       }
     })
-
-
-
-
-
   },
+
   globalData: {
     userInfo: null,
     rawData: null, //用户非敏感信息
@@ -87,6 +84,6 @@ App({
     encrypteData: null, //用户敏感信息
     iv: null, //解密算法的向量
     token: null,
-
+    serverIp: 'http://140.143.129.182:80'
   }
 })

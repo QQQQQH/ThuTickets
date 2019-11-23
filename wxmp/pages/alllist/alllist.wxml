@@ -1,7 +1,7 @@
 <!--pages/alllist/alllist.wxml-->
 <view class="root">
   <view class="searchtab">
-    <input class="searchinput" placeholder="搜你想要的"/> 
+    <input class="searchinput" placeholder="搜索"/> 
     <button class="searchbutton">搜索</button>
     </view>
 <!--电影列表-->

@@ -1,9 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs",
     "pages/me/me",
-    "pages/bindId/bindId",
     "pages/alllist/alllist",
     "pages/wallet/wallet",
     "pages/detail/detail",

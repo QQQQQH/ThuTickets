@@ -1,9 +1,0 @@
-<!--pages/bindId/bindId.wxml-->
-
-<view class="pageContainer">
-  <view class="input">
-    <input class="inputName" type="text" placeholder="请输入姓名" bindinput="inputName" />
-    <input class="inputId" type="number" placeholder="请输入学号" bindinput="inputId" />
-  </view>
-  <button bindtap="popConfirm" class="btnBind">确认绑定</button>
-</view>

@@ -7,21 +7,21 @@
   </view>
 
   <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <block wx:for="{{imgUrls}}" wx:key="unique">
+    <block wx:for="{{eventList}}" wx:key="unique">
       <swiper-item>
-        <image src="{{item}}" class="slide-image" />
+        <image wx:if='{{gotEventList}}' src="{{item.imgPath}}" class="slide-image" />
       </swiper-item>
     </block>
   </swiper>
 </view>
 
- <view class="text">
-        <view class="line_flag"></view>
-        <text>近期活动</text>
-    </view>
+<view class="text">
+  <view class="line_flag"></view>
+  <text>近期活动</text>
+</view>
 
-<block wx:for='{{eventList}}' wx:key='{{index}}'>
+<block wx:if='{{gotEventList}}' wx:for='{{eventList}}' wx:key='{{index}}'>
   <view>
-    <template is='imgTmp' data='{{...item}}'/>
+    <template is='imgTmp' data='{{...item}}' />
   </view>
 </block>

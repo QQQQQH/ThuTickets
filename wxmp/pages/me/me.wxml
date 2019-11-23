@@ -1,6 +1,6 @@
 <!--pages/me/me.wxml-->
 <view class="pageContainer">
-  <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="handleClickGetUserInfo"> 登录 </button>
+  <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="handleClickGetUserInfo"> 获取头像 </button>
   <block wx:else>
     <image bindtap="bindViewTap" class="userInfoAvatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
     <text class="userInfoNickName">{{userInfo.nickName}}</text>
