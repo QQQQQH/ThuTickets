@@ -7,14 +7,18 @@
   </view>
 
   <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <block wx:for="{{imgPath}}" wx:key="unique">
+    <block wx:for="{{imgUrls}}" wx:key="unique">
       <swiper-item>
         <image src="{{item}}" class="slide-image" />
       </swiper-item>
     </block>
   </swiper>
 </view>
-  <text class='todaycomment'>今日推荐</text>
+
+ <view class="text">
+        <view class="line_flag"></view>
+        <text>近期活动</text>
+    </view>
 
 <block wx:for='{{eventList}}' wx:key='{{index}}'>
   <view>
