@@ -17,7 +17,7 @@
 
  <view class="text">
         <view class="line_flag"></view>
-        <text>正在上映</text>
+        <text>近期活动</text>
     </view>
 
 <block wx:for='{{eventList}}' wx:key='{{index}}'>
