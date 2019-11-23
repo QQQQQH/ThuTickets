@@ -46,7 +46,7 @@ Page({
     } else {
       // 若姓名和学号不为空
       wx.request({
-        url: 'http://localhost:8080/bindId',
+        url: 'http://183.173.152.189:8000/bindId',
         method: 'POST',
         data: {
           name:this.data.name,

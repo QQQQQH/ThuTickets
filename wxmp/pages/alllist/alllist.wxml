@@ -1,0 +1,17 @@
+<!--pages/alllist/alllist.wxml-->
+<view class="root">
+  <view class="searchtab">
+    <input class="searchinput" placeholder="搜你想要的"/> 
+    <button class="searchbutton">搜索</button>
+    </view>
+<!--电影列表-->
+  <view class="playlist1"> 
+    <view class="poster">
+      <image src="../../images/tabbar/index.png" class="poster"></image>
+    </view>
+    <view class="info">
+      <text>你好</text>
+       <button type="defalut" bindtap="jumpBtn">详情</button>
+    </view>
+  </view>
+</view>

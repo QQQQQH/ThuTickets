@@ -1,0 +1,14 @@
+<template name="imgTmp">
+  <view class="playlist">
+    <image src="{{imgPath}}" class="imge"></image>
+    <view class="title">
+      <text>内容</text>
+          <button type="defalut " bindtap="jumpBtn " >详情</button>
+    </view>
+  </view>
+</template>
+
+    <!-- <view class=" info ">
+      <text>你好</text>
+      <button type="defalut " bindtap="jumpBtn " class="detailBtn>详情</button>
+    </view> -->

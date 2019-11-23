@@ -1,22 +1,21 @@
 package cn.edu.tsinghua.thutickets.controller;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
+import cn.edu.tsinghua.thutickets.entity.Event;
+import com.alibaba.fastjson.JSONArray;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+
 
 import cn.edu.tsinghua.thutickets.common.HttpClientUtil;
 import cn.edu.tsinghua.thutickets.common.Result;
 import cn.edu.tsinghua.thutickets.dao.UserMapper;
+import cn.edu.tsinghua.thutickets.dao.EventMapper;
 import cn.edu.tsinghua.thutickets.entity.User;
 
 
@@ -26,6 +25,8 @@ public class UserController {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private EventMapper eventMapper;
 
     @PostMapping("/login")
     public Result login(@RequestParam(value = "code", required = false) String code,
@@ -64,7 +65,6 @@ public class UserController {
             //身份验证验证成功
             String card = JSON.parseObject(studentInfo.getString("user")).getString("card");
             System.out.println(card);
-
         }
 
         else {
@@ -73,6 +73,23 @@ public class UserController {
         }*/
         String card = "";
         return Result.buildOK(card);
+    }
+
+    @GetMapping("/events")
+    private Result eventInfo() {
+        QueryWrapper<Event> queryWrapper = new QueryWrapper<>();
+        List<Event> eventList = eventMapper.selectList(queryWrapper);
+        for (int i = 0; i < eventList.size(); i++) {
+            Event e = eventList.get(i);
+            String img = e.getImgPath();
+            String temp = img.replace("~", "");
+            e.setImgPath(temp);
+        }
+        Object json = JSON.toJSON(eventList);
+        System.out.println("json string:");
+        System.out.println(json);
+
+        return Result.buildOK(json);
     }
 
     private String updateUserInfo(JSONObject idJson, JSONObject rawDataJson) {
@@ -115,6 +132,4 @@ public class UserController {
         }
         return statusKey;
     }
-
-
 }

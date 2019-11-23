@@ -3,7 +3,13 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/me/me",
-    "pages/bindId/bindId"
+    "pages/bindId/bindId",
+    "pages/alllist/alllist",
+    "pages/wallet/wallet",
+    "pages/detail/detail",
+    "pages/tickets/tickets",
+    "pages/withdraw/withdraw",
+    "pages/template/imgTmp"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -17,6 +23,18 @@
         "text": "主页",
         "iconPath": "/images/tabbar/index.png",
         "selectedIconPath": "/images/tabbar/index_selected.png"
+      },
+      {
+        "pagePath": "pages/alllist/alllist",
+        "text": "全部",
+        "iconPath": "/images/tabbar/me.png",
+        "selectedIconPath": "/images/tabbar/me_selected.png"
+      },
+      {
+        "pagePath": "pages/wallet/wallet",
+        "text": "票夹",
+        "iconPath": "/images/tabbar/me.png",
+        "selectedIconPath": "/images/tabbar/me_selected.png"
       },
       {
         "pagePath": "pages/me/me",

@@ -1,0 +1,13 @@
+<view class='imagesize'>
+  <image src="../../images/tabbar/index.png" class='in-image'></image>
+</view>
+<view class='totaltext'>
+  <view class='textbox'>
+    <text>时间\n</text>
+    <text>地点\n</text>
+    <text>演员\n</text>
+    <text>描述</text>
+    <button type="defalut" bindtap="jumpBtn" class='goodbutton' hover-class="hover">抢票</button>
+  </view>
+
+</view>
