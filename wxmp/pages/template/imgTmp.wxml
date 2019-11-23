@@ -1,14 +1,32 @@
 <template name="imgTmp">
-  <view class="playlist">
-    <image src="{{imgPath}}" class="imge"></image>
-    <view class="title">
-      <text>内容</text>
-          <button type="defalut " bindtap="jumpBtn " >详情</button>
-    </view>
-  </view>
+            <view class="item">
+<image src="{{imgPath}}" class="imge"></image>
+            <view class="meta">
+                <text class="title">{{text}}</text>
+                <text class="sub-title">{{item.subject.original_title}}({{item.year}})</text>
+            </view>
+
+               <button type="defalut" bindtap="jumpBtn" class='goodbutton' hover-class="hover">抢票</button>
+        </view>
 </template>
+
 
     <!-- <view class=" info ">
       <text>你好</text>
       <button type="defalut " bindtap="jumpBtn " class="detailBtn>详情</button>
     </view> -->
+
+            <view class="item">
+            <image class="poster" src="{{item.images.small}}"></image>
+            <view class="meta">
+                <text class="title">{{item.title}}</text>
+                <text class="sub-title">{{item.subject.original_title}}({{item.year}})</text>
+                <view class="artists">
+                    <text wx:for="{{item.directors}}">{{item.name}}</text>
+                </view>
+            </view>
+            <view class="rating">
+                <text>{{item.rating.average}}</text>
+                <view class="buy">购票</view>
+            </view>
+        </view>
