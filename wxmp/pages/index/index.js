@@ -10,10 +10,11 @@ Page({
     duration: 500,
   },
 
-  jumpBtn: function(options) {
+  jumpBtn: function(e) {
     wx.navigateTo({
-      url: '../detail/detail'
+      url: '../detail/detail?id=' + e.currentTarget.dataset.eventid
     })
+    console.log(e)
   },
 
   onLoad: function(options) {

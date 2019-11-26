@@ -4,6 +4,6 @@
     <view class="meta">
       <text class="title">{{text}}</text>
     </view>
-    <button type="defalut" bindtap="jumpBtn" class='goodbutton' hover-class="hover">抢票</button>
+    <button type="defalut" bindtap="jumpBtn" data-eventid="{{eventid}}" class='goodbutton' hover-class="hover">抢票</button>
   </view>
 </template>
