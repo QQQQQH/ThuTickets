@@ -1,5 +1,5 @@
-<view class='imagesize'>
-  <image src="../../images/tabbar/index.png" class='in-image'></image>
+<!-- <view class='imagesize'>
+  <image src="http://140.143.129.182/images/e3bec6ba-0d48-4db7-bffc-c1dc2cf14edc.jpg" class='in-image'></image>
 </view>
 <view class='totaltext'>
   <view class='textbox'>
@@ -9,4 +9,29 @@
     <button type="defalut" bindtap="jumpBtn" class='goodbutton' hover-class="hover">抢票</button>
   </view>
 
+</view> -->
+<view class="container">
+  <view class="session-poster session-poster-spacing">
+    <image class="poster" src="http://140.143.129.182/images/e3bec6ba-0d48-4db7-bffc-c1dc2cf14edc.jpg"
+     bindtap="bindPoster" data-poster-url="{{movie.images.large}}"></image>
+  </view>
+  <view class="summary-session">
+    <view class="movie-summary">
+      <text class="name">演出名</text>
+      <text class="subtype">开始时间</text>
+    </view>
+  </view>
+  
+  <view class="desc-session">
+    <text class="title">简介</text>
+    <block>
+      <view class="desc-wrapper">
+        <text class="desc-content {{showAllDesc ? 'desc-content-auto' : 'desc-content-3line'}}">我我我呜呜呜呜呜呜呜呜无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无我打打问号</text>
+        <block wx:if="{{!showAllDesc}}">
+          <text class="extension" bindtap="handleExtensiontap">展开</text>
+        </block>
+      </view>
+    </block>
+  </view>
+      <button type="defalut" bindtap="jumpBtn" class='goodbutton' hover-class="hover">抢票</button>
 </view>
