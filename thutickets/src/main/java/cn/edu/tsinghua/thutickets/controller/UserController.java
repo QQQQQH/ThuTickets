@@ -138,7 +138,14 @@ public class UserController {
         return Result.buildOK("使用成功！");
 
     }
-
+    @GetMapping("/events/image")
+    private Result imageInfo(@RequestParam(value = "id", required = false) String id) {
+        Event e = this.eventMapper.selectById(id);
+        String img = e.getImgPath();
+        String temp = img.replace("~", "");
+        e.setImgPath(temp);
+        return Result.buildOK(e);
+    }
     private String updateUserInfo(JSONObject idJson, JSONObject rawDataJson) {
         String openid = idJson.getString("openid");
         String sessionKey = idJson.getString("session_key");
