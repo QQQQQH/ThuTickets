@@ -98,13 +98,14 @@ public class UserController {
 
     @GetMapping("/buy-ticket")
     private Result buyTicket(@RequestParam(value = "eventid", required = true) String eventid,
-                             @RequestParam(value = "studentid", required = true) String studentid) {
+                             @RequestParam(value = "skey", required = true) String skey) {
         Event event = eventMapper.selectById(eventid);
+        System.out.println("eventid:"+event.getEventid());
         if (event == null) {
             // 活动id错误
             return Result.buildError("活动不存在！");
         }
-        User user = userMapper.selectOne(new QueryWrapper<User>().eq("studentid",studentid));
+        User user = userMapper.selectOne(new QueryWrapper<User>().eq("status_key", skey));
         if (user == null) {
             // 用户学生号错误
             return Result.buildError("学号错误！");
@@ -112,7 +113,7 @@ public class UserController {
         Ticket ticket = new Ticket();
         ticket.setTicketid(UUID.randomUUID().toString());
         ticket.setEventid(eventid);
-        ticket.setStudentid(studentid);
+        ticket.setStudentid(user.getStudentid());
         ticket.setValidation(1);
         ticket.setCreateTime(new Timestamp(new Date().getTime()));
         ticketMapper.insert(ticket);
