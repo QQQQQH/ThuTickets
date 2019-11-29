@@ -17,7 +17,7 @@
   <view class="summary-session">
     <view class="movie-summary">
       <text class="name">{{eventInfo.title}}</text>
-      <text class="subtype">活动开始时间{{eventInfo.id}}</text>
+      <text class="subtype">活动开始时间：{{eventInfo.date}}</text>
     </view>
   </view>
   
@@ -25,10 +25,10 @@
     <text class="title">简介</text>
     <block>
       <view class="desc-wrapper">
-        <text class="desc-content {{ellipsis?'ellipsis':'unellipsis'}}">{{eventinfo.text}}</text>
-          <text class="extension" bindtap="handleExtensiontap">展开</text>
+        <text class="desc-content {{ellipsis?'ellipsis':'unellipsis'}}">{{eventInfo.text}}</text>
+          <text class="extension" bindtap="ellipsis">展开</text>
       </view>
     </block>
   </view>
-      <button type="defalut" bindtap="jumpBtn" class='goodbutton' hover-class="hover">抢票</button>
+      <button type="defalut" bindtap='is_touch' class='goodbutton' hover-class="hover">抢票</button>
 </view>

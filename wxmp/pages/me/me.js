@@ -43,7 +43,7 @@ Page({
         },
         success: res => {
           if (res.data.status == 200) {
-            wx.setStorageSync('skey', res.data);
+            wx.getStorageSync('skey', res.data);
             wx.showToast({
               title: '绑定成功',
               duration: 1000

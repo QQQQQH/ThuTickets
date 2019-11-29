@@ -1,92 +1,90 @@
 const app = getApp()
 Page({
 
+
   /**
    * 页面的初始数据
    */
   data: {
     ellipsis: true, // 文字是否收起，默认收起
     //活动详情
-    eventInfo:null
+    eventInfo: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-      let picId=options.id;
+  onLoad: function(options) {
+    let picId = options.id;
     this.getCurrenteventInfo(picId);
   },
-getCurrenteventInfo(picId)
-{
-  let that=this;
-  wx.request({
-    url: app.globalData.serverIp+'/user/events/image?id='+picId,
-    success(res) {
-       console.log(res);
+  getCurrenteventInfo(picId) {
+    let that = this;
+    wx.request({
+      url: app.globalData.serverIp + '/user/events/image?id=' + picId,
+      success(res) {
         that.setData({
-          eventInfo:res.data.data
-          
+          eventInfo: res.data.data
+
         })
         let s = 'eventInfo.imgPath'
         let path = app.globalData.serverIp + that.data.eventInfo.imgPath
-        console.log(path)
         that.setData({
           [s]: path
         })
-    }
-  })
-},
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
   //简介展开
-  ellipsis: function () {
+  ellipsis: function() {
     var value = !this.data.ellipsis;
     this.setData({
       ellipsis: value
@@ -98,4 +96,23 @@ getCurrenteventInfo(picId)
   //     url: '/pages/detail/de' 
   //   });
   // },
+  is_touch: function(e) {
+    var value = wx.getStorageSync('skey').data
+    let that = this
+    wx.request({
+      url: app.globalData.serverIp + '/user/buy-ticket?skey=' + value + '&eventid=' + that.data.eventInfo.eventid,
+      method: 'GET',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+
+      success: res => {
+        console.log(res);
+        
+      },
+      fail: function(error) {
+        console.log('failed');
+      }
+    })
+  },
 })
