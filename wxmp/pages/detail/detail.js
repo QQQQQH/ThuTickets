@@ -1,39 +1,42 @@
-// pages/detail/detail.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    ellipsis: true, // 文字是否收起，默认收起
     //活动详情
-    picInfo:null
+    eventInfo:null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //  console.log(options)
-    let picId=options.id+'.jpg';
-    // this.getCurrentpic(picId);
+      let picId=options.id;
+    this.getCurrenteventInfo(picId);
   },
-// getCurrentpic(picId)
-// {
-//   let that=this;
-//   wx.request({
-//     url: 'http://140.143.129.182:80/images/?id='+picId,
-//     success(res) {
-//       console.log(res);
-//       if(res.data.code==0)
-//       {
-//         that.setData({
-//           picInfo:res.data.data.picInfo
-//         })
-
-//       }
-//     }
-//   })
-// },
+getCurrenteventInfo(picId)
+{
+  let that=this;
+  wx.request({
+    url: app.globalData.serverIp+'/user/events/image?id='+picId,
+    success(res) {
+       console.log(res);
+        that.setData({
+          eventInfo:res.data.data
+          
+        })
+        let s = 'eventInfo.imgPath'
+        let path = app.globalData.serverIp + that.data.eventInfo.imgPath
+        console.log(path)
+        that.setData({
+          [s]: path
+        })
+    }
+  })
+},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -83,16 +86,16 @@ Page({
 
   },
   //简介展开
-    handleExtensiontap: function (event) {
-    var readyData = {
-      "showAllDesc": true
-    };
-    this.setData(readyData);
+  ellipsis: function () {
+    var value = !this.data.ellipsis;
+    this.setData({
+      ellipsis: value
+    })
   },
-  bindPoster: function (event) {
-    var posterUrl = event.currentTarget.dataset.posterUrl;
-    wx.navigateTo({
-      url: '/pages/detail/de' 
-    });
-  },
+  // bindPoster: function (event) {
+  //   var posterUrl = event.currentTarget.dataset.posterUrl;
+  //   wx.navigateTo({
+  //     url: '/pages/detail/de' 
+  //   });
+  // },
 })

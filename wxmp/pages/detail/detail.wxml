@@ -12,13 +12,12 @@
 </view> -->
 <view class="container">
   <view class="session-poster session-poster-spacing">
-    <image class="poster" src="http://140.143.129.182/images/e3bec6ba-0d48-4db7-bffc-c1dc2cf14edc.jpg"
-     bindtap="bindPoster" data-poster-url="{{movie.images.large}}"></image>
+    <image class="poster" src="{{eventInfo.imgPath}}">"</image>
   </view>
   <view class="summary-session">
     <view class="movie-summary">
-      <text class="name">演出名</text>
-      <text class="subtype">开始时间</text>
+      <text class="name">{{eventInfo.title}}</text>
+      <text class="subtype">活动开始时间{{eventInfo.id}}</text>
     </view>
   </view>
   
@@ -26,10 +25,8 @@
     <text class="title">简介</text>
     <block>
       <view class="desc-wrapper">
-        <text class="desc-content {{showAllDesc ? 'desc-content-auto' : 'desc-content-3line'}}">我我我呜呜呜呜呜呜呜呜无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无无我打打问号</text>
-        <block wx:if="{{!showAllDesc}}">
+        <text class="desc-content {{ellipsis?'ellipsis':'unellipsis'}}">{{eventinfo.text}}</text>
           <text class="extension" bindtap="handleExtensiontap">展开</text>
-        </block>
       </view>
     </block>
   </view>
