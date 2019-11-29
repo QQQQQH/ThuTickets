@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import lombok.Data;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Data
 @TableName("event")
