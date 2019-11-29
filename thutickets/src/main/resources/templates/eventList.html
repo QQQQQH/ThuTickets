@@ -1,119 +1,177 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-    layout:decorate="~{layout}">
+      layout:decorate="~{layout}">
 
 <head>
     <title>Index</title>
 </head>
 
 <body>
-    <h1 layout:fragment="head">Events</h1>
-    <h1 layout:fragment="leadText">Event List</h1>
-    <p layout:fragment="leadMessage">List of the events.</p>
-    <div th:unless='${eventsPage.getRecords().isEmpty()}' layout:fragment="content">
-        <nav>
-            <ul class='pagination'>
-                <li th:class="${eventsPage.getCurrent() == 1}?'page-item disabled' : 'page-item'"><a class='page-link'
-                        th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-1}}">
-                        <span>&laquo;</span>
-                    </a></li>
-                <li class='page-item' th:if="${eventsPage.getCurrent()-2 >= 1}"><a class='page-link'
-                        th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-2}}"
-                        th:text="${eventsPage.getCurrent()-2}"></a></li>
-                <li class='page-item' th:if="${eventsPage.getCurrent()-1 >= 1}"><a class='page-link'
-                        th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-1}}"
-                        th:text="${eventsPage.getCurrent()-1}"></a></li>
+<h1 layout:fragment="head">Events</h1>
+<h1 layout:fragment="leadText">Event List</h1>
+<p layout:fragment="leadMessage">List of the events.</p>
+<div th:unless='${eventsPage.getRecords().isEmpty()}' layout:fragment="content">
+    <nav>
+        <!--    上翻页-->
+        <ul class='pagination'>
+            <li th:class="${eventsPage.getCurrent() == 1}?'page-item disabled' : 'page-item'">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-1}}">
+                    <span>&laquo;</span>
+                </a>
+            </li>
+            <li class='page-item' th:if="${eventsPage.getCurrent()-2 >= 1}">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-2}}"
+                   th:text="${eventsPage.getCurrent()-2}">
+                </a>
+            </li>
+            <li class='page-item' th:if="${eventsPage.getCurrent()-1 >= 1}">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-1}}"
+                   th:text="${eventsPage.getCurrent()-1}">
+                </a>
+            </li>
+            <li class="page-item active">
+                <a class='page-link' href="#"
+                   th:text="${eventsPage.getCurrent()}">
+                </a>
+            </li>
 
-                <li class="page-item active"><a class='page-link' href="#" th:text="${eventsPage.getCurrent()}"></a>
-                </li>
+            <li class='page-item' th:if="${eventsPage.getCurrent()+1 <= eventsPage.getPages()}">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+1}}"
+                   th:text="${eventsPage.getCurrent()+1}">
+                </a>
+            </li>
+            <li class='page-item' th:if="${eventsPage.getCurrent()+2 <= eventsPage.getPages()}">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+2}}"
+                   th:text="${eventsPage.getCurrent()+2}">
+                </a>
+            </li>
+            <li th:class="${eventsPage.getCurrent() == eventsPage.getPages()}?'page-item disabled' : 'page-item'">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+1}}">
+                    <span>&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<!--    <table class="table"-->
+<!--           data-sortable="true"-->
+<!--           data-toggle="table"-->
+<!--           data-toolbar=".toolbar">-->
+<!--        &lt;!&ndash;        活动表格&ndash;&gt;-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">#</th>-->
+<!--            <th scope="col">Title</th>-->
+<!--            <th scope="col">Date</th>-->
+<!--            <th scope="col">Time</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="event,eventStat : ${eventsPage.getRecords()}">-->
+<!--            <td th:text="${eventStat.count}"></td>-->
+<!--            <td th:text="${event.getTitle()}"></td>-->
+<!--            <td th:text="${event.getDate()}"></td>-->
+<!--            <td th:text="${event.getTime()}"></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+    <table id="table">
+        <thead>
+        <tr>
+            <th data-field="title" data-sortable="true">Title</th>
+            <th data-field="date" data-sortable="true">Date</th>
+            <th data-field="time" data-sortable="true">Time</th>
+        </tr>
+        </thead>
+    </table>
 
-                <li class='page-item' th:if="${eventsPage.getCurrent()+1 <= eventsPage.getPages()}"><a class='page-link'
-                        th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+1}}"
-                        th:text="${eventsPage.getCurrent()+1}"></a></li>
-                <li class='page-item' th:if="${eventsPage.getCurrent()+2 <= eventsPage.getPages()}"><a class='page-link'
-                        th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+2}}"
-                        th:text="${eventsPage.getCurrent()+2}"></a></li>
-                <li th:class="${eventsPage.getCurrent() == eventsPage.getPages()}?'page-item disabled' : 'page-item'"><a
-                        class='page-link' th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+1}}">
-                        <span>&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!--&lt;!&ndash;        表格&ndash;&gt;-->
-        <!--        <table class="table">-->
-        <!--            <thead>-->
-        <!--            <tr>-->
-        <!--                <th scope="col">#</th>-->
-        <!--                <th scope="col">Title</th>-->
-        <!--                <th scope="col">Image</th>-->
-        <!--                <th scope="col">Date</th>-->
-        <!--                <th scope="col">Time</th>-->
-        <!--            </tr>-->
-        <!--            </thead>-->
-        <!--            <tbody>-->
-        <!--            <tr  th:each="event,eventStat : ${eventsPage.getRecords()}" >-->
-        <!--                <td th:text="${eventStat.count}"></td>-->
-        <!--                <td th:text="${event.getTitle()}"></td>-->
-        <!--                <td><img th:src="@{${event.getImgPath()}}" /></td>-->
-        <!--                <td th:text="${event.getDate()}"></td>-->
-        <!--                <td th:text="${event.getTime()}"></td>-->
-        <!--            </tr>-->
-        <!--            </tbody>-->
-        <!--        </table>-->
+    <script th:inline="javascript">
+        let $table = $('#table')
+        $(function() {
+            let data = []
+            let t = [[${eventsPage.getRecords()}]]
+            t.forEach(function (event) {
+                data.push({
+                    title:event.title,
+                    date:event.date,
+                    time:event.time
+                })
+            })
+            $table.bootstrapTable({data: data})
+        })
+    </script>
 
-        <div class="card mb-3" th:each="event,eventStat : ${eventsPage.getRecords()}">
-            <!--        <div class="row no-gutters">-->
-            <!--            <div class="col-md-4">-->
-            <!--                <img th:src="@{${event.getImgPath()}}" class="card-img" alt="image">-->
-            <!--            </div>-->
-            <!--            <div class="col-md-8">-->
-            <!--                <div class="card-body">-->
-            <!--                    <h5 class="card-title" th:text="${event.getTitle()}"></h5>-->
-            <!--                    <p class="card-text" th:text="${event.getText()}"></p>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--        </div>-->
-            <div class="card">
-                <img class="card-img-top" th:src="@{${event.getImgPath()}}" alt="image">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${event.getTitle()}"></h5>
-                    <p class="card-text" th:text="${event.getText()}"></p>
-                    <a href="#" class="btn btn-primary">Details</a>
-                </div>
-            </div>
-        </div>
 
-        <nav>
-            <ul class='pagination'>
-                <li th:class="${eventsPage.getCurrent() == 1}?'page-item disabled' : 'page-item'"><a class='page-link'
-                        th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-1}}">
-                        <span>&laquo;</span>
-                    </a></li>
-                <li class='page-item' th:if="${eventsPage.getCurrent()-2 >= 1}"><a class='page-link'
-                        th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-2}}"
-                        th:text="${eventsPage.getCurrent()-2}"></a></li>
-                <li class='page-item' th:if="${eventsPage.getCurrent()-1 >= 1}"><a class='page-link'
-                        th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-1}}"
-                        th:text="${eventsPage.getCurrent()-1}"></a></li>
 
-                <li class="page-item active"><a class='page-link' href="#" th:text="${eventsPage.getCurrent()}"></a>
-                </li>
 
-                <li class='page-item' th:if="${eventsPage.getCurrent()+1 <= eventsPage.getPages()}"><a class='page-link'
-                        th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+1}}"
-                        th:text="${eventsPage.getCurrent()+1}"></a></li>
-                <li class='page-item' th:if="${eventsPage.getCurrent()+2 <= eventsPage.getPages()}"><a class='page-link'
-                        th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+2}}"
-                        th:text="${eventsPage.getCurrent()+2}"></a></li>
-                <li th:class="${eventsPage.getCurrent() == eventsPage.getPages()}?'page-item disabled' : 'page-item'"><a
-                        class='page-link' th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+1}}">
-                        <span>&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+    <!--    <div class="card mb-3" th:each="event,eventStat : ${eventsPage.getRecords()}">-->
+    <!--        &lt;!&ndash;        活动卡片&ndash;&gt;-->
+    <!--        <div class="card">-->
+    <!--            <img class="card-img-top" th:src="@{${event.getImgPath()}}" alt="image">-->
+    <!--            <div class="card-body">-->
+    <!--                <h5 class="card-title" th:text="${event.getTitle()}"></h5>-->
+    <!--                <p class="card-text" th:text="${event.getText()}"></p>-->
+    <!--                <a href="#" class="btn btn-primary">Details</a>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
-        <br>
-    </div>
+    <nav>
+        <!--    下翻页-->
+        <ul class='pagination'>
+            <li th:class="${eventsPage.getCurrent() == 1}?'page-item disabled' : 'page-item'">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-1}}">
+                    <span>&laquo;</span>
+                </a>
+            </li>
+            <li class='page-item' th:if="${eventsPage.getCurrent()-2 >= 1}">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-2}}"
+                   th:text="${eventsPage.getCurrent()-2}">
+                </a>
+            </li>
+            <li class='page-item' th:if="${eventsPage.getCurrent()-1 >= 1}">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()-1}}"
+                   th:text="${eventsPage.getCurrent()-1}">
+                </a>
+            </li>
+            <li class="page-item active">
+                <a class='page-link' href="#"
+                   th:text="${eventsPage.getCurrent()}">
+                </a>
+            </li>
+
+            <li class='page-item' th:if="${eventsPage.getCurrent()+1 <= eventsPage.getPages()}">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+1}}"
+                   th:text="${eventsPage.getCurrent()+1}">
+                </a>
+            </li>
+            <li class='page-item' th:if="${eventsPage.getCurrent()+2 <= eventsPage.getPages()}">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+2}}"
+                   th:text="${eventsPage.getCurrent()+2}">
+                </a>
+            </li>
+            <li th:class="${eventsPage.getCurrent() == eventsPage.getPages()}?'page-item disabled' : 'page-item'">
+                <a class='page-link'
+                   th:href="@{'/admin/events/list?page=' + ${eventsPage.getCurrent()+1}}">
+                    <span>&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <br>
+</div>
+
+
+
 </body>
