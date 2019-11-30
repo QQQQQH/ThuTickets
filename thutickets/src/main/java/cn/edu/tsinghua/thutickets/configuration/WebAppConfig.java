@@ -19,6 +19,7 @@ public class WebAppConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")
-                .addResourceLocations("file:/home/ubuntu/thutickets/images/");
+//                .addResourceLocations("file:/home/ubuntu/thutickets/images/");
+                .addResourceLocations("file:D:\\THU\\2019-2020_Autumn\\4-2 Software Engineering\\hw\\final\\ThuTickets\\thutickets\\images\\");
     }
 }

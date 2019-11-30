@@ -7,7 +7,7 @@
   </view>
 
   <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <block wx:for="{{eventList}}" wx:key="unique">
+    <block wx:for="{{eventList}}" wx:key="{{index}}">
       <swiper-item>
         <image wx:if='{{gotEventList}}' src="{{item.imgPath}}" class="slide-image" />
       </swiper-item>
