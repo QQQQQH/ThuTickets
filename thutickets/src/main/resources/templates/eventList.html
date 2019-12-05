@@ -11,6 +11,7 @@
 <h1 layout:fragment="leadText">Event List</h1>
 <p layout:fragment="leadMessage">List of the events.</p>
 <div th:unless='${eventsPage.getRecords().isEmpty()}' layout:fragment="content">
+
     <nav>
         <!--    上翻页-->
         <ul class='pagination'>
@@ -58,68 +59,94 @@
             </li>
         </ul>
     </nav>
-<!--    <table class="table"-->
-<!--           data-sortable="true"-->
-<!--           data-toggle="table"-->
-<!--           data-toolbar=".toolbar">-->
-<!--        &lt;!&ndash;        活动表格&ndash;&gt;-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--            <th scope="col">#</th>-->
-<!--            <th scope="col">Title</th>-->
-<!--            <th scope="col">Date</th>-->
-<!--            <th scope="col">Time</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="event,eventStat : ${eventsPage.getRecords()}">-->
-<!--            <td th:text="${eventStat.count}"></td>-->
-<!--            <td th:text="${event.getTitle()}"></td>-->
-<!--            <td th:text="${event.getDate()}"></td>-->
-<!--            <td th:text="${event.getTime()}"></td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
     <table id="table">
         <thead>
         <tr>
-            <th data-field="title" data-sortable="true">Title</th>
-            <th data-field="date" data-sortable="true">Date</th>
-            <th data-field="time" data-sortable="true">Time</th>
+            <th data-field="number" data-sortable="true">序号</th>
+            <th data-field="title" data-sortable="true">活动标题</th>
+            <th data-field="date" data-sortable="true">活动日期</th>
+            <th data-field="time" data-sortable="true">活动时间</th>
+            <th data-field="place" data-sortable="true">活动地点</th>
+            <th data-formatter="actionFormatter" data-events="operateEvents">操作</th>
         </tr>
         </thead>
     </table>
 
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">去往详情页面?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="jump()">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script th:inline="javascript">
-        let $table = $('#table')
-        $(function() {
+        let eventList = [[${eventsPage.getRecords()}]]
+        let jumpEventId
+        $(function () {
+            let $table = $('#table')
             let data = []
-            let t = [[${eventsPage.getRecords()}]]
-            t.forEach(function (event) {
+            for(i in eventList){
+                let event = eventList[i]
                 data.push({
-                    title:event.title,
-                    date:event.date,
-                    time:event.time
+                    number: i,
+                    title: event.title,
+                    date: event.date,
+                    time: event.time,
+                    place: event.place
                 })
-            })
+            }
             $table.bootstrapTable({data: data})
         })
+
+        function actionFormatter(value, row, index) {
+            return [
+                '<a class="detail" href="javascript:void(0)" title="查看">',
+                '<i class="fas fa-eye"></i>',
+                '</a>  ',
+                '<a class="edit" href="javascript:void(0)" title="编辑">',
+                '<i class="fas fa-edit"></i>',
+                '</a>  ',
+                '<a class="remove" href="javascript:void(0)" title="删除">',
+                '<i class="fas fa-trash"></i>',
+                '</a>'
+            ].join('')
+        }
+
+        function jump(){
+            location.href = '/admin/events/detail?eventid=' + jumpEventId
+        }
+
+        window.operateEvents = {
+            'click .detail': function (e, value, row, index) {
+                $('#confirmModal').modal('show')
+                jumpEventId = eventList[row.number].eventid
+            },
+            'click .edit': function (e, value, row, index) {
+                alert('You click edit action, row: ' + JSON.stringify(row))
+            },
+            'click .remove': function (e, value, row, index) {
+                alert('You click remove action, row: ' + JSON.stringify(row))
+                // $table.bootstrapTable('remove', {
+                //     field: 'number',
+                //     values: [row.number]
+                // })
+            }
+        }
     </script>
-
-
-
-
-    <!--    <div class="card mb-3" th:each="event,eventStat : ${eventsPage.getRecords()}">-->
-    <!--        &lt;!&ndash;        活动卡片&ndash;&gt;-->
-    <!--        <div class="card">-->
-    <!--            <img class="card-img-top" th:src="@{${event.getImgPath()}}" alt="image">-->
-    <!--            <div class="card-body">-->
-    <!--                <h5 class="card-title" th:text="${event.getTitle()}"></h5>-->
-    <!--                <p class="card-text" th:text="${event.getText()}"></p>-->
-    <!--                <a href="#" class="btn btn-primary">Details</a>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
 
     <nav>
         <!--    下翻页-->
@@ -171,7 +198,6 @@
 
     <br>
 </div>
-
 
 
 </body>
