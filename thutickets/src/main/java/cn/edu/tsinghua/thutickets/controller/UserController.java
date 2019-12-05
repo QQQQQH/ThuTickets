@@ -3,7 +3,9 @@ package cn.edu.tsinghua.thutickets.controller;
 import java.sql.Timestamp;
 import java.util.*;
 
+import cn.edu.tsinghua.thutickets.dao.TicketMapper;
 import cn.edu.tsinghua.thutickets.entity.Event;
+import cn.edu.tsinghua.thutickets.entity.Ticket;
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class UserController {
     private UserMapper userMapper;
     @Autowired
     private EventMapper eventMapper;
+    @Autowired
+    private TicketMapper ticketMapper;
 
     @PostMapping("/login")
     public Result login(@RequestParam(value = "code", required = false) String code,
@@ -92,10 +96,60 @@ public class UserController {
         return Result.buildOK(json);
     }
 
+    @GetMapping("/buy-ticket")
+    private Result buyTicket(@RequestParam(value = "eventid", required = true) String eventid,
+                             @RequestParam(value = "skey", required = true) String skey) {
+        Event event = eventMapper.selectById(eventid);
+        System.out.println("eventid:"+event.getEventid());
+        if (event == null) {
+            // 活动id错误
+            return Result.buildError("活动不存在！");
+        }
+        User user = userMapper.selectOne(new QueryWrapper<User>().eq("status_key", skey));
+        if (user == null) {
+            // 用户学生号错误
+            return Result.buildError("学号错误！");
+        }
+        Ticket ticket = new Ticket();
+        ticket.setTicketid(UUID.randomUUID().toString());
+        ticket.setEventid(eventid);
+        ticket.setStudentid(user.getStudentid());
+        ticket.setValidation(1);
+        ticket.setCreateTime(new Timestamp(new Date().getTime()));
+        ticketMapper.insert(ticket);
+        // 购票成功
+        return Result.buildOK(ticket.getTicketid());
+    }
+
+    @GetMapping("/use-ticket")
+    private Result useTicket(@RequestParam(value = "ticketid", required = true) String ticketid,
+                             @RequestParam(value = "eventid", required = true) String eventid,
+                             @RequestParam(value = "studentid", required = true) String studentid) {
+        Ticket ticket = ticketMapper.selectOne(new QueryWrapper<Ticket>().eq("ticketid", ticketid));
+        if (!ticket.getEventid().equals(eventid)) {
+            // 活动id不匹配
+            return Result.buildError("活动id不匹配！");
+        }
+        if (!ticket.getStudentid().equals(studentid)) {
+            // 用户学生号不匹配
+            return Result.buildError("学生号不匹配！");
+        }
+        ticket.setValidation(0);
+        // 使用成功
+        return Result.buildOK("使用成功！");
+
+    }
+    @GetMapping("/events/image")
+    private Result imageInfo(@RequestParam(value = "id", required = false) String id) {
+        Event e = this.eventMapper.selectById(id);
+        String img = e.getImgPath();
+        String temp = img.replace("~", "");
+        e.setImgPath(temp);
+        return Result.buildOK(e);
+    }
     private String updateUserInfo(JSONObject idJson, JSONObject rawDataJson) {
         String openid = idJson.getString("openid");
         String sessionKey = idJson.getString("session_key");
-
         String statusKey = UUID.randomUUID().toString();
 
         String nickName = rawDataJson.getString("nickName");
