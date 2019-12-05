@@ -22,15 +22,6 @@ public class Event {
     @TableField(value = "create_time", exist = true)
     private Timestamp createTime;
 
-    public String getImgPath() {
-        System.out.println(eventid);
-        System.out.println(title);
-        System.out.println(date);
-        System.out.println(time);
-        System.out.println(text);
-        System.out.println(imgPath);
-        System.out.println(createTime);
-        return imgPath;
-    }
+    public String getImgPath() { return imgPath; }
     public String getCreateTime() { return createTime.toString(); }
 }
