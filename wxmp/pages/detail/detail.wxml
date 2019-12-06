@@ -11,13 +11,14 @@
 
 </view> -->
 <view class="container">
-  <view class="session-poster session-poster-spacing">
-    <image class="poster" src="{{eventInfo.imgPath}}">"</image>
+  <view>
+    <image class="poster" src="{{eventInfo.imgPath}}" mode='aspectFit'>"</image>
   </view>
   <view class="summary-session">
     <view class="movie-summary">
       <text class="name">{{eventInfo.title}}</text>
-      <text class="subtype">活动开始时间：{{eventInfo.date}}</text>
+      <text class="subtype">活动开始时间：{{eventInfo.date}} {{eventInfo.time}}</text>
+      <text class="subtype">抢票开始时间：{{eventInfo.date}} {{eventInfo.time}}</text>
     </view>
   </view>
   
