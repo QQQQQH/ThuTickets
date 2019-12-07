@@ -18,18 +18,17 @@ Page({
     let picId = options.id;
     this.getCurrenteventInfo(picId);
   },
+
   getCurrenteventInfo(picId) {
-    let that = this;
     wx.request({
       url: app.globalData.serverIp + '/user/events/image?id=' + picId,
-      success(res) {
-        that.setData({
+      success: res => {
+        this.setData({
           eventInfo: res.data.data
-
         })
         let s = 'eventInfo.imgPath'
-        let path = app.globalData.serverIp + that.data.eventInfo.imgPath
-        that.setData({
+        let path = app.globalData.serverIp + this.data.eventInfo.imgPath
+        this.setData({
           [s]: path
         })
       }
@@ -97,10 +96,9 @@ Page({
   //   });
   // },
   is_touch: function(e) {
-    var value = wx.getStorageSync('skey').data
-    let that = this
+    let skey = wx.getStorageSync('skey').data // 登录态
     wx.request({
-      url: app.globalData.serverIp + '/user/buy-ticket?skey=' + value + '&eventid=' + that.data.eventInfo.eventid,
+      url: app.globalData.serverIp + '/user/buy-ticket?skey=' + value + '&eventid=' + this.data.eventInfo.eventid,
       method: 'GET',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
@@ -108,7 +106,6 @@ Page({
 
       success: res => {
         console.log(res);
-        
       },
       fail: function(error) {
         console.log('failed');

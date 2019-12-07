@@ -18,9 +18,8 @@ Page({
   },
 
   onLoad: function(options) {
-    let url = app.globalData.serverIp + '/user/events'
     wx.request({
-      url: url,
+      url: app.globalData.serverIp + '/user/events',
       headers: {
         'Content-Type': 'application/json'
       },

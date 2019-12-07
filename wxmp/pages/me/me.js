@@ -31,15 +31,14 @@ Page({
 
   onShow: function() {
     if (app.globalData.token != null) {
-      let url = app.globalData.serverIp + '/user/verifcation'
       wx.request({
-        url: url,
+        url: app.globalData.serverIp + '/user/verifcation',
         method: 'POST',
         header: {
           'content-type': 'application/x-www-form-urlencoded'
         },
         data: {
-          token: app.globalData.token
+          token: app.globalData.token //助教小程序返回的身份验证token
         },
         success: res => {
           if (res.data.status == 200) {

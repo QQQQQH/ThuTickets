@@ -39,9 +39,8 @@ App({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         console.log('wx.login success, res.code = ' + res.code)
-        let url = this.globalData.serverIp + '/user/login'
         wx.request({
-          url: url,
+          url: this.globalData.serverIp + '/user/login',
           method: 'POST',
           header: {
             'content-type': 'application/x-www-form-urlencoded'
