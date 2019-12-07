@@ -1,10 +1,6 @@
 //app.js
 App({
   onLaunch: function() {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -33,6 +29,7 @@ App({
   },
 
   onShow: function(options) {
+    // 获取清华身份验证小程序返回的token
     this.globalData.token = options.referrerInfo.extraData
   },
 
@@ -41,10 +38,9 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log(res.code)
-        let url = this.globalData.serverIp + '/user/login'
+        console.log('wx.login success, res.code = ' + res.code)
         wx.request({
-          url: url,
+          url: this.globalData.serverIp + '/user/login',
           method: 'POST',
           header: {
             'content-type': 'application/x-www-form-urlencoded'
@@ -55,7 +51,6 @@ App({
             signature: this.globalData.signature, //签名
             encrypteData: this.globalData.encryptedData, //用户敏感信息
             iv: this.globalData.iv //解密算法的向量
-
           },
           success: res => {
             if (res.data.status == 200) {
@@ -64,8 +59,12 @@ App({
                 title: '登录成功',
                 duration: 1000
               })
+              console.log('login success, skey = ' + wx.getStorageSync('skey'))
             } else {
-              console.log('服务器异常');
+              wx.showToast({
+                title: '登录失败',
+                duration: 1000
+              })
             }
           },
           fail: function(error) {
@@ -84,7 +83,6 @@ App({
     encrypteData: null, //用户敏感信息
     iv: null, //解密算法的向量
     token: null,
-    
-    serverIp: 'http://183.173.157.105:8000'
+    serverIp: 'http://140.143.129.182:80'
   }
 })

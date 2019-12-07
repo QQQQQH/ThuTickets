@@ -18,9 +18,8 @@ Page({
   },
 
   onLoad: function(options) {
-    let url = app.globalData.serverIp + '/user/events'
     wx.request({
-      url: url,
+      url: app.globalData.serverIp + '/user/events',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -28,7 +27,7 @@ Page({
         this.setData({
           eventList: res.data.data,
         })
-        // console.log(this.data.eventList)
+        console.log(this.data.eventList)
         for (let i = 0; i < this.data.eventList.length; i++) {
           let s = 'eventList[' + i + '].imgPath'
           let path = app.globalData.serverIp + this.data.eventList[i].imgPath
@@ -40,8 +39,6 @@ Page({
           gotEventList: true
         })
         console.log(this.data.eventList)
-
-
       }
     })
   },
