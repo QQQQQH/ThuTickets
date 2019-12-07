@@ -27,7 +27,6 @@ Page({
         this.setData({
           eventList: res.data.data,
         })
-        console.log(this.data.eventList)
         for (let i = 0; i < this.data.eventList.length; i++) {
           let s = 'eventList[' + i + '].imgPath'
           let path = app.globalData.serverIp + this.data.eventList[i].imgPath
@@ -38,6 +37,7 @@ Page({
         this.setData({
           gotEventList: true
         })
+        console.log('index eventList data:')
         console.log(this.data.eventList)
       }
     })

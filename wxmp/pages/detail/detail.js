@@ -15,13 +15,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    let picId = options.id;
-    this.getCurrenteventInfo(picId);
+    let eventId = options.id;
+    this.getCurrenteventInfo(eventId);
   },
 
-  getCurrenteventInfo(picId) {
+  getCurrenteventInfo(eventId) {
     wx.request({
-      url: app.globalData.serverIp + '/user/events/image?id=' + picId,
+      url: app.globalData.serverIp + '/user/events/image?id=' + eventId,
       success: res => {
         this.setData({
           eventInfo: res.data.data
@@ -98,16 +98,31 @@ Page({
   is_touch: function(e) {
     let skey = wx.getStorageSync('skey').data // 登录态
     wx.request({
-      url: app.globalData.serverIp + '/user/buy-ticket?skey=' + value + '&eventid=' + this.data.eventInfo.eventid,
+      url: app.globalData.serverIp + '/user/buy-ticket?skey=' + skey + '&eventid=' + this.data.eventInfo.eventid,
       method: 'GET',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-
       success: res => {
         console.log(res);
+        if (res.data.status == 200) {
+          wx.showToast({
+            title: '抢票成功',
+            duration: 1000
+          })
+        }
+        else{
+          wx.showToast({
+            title: '抢票失败',
+            duration: 1000
+          })
+        }
       },
       fail: function(error) {
+        wx.showToast({
+          title: '服务器连接错误',
+          duration: 1000
+        })
         console.log('failed');
       }
     })

@@ -4,8 +4,6 @@
     "pages/me/me",
     "pages/wallet/wallet",
     "pages/detail/detail",
-    "pages/tickets/tickets",
-    "pages/withdraw/withdraw",
     "pages/template/imgTmp"
   ],
   "window": {
