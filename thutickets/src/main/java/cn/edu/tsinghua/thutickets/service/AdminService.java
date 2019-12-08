@@ -6,8 +6,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface AdminService {
     boolean checkAdmin(String name, String password);
-    boolean uploadEvent(String title, String date,
-                               String time, String text,
-                               MultipartFile img);
+    boolean uploadEvent(String title, String eventDate,
+                        String eventTime, String location,
+                        String purchaseDate, String purchaseTime,
+                        Integer ticketsLeft, String text,
+                        MultipartFile inputImg);
     IPage<Event> listEvents(int pageIndex);
 };

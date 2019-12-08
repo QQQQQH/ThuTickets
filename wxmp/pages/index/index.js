@@ -19,7 +19,7 @@ Page({
 
   onLoad: function(options) {
     wx.request({
-      url: app.globalData.serverIp + '/user/events',
+      url: app.globalData.serverIp + '/user/events/list',
       headers: {
         'Content-Type': 'application/json'
       },

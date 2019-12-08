@@ -17,7 +17,7 @@ import java.util.Map;
 public class AdminController {
 
     @Autowired
-    private AdminService service;
+    private AdminService adminService;
 
     @RequestMapping("")
     public String _() {
@@ -39,19 +39,18 @@ public class AdminController {
 
     @GetMapping("/events/list")
     public String eventsList(@RequestParam(value = "page", required = false) int pageIndex, Model model) {
-        IPage<Event> eventsPage = service.listEvents(pageIndex);
+        IPage<Event> eventsPage = adminService.listEvents(pageIndex);
         model.addAttribute("eventsPage", eventsPage);
         eventsPage.getSize();
         return "eventList";
     }
-
 
     @PostMapping("/login")
     public String login(@RequestParam(value = "username", required = false) String username,
                         @RequestParam(value = "password", required = false) String password,
                         Map<String, Object> map,
                         HttpSession session) {
-        if (service.checkAdmin(username, password)) {
+        if (adminService.checkAdmin(username, password)) {
             session.setAttribute("username", "admin");
             return "redirect:/admin/index";
         }
@@ -64,12 +63,18 @@ public class AdminController {
 
     @PostMapping("/events/upload")
     public String eventsUpload(@RequestParam(value = "title", required = false) String title,
-                         @RequestParam(value = "date", required = false) String date,
-                         @RequestParam(value = "time", required = false) String time,
-                         @RequestParam(value = "text", required = false) String text,
-                         @RequestParam(value = "inputImg", required = false) MultipartFile inputImg,
+                               @RequestParam(value = "eventDate", required = false) String eventDate,
+                               @RequestParam(value = "eventTime", required = false) String eventTime,
+                               @RequestParam(value = "location", required = false) String location,
+                               @RequestParam(value = "purchaseDate", required = false) String purchaseDate,
+                               @RequestParam(value = "purchaseTime", required = false) String purchaseTime,
+                               @RequestParam(value = "ticketsLeft", required = false) Integer ticketsLeft,
+                               @RequestParam(value = "text", required = false) String text,
+                               @RequestParam(value = "inputImg", required = false) MultipartFile inputImg,
                          Map<String, Object> map) {
-        if (service.uploadEvent(title, date, time, text, inputImg)) {
+        if (adminService.uploadEvent(title, eventDate, eventTime, location,
+                                     purchaseDate, purchaseTime, ticketsLeft,
+                                     text, inputImg)) {
             map.put("msgSuccess", "上传成功");
             return "upload";
         }

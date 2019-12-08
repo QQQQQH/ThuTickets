@@ -21,7 +21,7 @@ Page({
 
   getCurrenteventInfo(eventId) {
     wx.request({
-      url: app.globalData.serverIp + '/user/events/image?id=' + eventId,
+      url: app.globalData.serverIp + '/user/events/detail?eventid=' + eventId,
       success: res => {
         this.setData({
           eventInfo: res.data.data
@@ -113,7 +113,7 @@ Page({
         }
         else{
           wx.showToast({
-            title: '抢票失败',
+            title: '抢票失败，请检查是否已登录并绑定学号',
             duration: 1000
           })
         }

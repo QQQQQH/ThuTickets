@@ -16,6 +16,7 @@ public class WebAppConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/admin/login");
     }
 
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")

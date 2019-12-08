@@ -33,8 +33,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean uploadEvent(String title, String date,
-                               String time, String text,
+    public boolean uploadEvent(String title, String eventDate,
+                               String eventTime, String location,
+                               String purchaseDate, String purchaseTime,
+                               Integer ticketsLeft, String text,
                                MultipartFile inputImg) {
         Event event = new Event();
         String eventid = UUID.randomUUID().toString();
@@ -59,8 +61,12 @@ public class AdminServiceImpl implements AdminService {
         }
         event.setEventid(eventid);
         event.setTitle(title);
-        event.setDate(date);
-        event.setTime(time);
+        event.setEventDate(eventDate);
+        event.setEventTime(eventTime);
+        event.setLocation(location);
+        event.setPurchaseDate(purchaseDate);
+        event.setPurchaseTime(purchaseTime);
+        event.setTicketsLeft(ticketsLeft);
         event.setText(text);
         event.setCreateTime(new Timestamp(new Date().getTime()));
         eventMapper.insert(event);
