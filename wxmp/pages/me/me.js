@@ -32,17 +32,17 @@ Page({
   onShow: function() {
     if (app.globalData.token != null) {
       wx.request({
-        url: app.globalData.serverIp + '/user/verifcation',
+        url: app.globalData.serverIp + '/user/verify',
         method: 'POST',
         header: {
           'content-type': 'application/x-www-form-urlencoded'
         },
         data: {
-          token: app.globalData.token //助教小程序返回的身份验证token
+          token: app.globalData.token.token //助教小程序返回的身份验证token
         },
         success: res => {
+          console.log(res)
           if (res.data.status == 200) {
-            wx.getStorageSync('skey', res.data);
             wx.showToast({
               title: '绑定成功',
               duration: 1000

@@ -51,18 +51,19 @@ public class UserController {
         JSONObject rawDataJson = JSON.parseObject(rawData);
         JSONObject idJson = JSON.parseObject(res);
         String statusKey = this.updateUserInfo(idJson, rawDataJson);
+        System.out.println("statusKey: "+statusKey);
         return Result.buildOK(statusKey);
     }
 
-    @PostMapping("/user/verification")
-    public Result verification(@RequestParam(value = "token", required = false) String token) {
+    @PostMapping("/verify")
+    public Result verify(@RequestParam(value = "token", required = false) String token) {
         System.out.println("token:" + token);
         //设置请求参数
         String jsonParam = "{\"token\":" + "\"" + token + "\"}";
         //执行请求
         String res = HttpClientUtil.doPostJson("https://alumni-test.iterator-traits.com/fake-id-tsinghua-proxy/api/user/session/token", jsonParam);
-        System.out.println(res);
         JSONObject studentInfo = JSON.parseObject(res);
+        System.out.println(studentInfo);
         /*JSONObject errorInfo = JSON.parseObject(JSON.parseObject(studentInfo.getString("user")).getString("error"));
         String status = errorInfo.getString("message");
         if (status == "success") {
@@ -100,15 +101,14 @@ public class UserController {
     private Result buyTicket(@RequestParam(value = "eventid", required = true) String eventid,
                              @RequestParam(value = "skey", required = true) String skey) {
         Event event = eventMapper.selectById(eventid);
-        System.out.println("eventid:"+event.getEventid());
         if (event == null) {
             // 活动id错误
-            return Result.buildError("活动不存在！");
+            return Result.buildError("Event does not exist");
         }
         User user = userMapper.selectOne(new QueryWrapper<User>().eq("status_key", skey));
         if (user == null) {
             // 用户学生号错误
-            return Result.buildError("学号错误！");
+            return Result.buildError("Invalid user info");
         }
         Ticket ticket = new Ticket();
         ticket.setTicketid(UUID.randomUUID().toString());
@@ -128,11 +128,11 @@ public class UserController {
         Ticket ticket = ticketMapper.selectOne(new QueryWrapper<Ticket>().eq("ticketid", ticketid));
         if (!ticket.getEventid().equals(eventid)) {
             // 活动id不匹配
-            return Result.buildError("活动id不匹配！");
+            return Result.buildError("Invalid event info");
         }
         if (!ticket.getStudentid().equals(studentid)) {
             // 用户学生号不匹配
-            return Result.buildError("学生号不匹配！");
+            return Result.buildError("Invalid user info");
         }
         ticket.setValidation(0);
         // 使用成功

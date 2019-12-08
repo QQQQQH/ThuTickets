@@ -83,6 +83,7 @@ App({
     encrypteData: null, //用户敏感信息
     iv: null, //解密算法的向量
     token: null,
-    serverIp: 'http://140.143.129.182:80'
+    // serverIp: 'http://140.143.129.182:80'
+    serverIp: 'http://192.168.0.104:8000'
   }
 })
