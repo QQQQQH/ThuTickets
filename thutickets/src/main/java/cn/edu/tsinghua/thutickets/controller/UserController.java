@@ -56,28 +56,25 @@ public class UserController {
     }
 
     @PostMapping("/verify")
-    public Result verify(@RequestParam(value = "token", required = false) String token) {
-        System.out.println("token:" + token);
-        //设置请求参数
-        String jsonParam = "{\"token\":" + "\"" + token + "\"}";
-        //执行请求
-        String res = HttpClientUtil.doPostJson("https://alumni-test.iterator-traits.com/fake-id-tsinghua-proxy/api/user/session/token", jsonParam);
-        JSONObject studentInfo = JSON.parseObject(res);
-        System.out.println(studentInfo);
-        /*JSONObject errorInfo = JSON.parseObject(JSON.parseObject(studentInfo.getString("user")).getString("error"));
-        String status = errorInfo.getString("message");
-        if (status == "success") {
-            //身份验证验证成功
-            String card = JSON.parseObject(studentInfo.getString("user")).getString("card");
-            System.out.println(card);
+    public Result verify(@RequestParam(value = "skey", required = false) String skey,
+                         @RequestParam(value = "token", required = false) String token) {
+        System.out.println("skey: "+skey);
+        JSONObject requestObject = new JSONObject();
+        requestObject.put("token", token);
+        String res = HttpClientUtil.doPostJson("https://alumni-test.iterator-traits.com/fake-id-tsinghua-proxy/api/user/session/token",
+                requestObject.toString());
+        JSONObject responseObject = JSON.parseObject(res);
+        System.out.println(responseObject);
+        JSONObject responseStatusObject = JSON.parseObject(responseObject.getString("error"));
+        if (responseStatusObject.getString("message").equals("success")) {
+            JSONObject studentInfoObject = JSON.parseObject(responseObject.getString("user"));
+            String studentid = studentInfoObject.getString("card");
+            User user = userMapper.selectOne(new QueryWrapper<User>().eq("status_key", skey));
+            if (user == null) return Result.buildError("Invalid skey.");
+            user.setStudentid(studentid);
+            return Result.buildOK(studentid);
         }
-
-        else {
-            //身份验证失败
-            return Result.buildError("verification failed.");
-        }*/
-        String card = "";
-        return Result.buildOK(card);
+        else return Result.buildError("Fail to verify student identity.");
     }
 
     @GetMapping("/events")

@@ -38,6 +38,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         data: {
+          skey: wx.getStorageSync('skey').data,
           token: app.globalData.token.token //助教小程序返回的身份验证token
         },
         success: res => {
@@ -47,6 +48,7 @@ Page({
               title: '绑定成功',
               duration: 1000
             })
+            console.log(res.data.data)
           } else {
             console.log('服务器异常');
           }

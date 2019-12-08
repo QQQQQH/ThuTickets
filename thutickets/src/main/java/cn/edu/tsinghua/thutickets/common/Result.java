@@ -23,7 +23,7 @@ public class Result {
     }
 
     public static  Result buildError(Object data) {
-        return new Result(500, "error:", data);
+        return new Result(500, "ERROR", data);
     }
 }
 
