@@ -12,4 +12,5 @@ public interface AdminService {
                         Integer ticketsLeft, String text,
                         MultipartFile inputImg);
     IPage<Event> listEvents(int pageIndex);
+    Event getEvent(String eventid);
 };

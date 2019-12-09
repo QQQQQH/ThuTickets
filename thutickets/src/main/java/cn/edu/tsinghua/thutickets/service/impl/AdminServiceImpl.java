@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,10 +19,9 @@ import java.util.UUID;
 
 @Service("AdminService")
 public class AdminServiceImpl implements AdminService {
-    private String localPath = "/home/ubuntu/thutickets/images/";
-//    private String localPath = "D:\\THU\\2019-2020_Autumn\\4-2 Software Engineering\\hw\\final\\ThuTickets\\thutickets\\images\\";
-//    private String localPath = "/Users/myosotis/Documents/GitHub/Thutickets/thutickets/images/";
-    private String imgPath = "~/images/";
+
+    @Value("${img.dir}")
+    private String imgDir;
 
     @Autowired
     private EventMapper eventMapper;
@@ -45,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
         if (sepIndex != -1) {
             String suffix = filename.substring(sepIndex);
             filename = eventid+suffix;
-            String path = localPath+filename;
+            String path = imgDir+filename;
             File file = new File(path);
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
@@ -57,7 +57,8 @@ public class AdminServiceImpl implements AdminService {
                 e.printStackTrace();
                 return false;
             }
-            event.setImgPath(imgPath+filename);
+            String imgPath = "~/images/";
+            event.setImgPath(imgPath +filename);
         }
         event.setEventid(eventid);
         event.setTitle(title);
@@ -81,5 +82,12 @@ public class AdminServiceImpl implements AdminService {
 
         IPage<Event> iPage = eventMapper.selectPage(page, queryWrapper);
         return iPage;
+    }
+
+    @Override
+    public Event getEvent(String eventid) {
+        Event event = eventMapper.selectById(eventid);
+        System.out.println(event);
+        return event;
     }
 };

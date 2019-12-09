@@ -1,6 +1,7 @@
 package cn.edu.tsinghua.thutickets.configuration;
 
 import cn.edu.tsinghua.thutickets.component.LoginHandlerInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -9,6 +10,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebAppConfig implements WebMvcConfigurer {
 
+    @Value("${img.dir}")
+    private String imgDir;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginHandlerInterceptor())
@@ -16,12 +20,9 @@ public class WebAppConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/admin/login");
     }
 
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")
-                .addResourceLocations("file:/home/ubuntu/thutickets/images/");
-//                .addResourceLocations("file:D:\\THU\\2019-2020_Autumn\\4-2 Software Engineering\\hw\\final\\ThuTickets\\thutickets\\images\\");
-//                .addResourceLocations("file:/Users/myosotis/Documents/GitHub/Thutickets/thutickets/images/");
+                .addResourceLocations("file:"+imgDir);
     }
 }

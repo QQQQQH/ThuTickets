@@ -29,7 +29,4 @@ build/
 ### VS Code ###
 .vscode/
 
-### Media Files ###
-images
-
 **/.DS_Store

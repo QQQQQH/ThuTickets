@@ -41,7 +41,6 @@ public class AdminController {
     public String eventsList(@RequestParam(value = "page", required = false) int pageIndex, Model model) {
         IPage<Event> eventsPage = adminService.listEvents(pageIndex);
         model.addAttribute("eventsPage", eventsPage);
-        eventsPage.getSize();
         return "eventList";
     }
 
@@ -81,6 +80,17 @@ public class AdminController {
         else {
             map.put("msgError", "上传失败");
             return "upload";
+        }
+    }
+
+    @GetMapping("/events/detail")
+    public String getEventDetail(@RequestParam(value = "eventid", required = true) String eventid,
+                                 Map<String, Object> map) {
+        Event event = adminService.getEvent(eventid);
+        if (event != null) return "upload";
+        else {
+//            显示活动不存在
+            return "index";
         }
     }
 }

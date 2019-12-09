@@ -43,20 +43,20 @@ public class UserController {
     }
 
     @GetMapping("/events/list")
-    private Result getEventList() {
+    public Result getEventList() {
         Object eventList = userService.listEvents();
         return Result.buildOK(eventList);
     }
 
     @GetMapping("/events/detail")
-    private Result getEventDetail(@RequestParam(value = "eventid", required = true) String eventid) {
+    public Result getEventDetail(@RequestParam(value = "eventid", required = true) String eventid) {
         Event event = userService.getEvent(eventid);
         if (event != null) return Result.buildOK(event);
         else return Result.buildError("Fail to fetch event detail.");
     }
 
     @GetMapping("/buy-ticket")
-    private Result buyTicket(@RequestParam(value = "skey", required = true) String skey,
+    public Result buyTicket(@RequestParam(value = "skey", required = true) String skey,
                              @RequestParam(value = "eventid", required = true) String eventid) {
         String ticketid = userService.buyTicket(skey, eventid);
         if (ticketid != null) return Result.buildOK(ticketid);
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @GetMapping("/use-ticket")
-    private Result useTicket(@RequestParam(value = "skey", required = true) String skey,
+    public Result useTicket(@RequestParam(value = "skey", required = true) String skey,
                              @RequestParam(value = "ticketid", required = true) String ticketid,
                              @RequestParam(value = "eventid", required = true) String eventid) {
         if (userService.useTicket(skey, ticketid, eventid)) return Result.buildOK(ticketid);
@@ -72,7 +72,7 @@ public class UserController {
     }
 
     @GetMapping("/tickets/list")
-    private Result getTicketList(@RequestParam(value = "skey", required = true) String skey,
+    public Result getTicketList(@RequestParam(value = "skey", required = true) String skey,
                                  @RequestParam(value = "validation", required = false) Integer validation) {
         Object eventList = userService.listTicketEvents(skey, validation);
         if (eventList != null) return Result.buildOK(eventList);
@@ -80,10 +80,17 @@ public class UserController {
     }
 
     @GetMapping("/tickets/detail")
-    private Result getEventDetail(@RequestParam(value = "skey", required = true) String skey,
+    public Result getEventDetail(@RequestParam(value = "skey", required = true) String skey,
                                   @RequestParam(value = "ticketid", required = true) String ticketid) {
         Ticket ticket = userService.getTicket(skey, ticketid);
         if (ticket != null) return Result.buildOK(ticket);
         else return Result.buildError("Fail to fetch ticket detail.");
+    }
+
+    @GetMapping("/tickets/delete")
+    public Result deleteTicket(@RequestParam(value = "skey", required = true) String skey,
+                                @RequestParam(value = "ticketid", required = true) String ticketid) {
+        if (userService.deleteTicket(skey, ticketid)) return Result.buildOK(ticketid);
+        else return Result.buildError("Fail to delete ticket.");
     }
 }

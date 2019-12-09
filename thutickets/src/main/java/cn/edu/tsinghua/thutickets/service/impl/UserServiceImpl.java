@@ -177,7 +177,11 @@ public class UserServiceImpl implements UserService {
         List<Event> eventList = new ArrayList<>();
         for (Ticket ticket: ticketList) {
             Event event = eventMapper.selectById(ticket.getEventid());
-            if (event != null) eventList.add(event);
+            if (event != null) {
+                String modifiedPath = event.getImgPath().replace("~", "");
+                event.setImgPath(modifiedPath);
+                eventList.add(event);
+            }
         }
         return JSON.toJSON(eventList);
     }
@@ -187,5 +191,21 @@ public class UserServiceImpl implements UserService {
         User user = getUserBySkey(skey);
         if (user == null) return null;
         return ticketMapper.selectById(ticketid);
+    }
+
+    @Override
+    public boolean deleteTicket(String skey, String ticketid) {
+        User user = getUserBySkey(skey);
+        if (user == null) return false;
+
+        Ticket ticket = ticketMapper.selectById(ticketid);
+        if (ticket == null) return false;
+        ticketMapper.deleteById(ticket.getTicketid());
+        Event event = eventMapper.selectById(ticket.getEventid());
+        if (event != null) {
+            event.setTicketsLeft(event.getTicketsLeft()+1);
+            eventMapper.updateById(event);
+        }
+        return true;
     }
 };
