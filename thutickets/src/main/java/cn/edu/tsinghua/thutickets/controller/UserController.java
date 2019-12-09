@@ -74,7 +74,7 @@ public class UserController {
     @GetMapping("/tickets/list")
     private Result getTicketList(@RequestParam(value = "skey", required = true) String skey,
                                  @RequestParam(value = "validation", required = false) Integer validation) {
-        Object eventList = userService.listTickets(skey, validation);
+        Object eventList = userService.listTicketEvents(skey, validation);
         if (eventList != null) return Result.buildOK(eventList);
         else return Result.buildError("Fail to fetch ticket list.");
     }

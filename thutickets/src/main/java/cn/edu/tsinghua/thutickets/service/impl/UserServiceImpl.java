@@ -111,8 +111,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object listEvents() {
-        QueryWrapper<Event> queryWrapper = new QueryWrapper<>();
-        List<Event> eventList = eventMapper.selectList(queryWrapper);
+        List<Event> eventList = eventMapper.selectList(new QueryWrapper<>());
         for (Event event: eventList) {
             String modifiedPath = event.getImgPath().replace("~", "");
             event.setImgPath(modifiedPath);
@@ -145,8 +144,6 @@ public class UserServiceImpl implements UserService {
         ticket.setEventid(eventid);
         ticket.setStudentid(user.getStudentid());
         ticket.setValidation(1);
-        ticket.setEventDate(event.getEventDate());
-        ticket.setEventTime(event.getEventTime());
         ticket.setCreateTime(new Timestamp(new Date().getTime()));
         ticketMapper.insert(ticket);
         return ticketid;
@@ -166,12 +163,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object listTickets(String skey, Integer validation) {
+    public Object listTicketEvents(String skey, Integer validation) {
         User user = getUserBySkey(skey);
         if (user == null) return null;
 
-        List<Ticket> ticketList = ticketMapper.selectList(new QueryWrapper<Ticket>().eq("validation", validation));
-        return JSON.toJSON(ticketList);
+        List<Ticket> ticketList;
+        if (validation != 0 && validation != 1) {
+            ticketList = ticketMapper.selectList(new QueryWrapper<>());
+        }
+        else{
+            ticketList = ticketMapper.selectList(new QueryWrapper<Ticket>().eq("validation", validation));
+        }
+        List<Event> eventList = new ArrayList<>();
+        for (Ticket ticket: ticketList) {
+            Event event = eventMapper.selectById(ticket.getEventid());
+            if (event != null) eventList.add(event);
+        }
+        return JSON.toJSON(eventList);
     }
 
     @Override

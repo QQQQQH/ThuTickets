@@ -16,10 +16,6 @@ public class Ticket {
     private String eventid;
     private String studentid;
     private Integer validation;
-    @TableField(value = "event_date", exist = true)
-    private String eventDate;
-    @TableField(value = "event_time", exist = true)
-    private String eventTime;
     @TableField(value = "create_time", exist = true)
     private Timestamp createTime;
 
