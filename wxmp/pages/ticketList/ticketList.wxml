@@ -1,0 +1,6 @@
+<import src="/pages/template/ticketCard/ticketCard.wxml" />
+<block wx:if='{{gotTicketList}}' wx:for='{{ticketList}}' wx:key='{{index}}'>
+  <view>
+    <template is='ticketCard' data='{{...item}}' />
+  </view>
+</block>

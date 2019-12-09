@@ -1,0 +1,6 @@
+<import src="/pages/template/eventCard/eventCard.wxml" />
+<block wx:if='{{gotEventList}}' wx:for='{{eventList}}' wx:key='{{index}}'>
+  <view>
+    <template is='eventCard' data='{{...item}}' />
+  </view>
+</block>

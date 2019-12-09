@@ -1,10 +1,8 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/eventList/eventList",
     "pages/me/me",
-    "pages/wallet/wallet",
-    "pages/detail/detail",
-    "pages/template/imgTmp"
+    "pages/ticketList/ticketList"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -14,13 +12,13 @@
   "tabBar": {
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/eventList/eventList",
         "text": "主页",
         "iconPath": "/images/tabbar/index.png",
         "selectedIconPath": "/images/tabbar/index_selected.png"
       },
       {
-        "pagePath": "pages/wallet/wallet",
+        "pagePath": "pages/ticketList/ticketList",
         "text": "票夹",
         "iconPath": "/images/tabbar/me.png",
         "selectedIconPath": "/images/tabbar/me_selected.png"

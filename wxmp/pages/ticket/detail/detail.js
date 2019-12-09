@@ -2,18 +2,14 @@ const app = getApp()
 
 Page({
   data: {
-    fromPage: null,
     ellipsis: true, // 文字是否收起，默认收起
     eventInfo: null, // 活动详情
     ticketsLeft: false // 有余票
   },
 
-  onLoad: function(options) {
-    this.setData({
-      fromPage: options.fromPage
-    })
-    console.log('from page: ' + this.data.fromPage)
-    this.getCurrenteventInfo(options.id);
+  onLoad: function (options) {
+    let eventId = options.id;
+    this.getCurrenteventInfo(eventId);
   },
 
   getCurrenteventInfo(eventId) {
@@ -39,7 +35,7 @@ Page({
     })
   },
 
-  ellipsis: function() {
+  ellipsis: function () {
     //简介展开
     var value = !this.data.ellipsis;
     this.setData({
@@ -47,7 +43,7 @@ Page({
     })
   },
 
-  handleGetTicket: function(e) {
+  handleGetTicket: function (e) {
     wx.request({
       url: app.globalData.serverIp + '/user/buy-ticket?skey=' +
         wx.getStorageSync('skey') + '&eventid=' + this.data.eventInfo.eventid,
@@ -70,7 +66,7 @@ Page({
           })
         }
       },
-      fail: function(error) {
+      fail: function (error) {
         wx.showToast({
           icon: none,
           title: '服务器连接错误',
@@ -80,26 +76,4 @@ Page({
       }
     })
   },
-
-  handleReturnTicket: function(e) {
-    wx.showModal({
-      title: '警告',
-      content: '确认要退票吗？',
-      success: res => {
-        if (res.confirm) {
-          this.returnTicket()
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-        }
-      }
-    })
-  },
-
-  returnTicket: function() {
-    wx.showToast({
-      title: '退票成功',
-      duration: 1000
-    })
-  }
-
 })
