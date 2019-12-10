@@ -3,6 +3,7 @@ const app = getApp()
 Page({
   data: {
     eventId: null,
+    ticketId: null,
     fromPage: null,
     ellipsis: true, // 文字是否收起，默认收起
     eventInfo: null, // 活动详情
@@ -11,18 +12,19 @@ Page({
 
   onLoad: function(options) {
     this.setData({
-      eventId: options.id,
-      fromPage: options.fromPage
+      eventId: options.eventId,
+      ticketId: options.ticketId
     })
-    console.log('from page: ' + this.data.fromPage)
+    console.log('detail: eventId=' + this.data.eventId + '; ticketId=' + this.data.ticketId)
     this.refreshPage(this.data.eventId);
   },
 
   onPullDownRefresh: function() {
+    wx.stopPullDownRefresh()
     this.refreshPage(this.data.eventId)
   },
 
-  refreshPage(eventId) {
+  refreshPage: function(eventId) {
     wx.request({
       url: app.globalData.serverIp + '/user/events/detail?eventid=' + eventId,
       success: res => {
@@ -44,7 +46,6 @@ Page({
           wx.showToast({
             title: '获取活动信息失败',
             icon: 'none',
-            duration: 1000
           })
         }
       },
@@ -53,7 +54,6 @@ Page({
         wx.showToast({
           title: '服务器连接错误',
           icon: 'none',
-          duration: 1000
         })
       }
     })
@@ -76,17 +76,16 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: res => {
+        console.log('res:')
         console.log(res);
         if (res.data.status == 200) {
           wx.showToast({
             title: '抢票成功',
-            duration: 1000
           })
         } else {
           wx.showToast({
             icon: 'none',
             title: '抢票失败，请检查是否已绑定学号',
-            duration: 1000
           })
         }
       },
@@ -94,7 +93,6 @@ Page({
         wx.showToast({
           icon: 'none',
           title: '服务器连接错误',
-          duration: 1000
         })
         console.log('服务器连接错误');
       }
@@ -117,15 +115,31 @@ Page({
 
   returnTicket: function() {
     wx.request({
-      url: app.globalData.serverIp + '/user/tickets/delete?skey=' + wx.getStorageSync('skey') + '&ticketid=' + ticketid,
+      url: app.globalData.serverIp + '/user/tickets/delete?skey=' + wx.getStorageSync('skey') + '&ticketid=' + this.data.ticketId,
       method: 'GET',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: res =>{
+        console.log('res: ' + res)
+        if(res.data.status == 200){
+          wx.showToast({
+            title: '退票成功',
+          })
+        }else{
+          wx.showToast({
+            title: '退票失败',
+            icon: 'none',
+          })
+        }
+      },
+      fail: res =>{
+        wx.showToast({
+          icon: 'none',
+          title: '服务器连接错误',
+        })
+        console.log('服务器连接错误');
       }
-    })
-    wx.showToast({
-      title: '退票成功',
-      duration: 1000
     })
   }
 })

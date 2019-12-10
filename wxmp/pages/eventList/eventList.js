@@ -1,9 +1,10 @@
 const app = getApp()
+const promisify = require('../../utils/util.js')
 
 Page({
   data: {
     eventList: [],
-    gotEventList: false,
+    gotEventList: -1,
   },
 
   onLoad: function(options) {
@@ -11,9 +12,7 @@ Page({
   },
 
   onPullDownRefresh: function() {
-    // wx.showLoading({
-    //   title: '正在加载...',
-    // })
+    wx.stopPullDownRefresh()
     this.refreshPage()
   },
 
@@ -24,6 +23,7 @@ Page({
         'Content-Type': 'application/json'
       },
       success: res => {
+        console.log('res:')
         console.log(res)
         if (res.data.status == 200) {
           let eventList = res.data.data
@@ -33,19 +33,14 @@ Page({
           }
           this.setData({
             eventList: res.data.data,
+            gotEventList: len > 0
           })
-          if (len > 0) {
-            this.setData({
-              gotEventList: true
-            })
-          }
           console.log('event list:')
           console.log(this.data.eventList)
         } else {
           wx.showToast({
             title: '获取活动失败',
             icon: 'none',
-            duration: 1000
           })
         }
       },
@@ -54,7 +49,6 @@ Page({
         wx.showToast({
           title: '服务器连接错误',
           icon: 'none',
-          duration: 1000
         })
         console.log(error);
       }

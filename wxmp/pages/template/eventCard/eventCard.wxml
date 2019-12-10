@@ -1,5 +1,5 @@
 <template name="eventCard">
-  <navigator class='eventCard' url='/pages/detail/detail?id={{eventid}}&fromPage=eventList'>
+  <navigator class='eventCard' url='/pages/detail/detail?eventId={{eventid}}'>
     <image src='{{imgPath}}' mode='aspectFit' class='eventImg'></image>
     <view class='eventInfo'>
       <view class='eventTitle'>{{title}}</view>

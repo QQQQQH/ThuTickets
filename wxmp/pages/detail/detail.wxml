@@ -1,4 +1,4 @@
-<view class="container">
+<view>
   <view>
     <image src="{{eventInfo.imgPath}}" mode='aspectFit'>"</image>
   </view>
@@ -28,6 +28,6 @@
       </view>
     </view>
   </view>
-  <button wx:if="{{fromPage == 'eventList'}}" type="primary" disabled="{{!ticketsLeft}}" bindtap='handleGetTicket'>抢票</button>
+  <button wx:if="{{!ticketId}}" type="primary" disabled="{{!ticketsLeft}}" bindtap='handleGetTicket'>抢票</button>
   <button wx:else type="warn" bindtap='handleReturnTicket'>退票</button>
 </view>
