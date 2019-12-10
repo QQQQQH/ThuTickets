@@ -18,7 +18,7 @@ Page({
 
   refreshPage: function() {
     wx.request({
-      url: app.globalData.serverIp + '/user/events/list?expired=1',
+      url: app.globalData.serverIp + '/user/events/list?expired=2',
       headers: {
         'Content-Type': 'application/json'
       },

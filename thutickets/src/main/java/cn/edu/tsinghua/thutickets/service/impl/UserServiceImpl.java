@@ -124,10 +124,12 @@ public class UserServiceImpl implements UserService {
                     long currentTimestamp = currentDate.getTime();
                     if ((expired == 1 && currentTimestamp > eventTimestamp)
                             || (expired == 0 && currentTimestamp <= eventTimestamp)) {
+                        eventList.remove(event);
                         continue;
                     }
                 }
                 catch (ParseException e) {
+                    eventList.remove(event);
                     continue;
                 }
             }
