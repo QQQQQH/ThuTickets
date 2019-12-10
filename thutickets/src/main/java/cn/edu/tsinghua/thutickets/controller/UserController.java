@@ -43,8 +43,8 @@ public class UserController {
     }
 
     @GetMapping("/events/list")
-    public Result getEventList() {
-        Object eventList = userService.listEvents();
+    public Result getEventList(@RequestParam(value = "expired", required = false) Integer expired) {
+        Object eventList = userService.listEvents(expired);
         return Result.buildOK(eventList);
     }
 

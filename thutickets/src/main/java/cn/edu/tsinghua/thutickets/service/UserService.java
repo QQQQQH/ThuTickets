@@ -10,7 +10,7 @@ public interface UserService {
      JSONObject getOpenidAndSessionKey(String code);
      String updateUserInfo(JSONObject idJson, JSONObject rawDataJson);
      String verifyStudent(String skey, String token);
-     Object listEvents();
+     Object listEvents(Integer expired);
      Event getEvent(String eventid);
      String buyTicket(String skey, String eventid);
      boolean useTicket(String skey, String ticketid, String eventid);

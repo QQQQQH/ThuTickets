@@ -15,6 +15,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import java.sql.Timestamp;
@@ -31,6 +33,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private TicketMapper ticketMapper;
+
+    SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     @Override
     public User getUserBySkey(String skey) {
@@ -110,9 +114,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object listEvents() {
+    public Object listEvents(Integer expired) {
         List<Event> eventList = eventMapper.selectList(new QueryWrapper<>());
         for (Event event: eventList) {
+            if (expired == 0 || expired == 1) {
+                try {
+                    long eventTimestamp = format.parse(event.getEventDate()+" "+event.getEventTime()).getTime();
+                    Date currentDate = new Date();
+                    long currentTimestamp = currentDate.getTime();
+                    if ((expired == 1 && currentTimestamp > eventTimestamp)
+                            || (expired == 0 && currentTimestamp <= eventTimestamp)) {
+                        continue;
+                    }
+                }
+                catch (ParseException e) {
+                    continue;
+                }
+            }
             String modifiedPath = event.getImgPath().replace("~", "");
             event.setImgPath(modifiedPath);
         }
@@ -136,6 +154,18 @@ public class UserServiceImpl implements UserService {
 
         Event event = eventMapper.selectById(eventid);
         if (event == null || event.getTicketsLeft() <= 0) return null;
+        try {
+            long eventTimestamp = format.parse(event.getEventDate()+" "+event.getEventTime()).getTime();
+            long purchaseTimestamp = format.parse(event.getPurchaseDate()+" "+event.getPurchaseTime()).getTime();
+            Date currentDate = new Date();
+            long currentTimestamp = currentDate.getTime();
+            if (currentTimestamp <= purchaseTimestamp || currentTimestamp >= eventTimestamp) {
+                return null;
+            }
+        }
+        catch (ParseException e) {
+            return null;
+        }
         event.setTicketsLeft(event.getTicketsLeft()-1);
         eventMapper.updateById(event);
         Ticket ticket = new Ticket();
@@ -161,6 +191,17 @@ public class UserServiceImpl implements UserService {
         if (ticket == null || ticket.getValidation() == 0 || !ticket.getStudentid().equals(user.getStudentid())) return false;
         Event event = eventMapper.selectById(eventid);
         if (event == null || !ticket.getEventid().equals(event.getEventid())) return false;
+        try {
+            long eventTimestamp = format.parse(event.getEventDate()+" "+event.getEventTime()).getTime();
+            Date currentDate = new Date();
+            long currentTimestamp = currentDate.getTime();
+            if (currentTimestamp < eventTimestamp) {
+                return false;
+            }
+        }
+        catch (ParseException e) {
+            return false;
+        }
         ticket.setValidation(0);
         ticketMapper.updateById(ticket);
         return true;
@@ -172,21 +213,12 @@ public class UserServiceImpl implements UserService {
         if (user == null) return null;
 
         List<Ticket> ticketList;
-        if (validation != 0 && validation != 1) {
-            ticketList = ticketMapper.selectList(new QueryWrapper<>());
+        if (validation == 0 || validation == 1) {
+            ticketList = ticketMapper.selectList(new QueryWrapper<Ticket>().eq("validation", validation.toString()));
         }
         else{
-            ticketList = ticketMapper.selectList(new QueryWrapper<Ticket>().eq("validation", validation));
+            ticketList = ticketMapper.selectList(new QueryWrapper<>());
         }
-//        List<Event> eventList = new ArrayList<>();
-//        for (Ticket ticket: ticketList) {
-//            Event event = eventMapper.selectById(ticket.getEventid());
-//            if (event != null) {
-//                String modifiedPath = event.getImgPath().replace("~", "");
-//                event.setImgPath(modifiedPath);
-//                eventList.add(event);
-//            }
-//        }
         return JSON.toJSON(ticketList);
     }
 
