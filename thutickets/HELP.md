@@ -31,7 +31,7 @@ CREATE TABLE `user`  (
   `avatar_url` varchar(4096) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_visit_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后登录时间',
-  PRIMARY KEY (`openid`) USING BTREE
+  PRIMARY KEY (`openid`) USING BTREE,
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息' ROW_FORMAT = Dynamic;
 ```
 
@@ -48,18 +48,25 @@ CREATE TABLE `event`  (
 `text` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '简介',
 `img_path` varchar(4096) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片路径',
 `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-PRIMARY KEY (`eventid`) USING BTREE
+PRIMARY KEY (`eventid`) USING BTREE,
+UNIQUE (`title`)
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '活动信息' ROW_FORMAT = Dynamic;
 ```
 
 ``` sql
 CREATE TABLE `ticket`  (
 `ticketid` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'eventid',
-`eventid` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT 'eventid',
 `studentid` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT 'studentid',
 `validation` tinyint(11) NULL DEFAULT NULL COMMENT '有效校验',
+`eventid` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT 'eventid',
+`title` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
+`event_date` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '活动日期',
+`event_time` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '活动时间',
+`location` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地点',
 `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-PRIMARY KEY (`ticketid`) USING BTREE
+PRIMARY KEY (`ticketid`) USING BTREE,
+FOREIGN KEY (`eventid`) REFERENCES event (`eventid`) ON DELETE SET NULL,
+FOREIGN KEY (`title`) REFERENCES event (`title`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '门票信息' ROW_FORMAT = Dynamic;
 ```
 
