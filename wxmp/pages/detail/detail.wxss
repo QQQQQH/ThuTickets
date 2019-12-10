@@ -8,6 +8,10 @@ button {
   color: black;
 }
 
+.eventInfo>view{
+  margin: 10rpx;
+}
+
 .eventTitle {
   font-size: 50rpx;
 }

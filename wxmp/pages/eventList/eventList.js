@@ -22,13 +22,17 @@ Page({
       success: res => {
         let eventList = res.data.data
         let len = eventList.length
-        for(let i = 0;i < len;i++){
+        for (let i = 0; i < len; i++) {
           eventList[i].imgPath = app.globalData.serverIp + eventList[i].imgPath
         }
         this.setData({
           eventList: res.data.data,
-          gotEventList: true
         })
+        if (len > 0) {
+          this.setData({
+            gotEventList: true
+          })
+        }
         console.log('event list:')
         console.log(this.data.eventList)
       }

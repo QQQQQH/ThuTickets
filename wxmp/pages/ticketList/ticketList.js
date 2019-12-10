@@ -29,8 +29,12 @@ Page({
         }
         this.setData({
           ticketList: res.data.data,
-          gotTicketList: true
         })
+        if (len > 0) {
+          this.setData({
+            gotEventList: true
+          })
+        }
         console.log('ticket list:')
         console.log(this.data.ticketList)
       }

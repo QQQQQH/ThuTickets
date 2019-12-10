@@ -60,7 +60,7 @@ Page({
           })
         } else {
           wx.showToast({
-            icon: none,
+            icon: 'none',
             title: '抢票失败，请检查是否已绑定学号',
             duration: 1000
           })
@@ -68,7 +68,7 @@ Page({
       },
       fail: function (error) {
         wx.showToast({
-          icon: none,
+          icon: 'none',
           title: '服务器连接错误',
           duration: 1000
         })
