@@ -13,9 +13,15 @@ import java.sql.Timestamp;
 public class Ticket {
     @TableId(value = "ticketid",type = IdType.INPUT)
     private String ticketid;
-    private String eventid;
     private String studentid;
     private Integer validation;
+    private String eventid;
+    private String title;
+    @TableField(value = "event_date", exist = true)
+    private String eventDate;
+    @TableField(value = "event_time", exist = true)
+    private String eventTime;
+    private String location;
     @TableField(value = "create_time", exist = true)
     private Timestamp createTime;
 
