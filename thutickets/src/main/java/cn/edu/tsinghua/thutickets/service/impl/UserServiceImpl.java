@@ -141,9 +141,13 @@ public class UserServiceImpl implements UserService {
         Ticket ticket = new Ticket();
         String ticketid = UUID.randomUUID().toString();
         ticket.setTicketid(ticketid);
-        ticket.setEventid(eventid);
         ticket.setStudentid(user.getStudentid());
         ticket.setValidation(1);
+        ticket.setEventid(event.getEventid());
+        ticket.setTitle(event.getTitle());
+        ticket.setEventDate(event.getEventDate());
+        ticket.setEventTime(event.getEventTime());
+        ticket.setLocation(event.getLocation());
         ticket.setCreateTime(new Timestamp(new Date().getTime()));
         ticketMapper.insert(ticket);
         return ticketid;
@@ -163,7 +167,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object listTicketEvents(String skey, Integer validation) {
+    public Object listTickets(String skey, Integer validation) {
         User user = getUserBySkey(skey);
         if (user == null) return null;
 
@@ -174,16 +178,16 @@ public class UserServiceImpl implements UserService {
         else{
             ticketList = ticketMapper.selectList(new QueryWrapper<Ticket>().eq("validation", validation));
         }
-        List<Event> eventList = new ArrayList<>();
-        for (Ticket ticket: ticketList) {
-            Event event = eventMapper.selectById(ticket.getEventid());
-            if (event != null) {
-                String modifiedPath = event.getImgPath().replace("~", "");
-                event.setImgPath(modifiedPath);
-                eventList.add(event);
-            }
-        }
-        return JSON.toJSON(eventList);
+//        List<Event> eventList = new ArrayList<>();
+//        for (Ticket ticket: ticketList) {
+//            Event event = eventMapper.selectById(ticket.getEventid());
+//            if (event != null) {
+//                String modifiedPath = event.getImgPath().replace("~", "");
+//                event.setImgPath(modifiedPath);
+//                eventList.add(event);
+//            }
+//        }
+        return JSON.toJSON(ticketList);
     }
 
     @Override

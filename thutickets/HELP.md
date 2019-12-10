@@ -31,7 +31,7 @@ CREATE TABLE `user`  (
   `avatar_url` varchar(4096) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `last_visit_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后登录时间',
-  PRIMARY KEY (`openid`) USING BTREE
+  PRIMARY KEY (`openid`) USING BTREE,
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户信息' ROW_FORMAT = Dynamic;
 ```
 
@@ -55,17 +55,43 @@ PRIMARY KEY (`eventid`) USING BTREE
 ``` sql
 CREATE TABLE `ticket`  (
 `ticketid` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'eventid',
-`eventid` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT 'eventid',
 `studentid` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT 'studentid',
 `validation` tinyint(11) NULL DEFAULT NULL COMMENT '有效校验',
+`eventid` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT 'eventid',
+`title` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
+`event_date` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '活动日期',
+`event_time` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '活动时间',
+`location` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地点',
 `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 PRIMARY KEY (`ticketid`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '门票信息' ROW_FORMAT = Dynamic;
 ```
 
+设置活动信息和门票中相应活动同步的trigger
+``` sql
+DELIMITER $
+CREATE TRIGGER event_update_trigger AFTER UPDATE
+ON event FOR EACH ROW
+BEGIN
+UPDATE ticket SET title=new.title, event_date=new.event_date, event_time=new.event_time, location=new.location WHERE eventid=old.eventid;
+END$
+DELIMITER ;
+```
+
+活动被删除后触发的trigger，活动删除后相应的ticket中validation字段设为-1
+``` sql
+DELIMITER $
+CREATE TRIGGER event_delete_trigger AFTER DELETE
+ON event FOR EACH ROW
+BEGIN
+UPDATE ticket SET validation=-1 WHERE eventid=old.eventid;
+END$
+DELIMITER ;
+```
+
 如果需要彻底删除表（以user为例）：
 ```sql
-drop table user;
+DROP TABLE user;
 ```
 
 ## IDEA配置
@@ -79,4 +105,4 @@ Mybatis-Plus（用于将实体类映射到数据库中的数据项）、lombok�
 请将cn.edu.tsinghua.thutickets.configuration.WebAppConfig中addResourceHandler方法下addResourceLocations改为本机的绝对路径（记得前面必须有"file:"）。
 
 ## 运行
-在IDEA中找到`src/main/java/cn.edu.tsinghua.thutickets/ThuticketsApplication`，右击该文件点击`run 'ThuticketsApplication'`启动服务器（端口8080，可在`src/main/resources/application.properties`中修改）。
+在IDEA中找到`src/main/java/cn.edu.tsinghua.thutickets/ThuticketsApplication`，右击该文件点击`run 'ThuticketsApplication'`启动服务器（端口8000，可在`src/main/resources/application.properties`中修改）。
