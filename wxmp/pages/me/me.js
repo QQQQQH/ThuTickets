@@ -38,8 +38,8 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         data: {
-          skey: wx.getStorageSync('skey').data,
-          token: app.globalData.token.token //助教小程序返回的身份验证token
+          skey: wx.getStorageSync('skey'),
+          token: app.globalData.token //助教小程序返回的身份验证token
         },
         success: res => {
           console.log(res)
@@ -88,10 +88,5 @@ Page({
         type: "id.tsinghua"
       }
     })
-
-
-
-
-
   }
 })

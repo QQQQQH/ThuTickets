@@ -1,0 +1,33 @@
+.eventCard {
+  border: 4rpx solid white;
+  border-radius: 20rpx;
+  background-color: white;
+  box-shadow: 10rpx 10rpx 20rpx #ccc;
+  margin-bottom: 50rpx;
+  padding: 30rpx;
+  position: relative;
+}
+
+.eventInfo {
+  margin: 20rpx;
+  font-size: 30rpx;
+  color: black;
+}
+
+.eventTitle {
+  font-size: 36rpx;
+}
+
+.eventInfo>view {
+  margin-bottom: 6rpx;
+}
+
+.eventImg {
+  width: 100%;
+  height: 400rpx;
+  background-color: #eee;
+}
+
+.green {
+  color: green;
+}

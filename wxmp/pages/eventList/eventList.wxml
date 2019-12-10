@@ -1,0 +1,9 @@
+<import src="/pages/template/eventCard/eventCard.wxml" />
+<block wx:if='{{gotEventList}}'>
+  <view wx:for='{{eventList}}' wx:key='{{index}}'>
+    <template is='eventCard' data='{{...item}}' />
+  </view>
+</block>
+<block wx:else>
+  空空如也
+</block>

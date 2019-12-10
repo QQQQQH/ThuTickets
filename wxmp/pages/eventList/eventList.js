@@ -4,10 +4,6 @@ Page({
   data: {
     eventList: [],
     gotEventList: false,
-    indicatorDots: true,
-    autoplay: true,
-    interval: 3000,
-    duration: 500,
   },
 
   jumpBtn: function(e) {
@@ -24,20 +20,20 @@ Page({
         'Content-Type': 'application/json'
       },
       success: res => {
+        let eventList = res.data.data
+        let len = eventList.length
+        for (let i = 0; i < len; i++) {
+          eventList[i].imgPath = app.globalData.serverIp + eventList[i].imgPath
+        }
         this.setData({
           eventList: res.data.data,
         })
-        for (let i = 0; i < this.data.eventList.length; i++) {
-          let s = 'eventList[' + i + '].imgPath'
-          let path = app.globalData.serverIp + this.data.eventList[i].imgPath
+        if (len > 0) {
           this.setData({
-            [s]: path
+            gotEventList: true
           })
         }
-        this.setData({
-          gotEventList: true
-        })
-        console.log('index eventList data:')
+        console.log('event list:')
         console.log(this.data.eventList)
       }
     })

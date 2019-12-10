@@ -1,0 +1,20 @@
+<template name="ticketCard">
+  <navigator class='ticketCard' url='/pages/detail/detail?id={{eventid}}&fromPage=ticketList'>
+    <!-- <image src='{{imgPath}}' mode='aspectFit' class='eventImg'></image> -->
+    <view class='eventInfo'>
+      <view class='eventTitle'>{{title}}</view>
+      <view>
+        活动时间：
+        <text class="green">{{eventDate}} {{eventTime}}</text>
+      </view>
+      <!-- <view>
+        抢票时间：
+        <text class="green">{{purchaseDate}} {{purchaseTime}}</text>
+      </view> -->
+      <view>
+        活动地点：
+        <text class="green">{{location}}</text>
+      </view>
+    </view>
+  </navigator>
+</template>

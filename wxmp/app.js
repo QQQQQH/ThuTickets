@@ -30,7 +30,9 @@ App({
 
   onShow: function(options) {
     // 获取清华身份验证小程序返回的token
-    this.globalData.token = options.referrerInfo.extraData
+    if (options.referrerInfo.extraData) {
+      this.globalData.token = options.referrerInfo.extraData.token
+    }
   },
 
   login: function() {
@@ -38,7 +40,7 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log('wx.login success, res.code = ' + res.code)
+        console.log('wx.login success, code = ' + res.code)
         wx.request({
           url: this.globalData.serverIp + '/user/login',
           method: 'POST',
@@ -54,7 +56,7 @@ App({
           },
           success: res => {
             if (res.data.status == 200) {
-              wx.setStorageSync('skey', res.data);
+              wx.setStorageSync('skey', res.data.data);
               wx.showToast({
                 title: '登录成功',
                 duration: 1000

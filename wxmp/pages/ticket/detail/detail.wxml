@@ -28,6 +28,4 @@
       </view>
     </view>
   </view>
-  <button wx:if="{{fromPage == 'eventList'}}" type="primary" disabled="{{!ticketsLeft}}" bindtap='handleGetTicket'>抢票</button>
-  <button wx:else type="warn" bindtap='handleReturnTicket'>退票</button>
 </view>

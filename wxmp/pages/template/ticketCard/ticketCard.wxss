@@ -1,34 +1,21 @@
-.eventCard {
+.ticketCard {
   border: 4rpx solid white;
   border-radius: 20rpx;
   background-color: white;
   box-shadow: 10rpx 10rpx 20rpx #ccc;
-  margin-bottom: 50rpx;
+  margin-bottom: 20rpx;
   padding: 30rpx;
   position: relative;
 }
 
 .eventInfo {
-  margin: 0 20rpx;
-  width: 60%;
-  max-height: 200rpx;
-  overflow: hidden;
-  font-size: 26rpx;
-  color: grey;
-}
-
-.eventTitle {
-  font-size: 36rpx;
-  color: black;
-  padding-right: 10rpx;
-}
-
-.eventTime {
+  margin: 20rpx;
   font-size: 30rpx;
   color: black;
 }
 
-.eventText {
+.eventTitle {
+  font-size: 36rpx;
 }
 
 .eventInfo>view {
@@ -41,6 +28,6 @@
   background-color: #eee;
 }
 
-.green{
+.green {
   color: green;
 }
