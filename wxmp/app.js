@@ -65,12 +65,18 @@ App({
             } else {
               wx.showToast({
                 title: '登录失败',
+                icon: 'none',
                 duration: 1000
               })
             }
           },
           fail: function(error) {
             //调用服务端登录接口失败
+            wx.showToast({
+              title: '服务器连接错误',
+              icon: 'none',
+              duration: 1000
+            })
             console.log(error);
           }
         })

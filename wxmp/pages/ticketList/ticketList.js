@@ -6,14 +6,15 @@ Page({
     gotTicketList: false,
   },
 
-  jumpBtn: function(e) {
-    wx.navigateTo({
-      url: '../detail/detail?id=' + e.currentTarget.dataset.eventid
-    })
-    console.log(e)
+  onLoad: function(options) {
+    this.refreshPage()
   },
 
-  onLoad: function(options) {
+  onPullDownRefresh: function() {
+    this.refreshPage()
+  },
+
+  refreshPage: function() {
     wx.request({
       url: app.globalData.serverIp + '/user/tickets/list?skey=' +
         wx.getStorageSync('skey') + '&validation=1', // 待修改，0表示过期票，1表示显示有效票，2表示所有票（2未实现）
@@ -22,22 +23,41 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: res => {
-        let ticketList = res.data.data
-        let len = ticketList.length
-        for (let i = 0; i < len; i++) {
-          ticketList[i].imgPath = app.globalData.serverIp + ticketList[i].imgPath
-        }
-        this.setData({
-          ticketList: res.data.data,
-        })
-        if (len > 0) {
+        console.log(res)
+        if (res.data.status == 200) {
+          let ticketList = res.data.data
+          let len = ticketList.length
+          for (let i = 0; i < len; i++) {
+            ticketList[i].imgPath = app.globalData.serverIp + ticketList[i].imgPath
+          }
           this.setData({
-            gotEventList: true
+            ticketList: res.data.data,
+          })
+          if (len > 0) {
+            this.setData({
+              gotTicketList: true
+            })
+          }
+          console.log('ticket list:')
+          console.log(this.data.ticketList)
+        } else {
+          wx.showToast({
+            title: '获取票据失败',
+            icon: 'none',
+            duration: 1000
           })
         }
-        console.log('ticket list:')
-        console.log(this.data.ticketList)
+      },
+      fail: error => {
+        //调用服务端登录接口失败
+        wx.showToast({
+          title: '服务器连接错误',
+          icon: 'none',
+          duration: 1000
+        })
+        console.log(error);
       }
     })
   },
+
 })
