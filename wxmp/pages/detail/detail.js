@@ -2,6 +2,7 @@ const app = getApp()
 
 Page({
   data: {
+    eventId: null,
     fromPage: null,
     ellipsis: true, // 文字是否收起，默认收起
     eventInfo: null, // 活动详情
@@ -10,31 +11,50 @@ Page({
 
   onLoad: function(options) {
     this.setData({
+      eventId: options.id,
       fromPage: options.fromPage
     })
     console.log('from page: ' + this.data.fromPage)
-    this.getCurrenteventInfo(options.id);
+    this.refreshPage(this.data.eventId);
   },
 
-  getCurrenteventInfo(eventId) {
+  onPullDownRefresh: function() {
+    this.refreshPage(this.data.eventId)
+  },
+
+  refreshPage(eventId) {
     wx.request({
       url: app.globalData.serverIp + '/user/events/detail?eventid=' + eventId,
       success: res => {
-        this.setData({
-          eventInfo: res.data.data
-        })
-        let s = 'eventInfo.imgPath'
-        let path = app.globalData.serverIp + this.data.eventInfo.imgPath
-        this.setData({
-          [s]: path
-        })
-        if (this.data.eventInfo.ticketsLeft) {
+        console.log(res)
+        if (res.data.status == 200) {
+          let eventInfo = res.data.data
+          eventInfo.imgPath = app.globalData.serverIp + eventInfo.imgPath
           this.setData({
-            ticketsLeft: true
+            eventInfo: eventInfo
+          })
+          if (this.data.eventInfo.ticketsLeft) {
+            this.setData({
+              ticketsLeft: true
+            })
+          }
+          console.log('event detail:')
+          console.log(this.data.eventInfo)
+        } else {
+          wx.showToast({
+            title: '获取活动信息失败',
+            icon: 'none',
+            duration: 1000
           })
         }
-        console.log('event detail:')
-        console.log(this.data.eventInfo)
+      },
+      fail: res => {
+        //调用服务端登录接口失败
+        wx.showToast({
+          title: '服务器连接错误',
+          icon: 'none',
+          duration: 1000
+        })
       }
     })
   },
@@ -96,10 +116,16 @@ Page({
   },
 
   returnTicket: function() {
+    wx.request({
+      url: app.globalData.serverIp + '/user/tickets/delete?skey=' + wx.getStorageSync('skey') + '&ticketid=' + ticketid,
+      method: 'GET',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      }
+    })
     wx.showToast({
       title: '退票成功',
       duration: 1000
     })
   }
-
 })
