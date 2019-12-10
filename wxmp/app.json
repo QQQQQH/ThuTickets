@@ -2,12 +2,14 @@
   "pages": [
     "pages/eventList/eventList",
     "pages/me/me",
-    "pages/ticketList/ticketList"
+    "pages/ticketList/ticketList",
+    "pages/detail/detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarTitleText": "清小票",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "list": [

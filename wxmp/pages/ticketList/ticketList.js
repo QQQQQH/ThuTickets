@@ -3,7 +3,7 @@ const app = getApp()
 Page({
   data: {
     ticketList: [],
-    gotTicketList: false,
+    gotTicketList: -1,
   },
 
   onLoad: function(options) {
@@ -11,6 +11,7 @@ Page({
   },
 
   onPullDownRefresh: function() {
+    wx.stopPullDownRefresh()
     this.refreshPage()
   },
 
@@ -23,28 +24,24 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: res => {
+        console.log('res:')
         console.log(res)
         if (res.data.status == 200) {
           let ticketList = res.data.data
           let len = ticketList.length
-          for (let i = 0; i < len; i++) {
-            ticketList[i].imgPath = app.globalData.serverIp + ticketList[i].imgPath
-          }
+          // for (let i = 0; i < len; i++) {
+          //   ticketList[i].imgPath = app.globalData.serverIp + ticketList[i].imgPath
+          // }
           this.setData({
-            ticketList: res.data.data,
+            ticketList: ticketList,
+            gotTicketList: len > 0
           })
-          if (len > 0) {
-            this.setData({
-              gotTicketList: true
-            })
-          }
           console.log('ticket list:')
           console.log(this.data.ticketList)
         } else {
           wx.showToast({
             title: '获取票据失败',
             icon: 'none',
-            duration: 1000
           })
         }
       },
@@ -53,7 +50,6 @@ Page({
         wx.showToast({
           title: '服务器连接错误',
           icon: 'none',
-          duration: 1000
         })
         console.log(error);
       }

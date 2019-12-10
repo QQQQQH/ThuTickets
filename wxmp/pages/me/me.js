@@ -46,7 +46,6 @@ Page({
           if (res.data.status == 200) {
             wx.showToast({
               title: '绑定成功',
-              duration: 1000
             })
             console.log(res.data.data)
           } else {

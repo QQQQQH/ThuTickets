@@ -59,14 +59,12 @@ App({
               wx.setStorageSync('skey', res.data.data);
               wx.showToast({
                 title: '登录成功',
-                duration: 1000
               })
               console.log('login success, skey = ' + wx.getStorageSync('skey'))
             } else {
               wx.showToast({
                 title: '登录失败',
                 icon: 'none',
-                duration: 1000
               })
             }
           },
@@ -75,7 +73,6 @@ App({
             wx.showToast({
               title: '服务器连接错误',
               icon: 'none',
-              duration: 1000
             })
             console.log(error);
           }
@@ -92,6 +89,6 @@ App({
     iv: null, //解密算法的向量
     token: null,
     serverIp: 'http://140.143.129.182:80'
-    // serverIp: 'http://192.168.0.102:8000'
+    // serverIp: 'http://183.173.154.166:8000'
   }
 })
