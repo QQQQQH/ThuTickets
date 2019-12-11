@@ -1,16 +1,19 @@
 const app = getApp()
 
 Page({
+
   data: {
     userInfo: {},
     hasUserInfo: false,
   },
+
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
+
   onLoad: function() {
     if (app.globalData.userInfo) {
       this.setData({
@@ -76,6 +79,7 @@ Page({
       app.login()
     } else {}
   },
+
   handleClickBindId: function() {
     // 点击绑定学号按钮
     wx.navigateToMiniProgram({
@@ -87,5 +91,19 @@ Page({
         type: "id.tsinghua"
       }
     })
-  }
+  },
+
+  handleClickScanCode: function() {
+    // 点击扫描二维码按钮
+    wx.scanCode({
+      onlyFromCamera: true,
+      success(res) {
+        console.log(res)
+        wx.navigateTo({
+          url: '/pages/ticket/ticket?ticketId=' + res.result,
+        })
+      }
+    })
+  },
+
 })

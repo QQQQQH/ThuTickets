@@ -3,7 +3,8 @@
     "pages/eventList/eventList",
     "pages/me/me",
     "pages/ticketList/ticketList",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/ticket/ticket"
   ],
   "window": {
     "backgroundTextStyle": "light",

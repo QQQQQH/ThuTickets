@@ -8,7 +8,7 @@
       活动时间：
       <text class="green">{{eventInfo.eventDate}} {{eventInfo.eventTime}}</text>
     </view>
-    <view>
+    <view wx:if="{{!ticketId}}">
       抢票时间：
       <text class="green">{{eventInfo.purchaseDate}} {{eventInfo.purchaseTime}}</text>
     </view>
@@ -16,7 +16,7 @@
       活动地点：
       <text class="green">{{eventInfo.location}}</text>
     </view>
-    <view>
+    <view wx:if="{{!ticketId}}">
       票余量：
       <text class="{{ticketsLeft ? 'green' : 'red'}}">{{eventInfo.ticketsLeft}}</text>
     </view>
@@ -28,6 +28,7 @@
       </view>
     </view>
   </view>
+  <canvas wx:if="{{ticketId}}" style="width: 200px; height: 200px;" canvas-id="myQrcode"></canvas>
   <button wx:if="{{!ticketId}}" type="primary" disabled="{{!ticketsLeft}}" bindtap='handleGetTicket'>抢票</button>
   <button wx:else type="warn" bindtap='handleReturnTicket'>退票</button>
 </view>

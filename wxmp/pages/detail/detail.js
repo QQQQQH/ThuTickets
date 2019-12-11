@@ -1,4 +1,5 @@
 const app = getApp()
+import drawQrcode from '../../utils/weapp.qrcode.esm.js'
 
 Page({
   data: {
@@ -13,8 +14,16 @@ Page({
   onLoad: function(options) {
     this.setData({
       eventId: options.eventId,
-      ticketId: options.ticketId
+      ticketId: options.ticketId ? options.ticketId : null
     })
+    if(this.data.ticketId){
+      drawQrcode({
+        width: 200,
+        height: 200,
+        canvasId: 'myQrcode',
+        text: this.data.ticketId
+      })
+    }
     console.log('detail: eventId=' + this.data.eventId + '; ticketId=' + this.data.ticketId)
     this.refreshPage(this.data.eventId);
   },
