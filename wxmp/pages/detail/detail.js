@@ -91,6 +91,7 @@ Page({
           wx.showToast({
             title: '抢票成功',
           })
+          this.refreshPage(this.data.eventId)
         } else {
           wx.showToast({
             icon: 'none',

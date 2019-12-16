@@ -23,8 +23,8 @@
       {
         "pagePath": "pages/ticketList/ticketList",
         "text": "票夹",
-        "iconPath": "/images/tabbar/me.png",
-        "selectedIconPath": "/images/tabbar/me_selected.png"
+        "iconPath": "/images/tabbar/ticket.png",
+        "selectedIconPath": "/images/tabbar/ticket_selected.png"
       },
       {
         "pagePath": "pages/me/me",
