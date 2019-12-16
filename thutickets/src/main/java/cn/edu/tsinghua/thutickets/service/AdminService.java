@@ -13,4 +13,5 @@ public interface AdminService {
                         MultipartFile inputImg);
     IPage<Event> listEvents(int pageIndex);
     Event getEvent(String eventid);
+    boolean deleteEvent(String eventid);
 };

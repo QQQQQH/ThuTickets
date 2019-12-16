@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 
@@ -77,9 +78,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public IPage<Event> listEvents(int pageIndex) {
         QueryWrapper<Event> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByAsc("eventid");
+        queryWrapper.orderByDesc("event_date", "event_time");
         Page<Event> page = new Page<>(pageIndex, 2);
-
         IPage<Event> iPage = eventMapper.selectPage(page, queryWrapper);
         return iPage;
     }
@@ -87,7 +87,14 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Event getEvent(String eventid) {
         Event event = eventMapper.selectById(eventid);
-        System.out.println(event);
         return event;
+    }
+
+    @Override
+    public boolean deleteEvent(String eventid) {
+        Event event = eventMapper.selectById(eventid);
+        if (event == null) return false;
+        eventMapper.deleteById(event.getEventid());
+        return true;
     }
 };
