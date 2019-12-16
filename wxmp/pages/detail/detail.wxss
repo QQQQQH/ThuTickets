@@ -2,13 +2,17 @@ button {
   margin: 20rpx;
 }
 
+canvas {
+  margin: auto;
+}
+
 .eventInfo {
   margin: 20rpx;
   font-size: 30rpx;
   color: black;
 }
 
-.eventInfo>view{
+.eventInfo>view {
   margin: 10rpx;
 }
 

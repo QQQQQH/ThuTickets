@@ -28,11 +28,11 @@
 </head>
 
 <body>
-<h1 layout:fragment="head">Head</h1>
+<h1 layout:fragment="head">清小票</h1>
 
 <!-- 导航 -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">THU Tickets Manager</a>
+    <a class="navbar-brand" href="#">清小票管理</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -40,25 +40,25 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/admin/login">Login</a>
+                <a class="nav-link" href="/admin/login">登录</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/events/upload">Upload</a>
+                <a class="nav-link" href="/admin/events/upload">上传活动</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/events/list?page=1">Events</a>
+                <a class="nav-link" href="/admin/events/list?page=1">活动列表</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Other</a>
-            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="#">Other</a>-->
+<!--            </li>-->
         </ul>
     </div>
 </nav>
 
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h1 layout:fragment="leadText" class="display-4">Lead Text</h1>
-        <p layout:fragment="leadMessage" class="lead">Lead Message.</p>
+        <h1 layout:fragment="leadText" class="display-4">清小票管理</h1>
+        <p layout:fragment="leadMessage" class="lead">清华大学学生活动抢票服务管理系统</p>
     </div>
 </div>
 
@@ -66,9 +66,7 @@
 <div class="alert alert-warning" th:text="${msgWarning}" th:if="${not #strings.isEmpty(msgWarning)}"></div>
 <div class="alert alert-danger" th:text="${msgError}" th:if="${not #strings.isEmpty(msgError)}"></div>
 
-<div layout:fragment="content" class="container">
-    content
-</div>
+<div layout:fragment="content" class="container"></div>
 
 </body>
 
