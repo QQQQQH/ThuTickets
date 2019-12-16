@@ -3,13 +3,13 @@
     layout:decorate="~{layout}">
 
 <head>
-    <title>Upload</title>
+    <title>上传活动</title>
 </head>
 
 <body>
-    <h1 layout:fragment="head">Upload</h1>
-    <h1 layout:fragment="leadText">Please upload</h1>
-    <p layout:fragment="leadMessage">Please upload to continue.</p>
+<!--    <h1 layout:fragment="head">上传活动</h1>-->
+    <h1 layout:fragment="leadText">上传活动</h1>
+    <p layout:fragment="leadMessage">请上传活动</p>
     <div layout:fragment="content">
         <form method="post" th:action="@{/admin/events/upload}" enctype="multipart/form-data">
             <div class="form-group">
