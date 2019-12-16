@@ -1,0 +1,17 @@
+<view>
+  <view class="ticketInfo">
+    <view class="eventTitle">{{ticketInfo.title}}</view>
+    <view>
+      活动时间：
+      <text class="green">{{ticketInfo.eventDate}} {{ticketInfo.eventTime}}</text>
+    </view>
+    <view>
+      活动地点：
+      <text class="green">{{ticketInfo.location}}</text>
+    </view>
+    <view>
+      学号：
+      <text class="green">{{ticketInfo.studentid}}</text>
+    </view>
+  </view>
+</view>
