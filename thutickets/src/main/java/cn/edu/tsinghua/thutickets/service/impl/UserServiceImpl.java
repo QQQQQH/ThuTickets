@@ -136,6 +136,7 @@ public class UserServiceImpl implements UserService {
             String modifiedPath = event.getImgPath().replace("~", "");
             event.setImgPath(modifiedPath);
         }
+        Collections.sort(eventList);
         Object jsonObject = JSON.toJSON(eventList);
         return jsonObject;
     }
