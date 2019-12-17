@@ -103,8 +103,11 @@ public class AdminServiceImpl implements AdminService {
     public boolean deleteEvent(String eventid) {
         Event event = eventMapper.selectById(eventid);
         if (event == null) return false;
-        File file = new File(".."+event.getImgPath().substring(1));
-        if (file.exists()) file.delete();
+        try {
+            File file = new File(".."+event.getImgPath().substring(1));
+            if (file.exists()) file.delete();
+        }
+        catch (Exception ignored){}
         eventMapper.deleteById(event.getEventid());
         return true;
     }
