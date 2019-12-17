@@ -1,6 +1,8 @@
 package cn.edu.tsinghua.thutickets.service.impl;
 
+import cn.edu.tsinghua.thutickets.dao.AdminMapper;
 import cn.edu.tsinghua.thutickets.dao.EventMapper;
+import cn.edu.tsinghua.thutickets.entity.Admin;
 import cn.edu.tsinghua.thutickets.service.AdminService;
 import cn.edu.tsinghua.thutickets.entity.Event;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -14,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 
@@ -25,11 +26,19 @@ public class AdminServiceImpl implements AdminService {
     private String imgDir;
 
     @Autowired
+    private AdminMapper adminMapper;
+
+    @Autowired
     private EventMapper eventMapper;
 
     @Override
     public boolean checkAdmin(String username, String password) {
-        if (username.equals("admin") && password.equals("123")) return true;
+        Admin admin = adminMapper.selectById(username);
+        if (admin != null && admin.getAdminPassword().equals(password)) {
+            admin.setLastVisitTime(new Timestamp(new Date().getTime()));
+            adminMapper.updateById(admin);
+            return true;
+        }
         else return false;
     }
 
@@ -94,6 +103,8 @@ public class AdminServiceImpl implements AdminService {
     public boolean deleteEvent(String eventid) {
         Event event = eventMapper.selectById(eventid);
         if (event == null) return false;
+        File file = new File(".."+event.getImgPath().substring(1));
+        if (file.exists()) file.delete();
         eventMapper.deleteById(event.getEventid());
         return true;
     }
