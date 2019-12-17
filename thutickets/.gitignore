@@ -30,3 +30,6 @@ build/
 .vscode/
 
 **/.DS_Store
+
+### Media Files ###
+images
