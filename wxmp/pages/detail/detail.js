@@ -95,7 +95,7 @@ Page({
         } else {
           wx.showToast({
             icon: 'none',
-            title: '抢票失败，请检查是否已绑定学号',
+            title: '抢票失败',
           })
         }
       },

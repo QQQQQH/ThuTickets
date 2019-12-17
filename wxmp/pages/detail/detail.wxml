@@ -1,5 +1,5 @@
 <view>
-  <view>
+  <view class="eventImg">
     <image src="{{eventInfo.imgPath}}" mode='aspectFit'>"</image>
   </view>
   <view class="eventInfo">
@@ -24,7 +24,8 @@
       简介：
       <view>
         <text class="eventText {{ellipsis?'ellipsis':'unellipsis'}}">{{eventInfo.text}}</text>
-        <text class="extension" bindtap="ellipsis">展开</text>
+        <text wx:if="{{ellipsis}}" class="extension" bindtap="ellipsis">展开</text>
+        <text wx:else class="extension" bindtap="ellipsis">收起</text>
       </view>
     </view>
   </view>

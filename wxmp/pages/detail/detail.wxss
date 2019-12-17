@@ -6,6 +6,11 @@ canvas {
   margin: auto;
 }
 
+.eventImg {
+  display: flex;
+  justify-content: center;
+}
+
 .eventInfo {
   margin: 20rpx;
   font-size: 30rpx;
