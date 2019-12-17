@@ -1,5 +1,6 @@
 package cn.edu.tsinghua.thutickets.controller;
 
+import cn.edu.tsinghua.thutickets.common.Result;
 import cn.edu.tsinghua.thutickets.entity.Event;
 import cn.edu.tsinghua.thutickets.service.AdminService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -9,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Map;
 
 @Controller
@@ -84,15 +87,10 @@ public class AdminController {
     }
 
     @GetMapping("/events/delete")
-    public String getEventDelete(@RequestParam(value = "eventid", required = true) String eventid,
-                                 Map<String, Object> map) {
-        if (adminService.deleteEvent(eventid)) {
-            map.put("msgSuccess", "删除成功");
-            return "redirect:/admin/event/upload";
-        }
-        else {
-            map.put("msgError", "删除失败");
-            return "redirect:/admin/event/upload";
+    public void getEventDelete(@RequestParam(value = "eventid", required = true) String eventid,
+                               HttpServletResponse response) throws IOException {
+        if (!adminService.deleteEvent(eventid)) {
+            response.sendError(500, "删除错误");
         }
     }
 }

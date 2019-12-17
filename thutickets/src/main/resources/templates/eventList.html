@@ -127,8 +127,18 @@
         }
 
         function deleteEvent(){
-            alert('你删除了活动：' + deleteEventId)
             location.href = '/admin/events/list?page=1'
+            $.ajax({
+                type: 'GET',
+                url: '/admin/events/delete',
+                data: { eventid: deleteEventId },
+                success: function() {
+                    alert('你删除了活动：' + deleteEventId)
+                },
+                error: function() {
+                    alert('删除失败')
+                }
+            })
         }
 
         window.operateEvents = {
@@ -139,8 +149,9 @@
             //     alert('You click edit action, row: ' + JSON.stringify(row))
             // },
             'click .remove': function (e, value, row, index) {
-                $('#confirmModal').modal('show')
                 deleteEventId = eventList[row.number].eventid
+                $('#confirmModal').modal('show')
+
             }
         }
     </script>
