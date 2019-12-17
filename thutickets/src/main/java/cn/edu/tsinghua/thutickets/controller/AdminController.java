@@ -87,7 +87,7 @@ public class AdminController {
     }
 
     @GetMapping("/events/delete")
-    public void getEventDelete(@RequestParam(value = "eventid", required = true) String eventid,
+    public void deleteEvent(@RequestParam(value = "eventid", required = true) String eventid,
                                HttpServletResponse response) throws IOException {
         if (!adminService.deleteEvent(eventid)) {
             response.sendError(500, "删除错误");
