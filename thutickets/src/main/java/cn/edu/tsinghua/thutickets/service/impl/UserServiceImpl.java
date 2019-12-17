@@ -226,9 +226,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Ticket getTicket(String skey, String ticketid) {
-        User user = getUserBySkey(skey);
-        if (user == null) return null;
+    public Ticket getTicket(String ticketid) {
         return ticketMapper.selectById(ticketid);
     }
 

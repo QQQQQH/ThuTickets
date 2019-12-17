@@ -80,9 +80,8 @@ public class UserController {
     }
 
     @GetMapping("/tickets/detail")
-    public Result getEventDetail(@RequestParam(value = "skey", required = true) String skey,
-                                  @RequestParam(value = "ticketid", required = true) String ticketid) {
-        Ticket ticket = userService.getTicket(skey, ticketid);
+    public Result getTicketDetail(@RequestParam(value = "ticketid", required = true) String ticketid) {
+        Ticket ticket = userService.getTicket(ticketid);
         if (ticket != null) return Result.buildOK(ticket);
         else return Result.buildError("Fail to fetch ticket detail.");
     }

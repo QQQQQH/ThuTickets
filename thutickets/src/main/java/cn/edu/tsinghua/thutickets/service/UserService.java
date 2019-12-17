@@ -15,6 +15,6 @@ public interface UserService {
      String buyTicket(String skey, String eventid);
      boolean useTicket(String skey, String ticketid, String eventid);
      Object listTickets(String skey, Integer validation);
-     Ticket getTicket(String skey, String ticketid);
+     Ticket getTicket(String ticketid);
      boolean deleteTicket(String skey, String ticketid);
 };
