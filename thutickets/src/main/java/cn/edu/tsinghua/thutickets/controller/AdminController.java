@@ -83,14 +83,16 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/events/detail")
-    public String getEventDetail(@RequestParam(value = "eventid", required = true) String eventid,
+    @GetMapping("/events/delete")
+    public String getEventDelete(@RequestParam(value = "eventid", required = true) String eventid,
                                  Map<String, Object> map) {
-        Event event = adminService.getEvent(eventid);
-        if (event != null) return "upload";
+        if (adminService.deleteEvent(eventid)) {
+            map.put("msgSuccess", "删除成功");
+            return "redirect:/admin/event/upload";
+        }
         else {
-//            显示活动不存在
-            return "index";
+            map.put("msgError", "删除失败");
+            return "redirect:/admin/event/upload";
         }
     }
 }
