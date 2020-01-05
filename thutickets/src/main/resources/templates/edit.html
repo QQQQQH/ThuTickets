@@ -14,35 +14,35 @@
         <form method="post" th:action="@{/admin/events/update?eventid={id}(id=${event.getEventid()})}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">标题</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题">
+                <input type="text" class="form-control" id="title" name="title" th:value="${event.getTitle()}">
             </div>
             <div class="form-group">
                 <label for="date">日期</label>
-                <input type="date" class="form-control" id="date" name="eventDate">
+                <input type="date" class="form-control" id="date" name="eventDate" th:value="${event.getEventDate()}">
             </div>
             <div class="form-group">
                 <label for="time">时间</label>
-                <input type="time" class="form-control" id="time" name="eventTime">
+                <input type="time" class="form-control" id="time" name="eventTime" th:value="${event.getEventTime()}">
             </div>
             <div class="form-group">
                 <label for="place">地点</label>
-                <input type="text" class="form-control" id="place" name="location">
+                <input type="text" class="form-control" id="place" name="location" th:value="${event.getLocation()}">
             </div>
             <div class="form-group">
                 <label for="orderDate">抢票日期</label>
-                <input type="date" class="form-control" id="orderDate" name="purchaseDate">
+                <input type="date" class="form-control" id="orderDate" name="purchaseDate" th:value="${event.getPurchaseDate()}">
             </div>
             <div class="form-group">
                 <label for="orderTime">抢票时间</label>
-                <input type="time" class="form-control" id="orderTime" name="purchaseTime">
+                <input type="time" class="form-control" id="orderTime" name="purchaseTime" th:value="${event.getPurchaseTime()}">
             </div>
             <div class="form-group">
                 <label for="ticketNum">票量</label>
-                <input type="number" class="form-control" id="ticketNum" name="ticketsLeft">
+                <input type="number" class="form-control" id="ticketNum" name="ticketsLeft" th:value="${event.getTicketsLeft()}">
             </div>
             <div class="form-group">
                 <label for="text">简介</label>
-                <textarea class="form-control" id="text" name="text" rows="3" placeholder="请输入简介。"></textarea>
+                <textarea class="form-control" id="text" name="text" rows="3" th:text="${event.getText()}"></textarea>
             </div>
             <div class="form-group">
                 <label for="inputImg">图片上传</label><br />
