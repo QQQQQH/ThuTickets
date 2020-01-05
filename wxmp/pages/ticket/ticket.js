@@ -22,25 +22,23 @@ Page({
   // 还没有做修改
   refreshPage: function (ticketId) {
     wx.request({
-      url: app.globalData.serverIp + '/user/events/detail?eventid=' + ticketId,
+      url: app.globalData.serverIp + '/user/tickets/detail?ticketid=' + ticketId,
+      method: 'GET',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
       success: res => {
         console.log(res)
         if (res.data.status == 200) {
           let ticketInfo = res.data.data
-          ticketInfo.imgPath = app.globalData.serverIp + ticketInfo.imgPath
           this.setData({
             ticketInfo: ticketInfo
           })
-          if (this.data.ticketInfo.ticketsLeft) {
-            this.setData({
-              ticketsLeft: true
-            })
-          }
-          console.log('event detail:')
+          console.log('ticket detail:')
           console.log(this.data.ticketInfo)
         } else {
           wx.showToast({
-            title: '获取活动信息失败',
+            title: '获取票据信息失败',
             icon: 'none',
           })
         }
