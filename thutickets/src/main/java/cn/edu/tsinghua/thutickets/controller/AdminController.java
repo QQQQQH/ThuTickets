@@ -98,16 +98,17 @@ public class AdminController {
                               @RequestParam(value = "text", required = false) String text,
                               @RequestParam(value = "inputImg", required = false) MultipartFile inputImg,
                               Map<String, Object> map) {
-        Event event = adminService.getEvent(eventid);
         if (adminService.updateEvent(eventid, title, eventDate, eventTime, location,
                 purchaseDate, purchaseTime, ticketsLeft,
                 text, inputImg)) {
             map.put("msgSuccess", "修改成功");
+            Event event = adminService.getEvent(eventid);
             if (event != null) map.put("event", event);
             return "edit";
         }
         else {
             map.put("msgError", "修改失败");
+            Event event = adminService.getEvent(eventid);
             if (event != null) map.put("event", event);
             return "edit";
         }
@@ -127,10 +128,11 @@ public class AdminController {
     }
 
     @GetMapping("/events/delete")
-    public void deleteEvent(@RequestParam(value = "eventid", required = true) String eventid,
+    public String deleteEvent(@RequestParam(value = "eventid", required = true) String eventid,
                                HttpServletResponse response) throws IOException {
         if (!adminService.deleteEvent(eventid)) {
             response.sendError(500, "删除错误");
         }
+        return "redirect:/admin/events/list?page=1";
     }
 }

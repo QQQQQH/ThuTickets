@@ -57,7 +57,7 @@ public class AdminServiceImpl implements AdminService {
                 int sepIndex = filename.lastIndexOf(".");
                 if (sepIndex != -1) {
                     String suffix = filename.substring(sepIndex);
-                    filename = eventid+suffix;
+                    filename = UUID.randomUUID().toString()+suffix;
                     File file = new File(imgDir+filename);
                     if (!file.getParentFile().exists()) {
                         file.getParentFile().mkdirs();
@@ -100,7 +100,7 @@ public class AdminServiceImpl implements AdminService {
                 int sepIndex = filename.lastIndexOf(".");
                 if (sepIndex != -1) {
                     String suffix = filename.substring(sepIndex);
-                    filename = eventid + suffix;
+                    filename = UUID.randomUUID().toString()+suffix;
                     File newFile = new File(imgDir + filename);
                     if (!file.getParentFile().exists()) {
                         file.getParentFile().mkdirs();
