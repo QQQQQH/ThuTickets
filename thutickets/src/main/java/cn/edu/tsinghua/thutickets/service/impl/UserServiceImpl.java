@@ -116,7 +116,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Object listEvents(Integer expired) {
         List<Event> eventList = eventMapper.selectList(new QueryWrapper<>());
-        for (Event event: eventList) {
+        for (int i = eventList.size()-1;i >= 0;i--) {
+            Event event = eventList.get(i);
             if (expired == 0 || expired == 1) {
                 try {
                     long eventTimestamp = format.parse(event.getEventDate()+" "+event.getEventTime()).getTime();
