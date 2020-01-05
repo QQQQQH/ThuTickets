@@ -98,8 +98,19 @@ public class AdminController {
                               @RequestParam(value = "text", required = false) String text,
                               @RequestParam(value = "inputImg", required = false) MultipartFile inputImg,
                               Map<String, Object> map) {
-        
-        return "upload";
+        Event event = adminService.getEvent(eventid);
+        if (adminService.updateEvent(eventid, title, eventDate, eventTime, location,
+                purchaseDate, purchaseTime, ticketsLeft,
+                text, inputImg)) {
+            map.put("msgSuccess", "修改成功");
+            if (event != null) map.put("event", event);
+            return "edit";
+        }
+        else {
+            map.put("msgError", "修改失败");
+            if (event != null) map.put("event", event);
+            return "edit";
+        }
     }
 
     @GetMapping("/events/edit")
