@@ -64,7 +64,7 @@ public class AdminController {
     }
 
     @PostMapping("/events/upload")
-    public String eventsUpload(@RequestParam(value = "title", required = false) String title,
+    public String eventUpload(@RequestParam(value = "title", required = false) String title,
                                @RequestParam(value = "eventDate", required = false) String eventDate,
                                @RequestParam(value = "eventTime", required = false) String eventTime,
                                @RequestParam(value = "location", required = false) String location,
@@ -73,7 +73,7 @@ public class AdminController {
                                @RequestParam(value = "ticketsLeft", required = false) Integer ticketsLeft,
                                @RequestParam(value = "text", required = false) String text,
                                @RequestParam(value = "inputImg", required = false) MultipartFile inputImg,
-                         Map<String, Object> map) {
+                               Map<String, Object> map) {
         if (adminService.uploadEvent(title, eventDate, eventTime, location,
                                      purchaseDate, purchaseTime, ticketsLeft,
                                      text, inputImg)) {
@@ -84,6 +84,35 @@ public class AdminController {
             map.put("msgError", "上传失败");
             return "upload";
         }
+    }
+
+    @PostMapping("/events/update")
+    public String eventUpdate(@RequestParam(value = "eventid", required = true) String eventid,
+                              @RequestParam(value = "title", required = false) String title,
+                              @RequestParam(value = "eventDate", required = false) String eventDate,
+                              @RequestParam(value = "eventTime", required = false) String eventTime,
+                              @RequestParam(value = "location", required = false) String location,
+                              @RequestParam(value = "purchaseDate", required = false) String purchaseDate,
+                              @RequestParam(value = "purchaseTime", required = false) String purchaseTime,
+                              @RequestParam(value = "ticketsLeft", required = false) Integer ticketsLeft,
+                              @RequestParam(value = "text", required = false) String text,
+                              @RequestParam(value = "inputImg", required = false) MultipartFile inputImg,
+                              Map<String, Object> map) {
+        
+        return "upload";
+    }
+
+    @GetMapping("/events/edit")
+    public String editEvent(@RequestParam(value = "eventid", required = true) String eventid,
+                            Model model,
+                            Map<String, Object> map) {
+        Event event = adminService.getEvent(eventid);
+        if (event == null) {
+            map.put("msgError", "活动不存在，请添加活动");
+            return "upload";
+        }
+        map.put("event", event);
+        return "edit";
     }
 
     @GetMapping("/events/delete")

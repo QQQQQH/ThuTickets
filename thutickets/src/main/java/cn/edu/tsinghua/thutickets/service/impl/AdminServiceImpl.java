@@ -95,8 +95,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Event getEvent(String eventid) {
-        Event event = eventMapper.selectById(eventid);
-        return event;
+        return eventMapper.selectById(eventid);
     }
 
     @Override

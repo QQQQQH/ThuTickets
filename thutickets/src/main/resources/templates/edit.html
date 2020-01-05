@@ -11,7 +11,7 @@
     <h1 layout:fragment="leadText">修改活动</h1>
     <p layout:fragment="leadMessage">请修改活动</p>
     <div layout:fragment="content">
-        <form method="post" th:action="@{/admin/events/edit}" enctype="multipart/form-data">
+        <form method="post" th:action="@{/admin/events/update?eventid={id}(id=${event.getEventid()})}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">标题</label>
                 <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题">
