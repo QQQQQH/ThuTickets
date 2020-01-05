@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service("AdminService")
@@ -50,25 +51,22 @@ public class AdminServiceImpl implements AdminService {
                                MultipartFile inputImg) {
         Event event = new Event();
         String eventid = UUID.randomUUID().toString();
-        String filename = inputImg.getOriginalFilename();
-        int sepIndex = filename.lastIndexOf(".");
-        if (sepIndex != -1) {
-            String suffix = filename.substring(sepIndex);
-            filename = eventid+suffix;
-            String path = imgDir+filename;
-            File file = new File(path);
-            if (!file.getParentFile().exists()) {
-                file.getParentFile().mkdirs();
-            }
+        if (!Objects.requireNonNull(inputImg.getOriginalFilename()).isEmpty()) {
             try {
-                inputImg.transferTo(file);
+                String filename = inputImg.getOriginalFilename();
+                int sepIndex = filename.lastIndexOf(".");
+                if (sepIndex != -1) {
+                    String suffix = filename.substring(sepIndex);
+                    filename = UUID.randomUUID().toString()+suffix;
+                    File file = new File(imgDir+filename);
+                    if (!file.getParentFile().exists()) {
+                        file.getParentFile().mkdirs();
+                    }
+                    inputImg.transferTo(file);
+                    event.setImgPath("~/images/"+filename);
+                }
             }
-            catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
-            String imgPath = "~/images/";
-            event.setImgPath(imgPath +filename);
+            catch (Exception ignored) {}
         }
         event.setEventid(eventid);
         event.setTitle(title);
@@ -85,6 +83,47 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public boolean updateEvent(String eventid,
+                        String title, String eventDate,
+                        String eventTime, String location,
+                        String purchaseDate, String purchaseTime,
+                        Integer ticketsLeft, String text,
+                        MultipartFile inputImg) {
+        Event event = eventMapper.selectById(eventid);
+        if (event == null) return false;
+        if (!Objects.requireNonNull(inputImg.getOriginalFilename()).isEmpty()) {
+            try {
+                File file = new File(".."+event.getImgPath().substring(1));
+                if (file.exists()) file.delete();
+
+                String filename = inputImg.getOriginalFilename();
+                int sepIndex = filename.lastIndexOf(".");
+                if (sepIndex != -1) {
+                    String suffix = filename.substring(sepIndex);
+                    filename = UUID.randomUUID().toString()+suffix;
+                    File newFile = new File(imgDir + filename);
+                    if (!file.getParentFile().exists()) {
+                        file.getParentFile().mkdirs();
+                    }
+                    inputImg.transferTo(newFile);
+                    event.setImgPath("~/images/" + filename);
+                }
+            }
+            catch (Exception ignored) {}
+        }
+        event.setTitle(title);
+        event.setEventDate(eventDate);
+        event.setEventTime(eventTime);
+        event.setLocation(location);
+        event.setPurchaseDate(purchaseDate);
+        event.setPurchaseTime(purchaseTime);
+        event.setTicketsLeft(ticketsLeft);
+        event.setText(text);
+        eventMapper.updateById(event);
+        return true;
+    }
+
+    @Override
     public IPage<Event> listEvents(int pageIndex) {
         QueryWrapper<Event> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("event_date", "event_time");
@@ -95,8 +134,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Event getEvent(String eventid) {
-        Event event = eventMapper.selectById(eventid);
-        return event;
+        return eventMapper.selectById(eventid);
     }
 
     @Override
