@@ -21,7 +21,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.3",
+	"libVersion": "2.10.0",
 	"appid": "wxa8353d2eedd5a43f",
 	"projectname": "ThuTickets",
 	"debugOptions": {

@@ -6,5 +6,5 @@
     <text class="userInfoNickName">{{userInfo.nickName}}</text>
     <button bindtap="handleClickBindId">绑定学号</button>
   </block>
-  <button bindtap="handleClickScanCode">扫二维码</button>
+  <button bindtap="handleClickScanCode">扫码验票</button>
 </view>

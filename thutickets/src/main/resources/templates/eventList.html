@@ -95,11 +95,11 @@
 
     <script th:inline="javascript">
         let eventList = [[${eventsPage.getRecords()}]]
-        let deleteEventId
+        let eventId
         $(function () {
             let $table = $('#table')
             let data = []
-            for(i in eventList){
+            for (i in eventList) {
                 let event = eventList[i]
                 data.push({
                     number: i,
@@ -117,25 +117,25 @@
                 // '<a class="detail" href="javascript:void(0)" title="查看">',
                 // '<i class="fas fa-eye"></i>',
                 // '</a>  ',
-                // '<a class="edit" href="javascript:void(0)" title="编辑">',
-                // '<i class="fas fa-edit"></i>',
-                // '</a>  ',
+                '<a class="edit" href="javascript:void(0)" title="编辑">',
+                '<i class="fas fa-edit"></i>',
+                '</a>  ',
                 '<a class="remove" href="javascript:void(0)" title="删除">',
                 '<i class="fas fa-trash"></i>',
                 '</a>'
             ].join('')
         }
 
-        function deleteEvent(){
+        function deleteEvent() {
             location.href = '/admin/events/list?page=1'
             $.ajax({
                 type: 'GET',
                 url: '/admin/events/delete',
-                data: { eventid: deleteEventId },
-                success: function() {
+                data: {eventid: eventId},
+                success: function () {
                     alert('你删除了活动')
                 },
-                error: function() {
+                error: function () {
                     alert('删除失败')
                 }
             })
@@ -145,13 +145,14 @@
             // 'click .detail': function (e, value, row, index) {
             //     alert('You click detail action, row: ' + JSON.stringify(row))
             // },
-            // 'click .edit': function (e, value, row, index) {
-            //     alert('You click edit action, row: ' + JSON.stringify(row))
-            // },
+            'click .edit': function (e, value, row, index) {
+                // alert('You click edit action, row: ' + JSON.stringify(row))
+                eventId = eventList[row.number].eventid
+                location.href = '/admin/events/edit?eventid=' + eventId
+            },
             'click .remove': function (e, value, row, index) {
-                deleteEventId = eventList[row.number].eventid
+                eventId = eventList[row.number].eventid
                 $('#confirmModal').modal('show')
-
             }
         }
     </script>
