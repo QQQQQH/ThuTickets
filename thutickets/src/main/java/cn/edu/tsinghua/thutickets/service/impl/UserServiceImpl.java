@@ -70,7 +70,6 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.selectById(openid);
         boolean isNewUser = user == null;
-        if(isNewUser) System.out.println("is new");
         if(isNewUser) {
             user = new User();
             user.setOpenid(openid);
@@ -134,8 +133,13 @@ public class UserServiceImpl implements UserService {
                     continue;
                 }
             }
-            String modifiedPath = event.getImgPath().replace("~", "");
-            event.setImgPath(modifiedPath);
+            try {
+                String modifiedPath = event.getImgPath().replace("~", "");
+                event.setImgPath(modifiedPath);
+            }
+            catch (Exception e) {
+                event.setImgPath("/images/default.jpg");
+            }
         }
         Collections.sort(eventList);
         Object jsonObject = JSON.toJSON(eventList);
