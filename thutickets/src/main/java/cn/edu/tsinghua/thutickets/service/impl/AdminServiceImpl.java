@@ -93,8 +93,10 @@ public class AdminServiceImpl implements AdminService {
         if (event == null) return false;
         if (!Objects.requireNonNull(inputImg.getOriginalFilename()).isEmpty()) {
             try {
-                File file = new File(".."+event.getImgPath().substring(1));
-                if (file.exists()) file.delete();
+                if (!event.getImgPath().substring(1).equals("/images/default.jpg")) {
+                    File file = new File(".." + event.getImgPath().substring(1));
+                    if (file.exists()) file.delete();
+                }
 
                 String filename = inputImg.getOriginalFilename();
                 int sepIndex = filename.lastIndexOf(".");
@@ -102,8 +104,8 @@ public class AdminServiceImpl implements AdminService {
                     String suffix = filename.substring(sepIndex);
                     filename = UUID.randomUUID().toString()+suffix;
                     File newFile = new File(imgDir + filename);
-                    if (!file.getParentFile().exists()) {
-                        file.getParentFile().mkdirs();
+                    if (!newFile.getParentFile().exists()) {
+                        newFile.getParentFile().mkdirs();
                     }
                     inputImg.transferTo(newFile);
                     event.setImgPath("~/images/" + filename);
