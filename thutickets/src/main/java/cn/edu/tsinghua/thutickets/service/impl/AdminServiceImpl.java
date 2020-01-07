@@ -144,8 +144,10 @@ public class AdminServiceImpl implements AdminService {
         Event event = eventMapper.selectById(eventid);
         if (event == null) return false;
         try {
-            File file = new File(".."+event.getImgPath().substring(1));
-            if (file.exists()) file.delete();
+            if (!event.getImgPath().substring(1).equals("/images/default.jpg")) {
+                File file = new File(".." + event.getImgPath().substring(1));
+                if (file.exists()) file.delete();
+            }
         }
         catch (Exception ignored){}
         eventMapper.deleteById(event.getEventid());

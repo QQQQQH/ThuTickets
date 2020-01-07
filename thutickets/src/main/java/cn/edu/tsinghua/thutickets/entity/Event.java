@@ -1,9 +1,6 @@
 package cn.edu.tsinghua.thutickets.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -32,6 +29,8 @@ public class Event implements Comparable<Event> {
     private String imgPath;
     @TableField(value = "create_time", exist = true)
     private Timestamp createTime;
+    @Version
+    private Integer version;
 
     public String getImgPath() { return imgPath; }
     public String getCreateTime() { return createTime.toString(); }

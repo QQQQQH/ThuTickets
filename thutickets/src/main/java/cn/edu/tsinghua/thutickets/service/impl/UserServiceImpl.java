@@ -161,21 +161,33 @@ public class UserServiceImpl implements UserService {
         if (user == null || user.getStudentid() == null) return null;
 
         Event event = eventMapper.selectById(eventid);
-        if (event == null || event.getTicketsLeft() <= 0) return null;
+        if (event == null) return null;
+        Date currentDate = new Date();
+        // 检查日期
         try {
             long eventTimestamp = format.parse(event.getEventDate()+" "+event.getEventTime()).getTime();
             long purchaseTimestamp = format.parse(event.getPurchaseDate()+" "+event.getPurchaseTime()).getTime();
-            Date currentDate = new Date();
             long currentTimestamp = currentDate.getTime();
-            if (currentTimestamp <= purchaseTimestamp || currentTimestamp >= eventTimestamp) {
+            if (currentTimestamp < purchaseTimestamp || currentTimestamp > eventTimestamp) {
                 return null;
             }
         }
         catch (ParseException e) {
             return null;
         }
-        event.setTicketsLeft(event.getTicketsLeft()-1);
-        eventMapper.updateById(event);
+
+        // 利用乐观锁机制更新票数，提供十次更新机会
+        int i = 10;
+        while (true) {
+            Event event2Update = eventMapper.selectById(eventid);
+            if (event2Update == null || event2Update.getTicketsLeft() <= 0) return null;
+            event2Update.setTicketsLeft(event2Update.getTicketsLeft()-1);
+            if (eventMapper.updateById(event2Update) == 1) {
+                break;
+            }
+            else if (--i <= 0) return null;
+        }
+
         Ticket ticket = new Ticket();
         String ticketid = UUID.randomUUID().toString();
         ticket.setTicketid(ticketid);
@@ -186,7 +198,7 @@ public class UserServiceImpl implements UserService {
         ticket.setEventDate(event.getEventDate());
         ticket.setEventTime(event.getEventTime());
         ticket.setLocation(event.getLocation());
-        ticket.setCreateTime(new Timestamp(new Date().getTime()));
+        ticket.setCreateTime(new Timestamp(currentDate.getTime()));
         ticketMapper.insert(ticket);
         return ticketid;
     }
