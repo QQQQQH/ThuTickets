@@ -1,0 +1,48 @@
+version: '3'
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:1.13
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    
+  mysql:
+    container_name: mysql
+    image: mysql/mysql-server:5.7
+    environment:
+      MYSQL_DATABASE: thutickets
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 3306:3306
+    restart: always
+    
+  thutickets:
+    build: ./thutickets
+    working_dir: /thutickets
+    volumes:
+      - ./thutickets:/thutickets
+    expose:
+      - 8000
+    depends_on:
+      - mysql
+      - nginx
+    command: mvn clean spring-boot:run -Dspring-boot.run.profiles=docker
+    restart: always
+
+  # thutickets_1:
+  #   build: ./thutickets
+  #   working_dir: /thutickets
+  #   volumes:
+  #     - ./thutickets:/thutickets
+  #   expose:
+  #     - 8001
+  #   depends_on:
+  #     - mysql
+  #     - nginx
+  #   command: mvn clean spring-boot:run -Dspring-boot.run.profiles=docker_1
+  #   restart: always
